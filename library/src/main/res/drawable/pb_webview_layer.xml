@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 背景  gradient是渐变,corners定义的是圆角 -->
+    <item android:id="@android:id/background">
+        <shape>
+            <corners android:radius="2dp" />
+            <solid android:color="#ffffff" />
+        </shape>
+    </item>
+    <!-- 第二条进度条颜色 -->
+    <item android:id="@android:id/secondaryProgress">
+        <clip>
+            <shape>
+                <corners android:radius="2dp" />
+                <gradient
+                    android:angle="90.0"
+                    android:centerColor="?attr/colorAccent"
+                    android:centerY="0.45"
+                    android:endColor="?attr/colorPrimaryDark"
+                    android:startColor="?attr/colorPrimary" />
+            </shape>
+        </clip>
+    </item>
+    <!-- 进度条 -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <corners android:radius="2dp" />
+                <solid android:color="?attr/colorAccent" />
+            </shape>
+        </clip>
+    </item>
+
+</layer-list>
