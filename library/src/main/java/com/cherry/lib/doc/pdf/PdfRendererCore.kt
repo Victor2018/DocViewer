@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory
 import android.graphics.pdf.PdfRenderer
 import android.os.Build
 import android.os.ParcelFileDescriptor
-import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -34,11 +33,12 @@ internal class PdfRendererCore(
     private val pdfQuality: PdfQuality
 ) {
     companion object {
+        var  pdfRenderer: PdfRenderer? = null
         private const val PREFETCH_COUNT = 3
     }
 
     private val cachePath = "___pdf___cache___"
-    private var  pdfRenderer: PdfRenderer? = null
+
 
     init {
         initCache()

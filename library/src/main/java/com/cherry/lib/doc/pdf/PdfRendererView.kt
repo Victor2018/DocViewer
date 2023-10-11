@@ -5,10 +5,8 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Build
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.webkit.WebResourceError
@@ -19,7 +17,6 @@ import android.widget.FrameLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toFile
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -305,8 +302,9 @@ class PdfRendererView @JvmOverloads constructor(
     }
 
     fun closePdfRender() {
-        if (pdfRendererCoreInitialised)
+        if (pdfRendererCoreInitialised) {
             pdfRendererCore.closePdfRender()
+        }
     }
 
 }

@@ -32,6 +32,7 @@ internal class PdfViewAdapter(
     private val enableLoadingForPages: Boolean
 ) :
     RecyclerView.Adapter<PdfViewAdapter.PdfPageViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PdfPageViewHolder {
         return PdfPageViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.list_item_pdf_page,parent,
@@ -47,14 +48,33 @@ internal class PdfViewAdapter(
         holder.bind(position)
     }
 
-    inner class PdfPageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(position: Int) {
-                handleLoadingForPage(position)
+    inner class PdfPageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),View.OnAttachStateChangeListener {
 
-            itemView.pageView.setImageBitmap(null)
-            itemView.pageView.clearAnimation()
-            renderer.renderPage(position) { bitmap: Bitmap?, pageNo: Int ->
-                if (pageNo == position) {
+        fun bind(position: Int) {
+
+        }
+
+        private fun handleLoadingForPage(position: Int) {
+            if (!enableLoadingForPages) {
+                itemView.pdf_view_page_loading_progress.hide()
+                return
+            }
+
+            if (renderer.pageExistInCache(position)) {
+                itemView.pdf_view_page_loading_progress.hide()
+            } else {
+                itemView.pdf_view_page_loading_progress.show()
+            }
+        }
+
+        init {
+            itemView.addOnAttachStateChangeListener(this)
+        }
+
+        override fun onViewAttachedToWindow(p0: View) {
+            handleLoadingForPage(adapterPosition)
+            renderer.renderPage(adapterPosition) { bitmap: Bitmap?, pageNo: Int ->
+                if (pageNo == adapterPosition) {
                     bitmap?.let {
                         itemView.container_view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                             height =
@@ -69,24 +89,15 @@ internal class PdfViewAdapter(
                             interpolator = LinearInterpolator()
                             duration = 200
                         }
-
                         itemView.pdf_view_page_loading_progress.hide()
                     }
                 }
             }
         }
 
-        private fun handleLoadingForPage(position: Int) {
-            if (!enableLoadingForPages) {
-                itemView.pdf_view_page_loading_progress.hide()
-                return
-            }
-
-            if (renderer.pageExistInCache(position)) {
-                itemView.pdf_view_page_loading_progress.hide()
-            } else {
-                itemView.pdf_view_page_loading_progress.show()
-            }
+        override fun onViewDetachedFromWindow(p0: View) {
+            itemView.pageView.setImageBitmap(null)
+            itemView.pageView.clearAnimation()
         }
     }
 }
