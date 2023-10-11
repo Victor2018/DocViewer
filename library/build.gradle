@@ -46,10 +46,6 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1"
     implementation "androidx.lifecycle:lifecycle-common:2.4.1"
-
-    implementation("io.coil-kt:coil:1.2.2")
-
-    implementation 'com.github.bumptech.glide:glide:4.15.1'
 }
 
 afterEvaluate {

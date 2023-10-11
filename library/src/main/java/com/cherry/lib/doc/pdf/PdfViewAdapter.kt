@@ -45,14 +45,9 @@ internal class PdfViewAdapter(
     }
 
     override fun onBindViewHolder(holder: PdfPageViewHolder, position: Int) {
-        holder.bind(position)
     }
 
     inner class PdfPageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),View.OnAttachStateChangeListener {
-
-        fun bind(position: Int) {
-
-        }
 
         private fun handleLoadingForPage(position: Int) {
             if (!enableLoadingForPages) {
