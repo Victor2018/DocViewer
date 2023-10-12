@@ -15,7 +15,7 @@
     <ProgressBar
         android:id="@+id/mPlLoadProgress"
         android:layout_width="match_parent"
-        android:layout_height="4dp"
+        android:layout_height="2dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:progressDrawable="@drawable/pb_webview_layer"
         android:visibility="gone"/>
@@ -28,6 +28,6 @@
 
     <include
         android:id="@+id/pageNumber"
-        layout="@layout/pdf_view_page_no"
-        />
+        layout="@layout/pdf_view_page_no" />
+
 </FrameLayout>
