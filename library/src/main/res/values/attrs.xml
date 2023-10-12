@@ -21,6 +21,8 @@
         <attr name="pdfView_page_marginTop" format="reference|dimension" />
         <attr name="pdfView_page_marginRight" format="reference|dimension"  />
         <attr name="pdfView_page_marginBottom" format="reference|dimension"  />
+
+        <attr name="pdfView_page_pb_height" format="reference|dimension"  />
     </declare-styleable>
 
     <!-- icons -->
