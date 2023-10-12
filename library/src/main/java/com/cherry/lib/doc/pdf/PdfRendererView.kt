@@ -56,6 +56,7 @@ class PdfRendererView @JvmOverloads constructor(
     private var quality = PdfQuality.NORMAL
     private var engine = PdfEngine.INTERNAL
     private var showDivider = true
+    private var showPageNum = true
     private var divider: Drawable? = null
     private var runnable = Runnable {}
     var enableLoadingForPages: Boolean = true
@@ -185,10 +186,13 @@ class PdfRendererView @JvmOverloads constructor(
             super.onScrolled(recyclerView, dx, dy)
             (recyclerView.layoutManager as LinearLayoutManager).run {
                 var foundPosition : Int = findLastCompletelyVisibleItemPosition()
+
                 pageNo.run {
                     if (foundPosition != NO_POSITION)
                         text = context.getString(R.string.pdfView_page_no,foundPosition + 1,totalPageCount)
-                    pageNo.visibility = View.VISIBLE
+                    if (showPageNum) {
+                        pageNo.visibility = View.VISIBLE
+                    }
                 }
 
                 if (foundPosition == 0)
@@ -281,6 +285,7 @@ class PdfRendererView @JvmOverloads constructor(
             typedArray.getInt(R.styleable.PdfRendererView_pdfView_engine, PdfEngine.INTERNAL.value)
         engine = PdfEngine.values().first { it.value == engineValue }
         showDivider = typedArray.getBoolean(R.styleable.PdfRendererView_pdfView_showDivider, true)
+        showPageNum = typedArray.getBoolean(R.styleable.PdfRendererView_pdfView_show_page_num, true)
         divider = typedArray.getDrawable(R.styleable.PdfRendererView_pdfView_divider)
         enableLoadingForPages = typedArray.getBoolean(R.styleable.PdfRendererView_pdfView_enableLoadingForPages, enableLoadingForPages)
 

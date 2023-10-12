@@ -11,6 +11,7 @@
             <enum name="google" value="200" />
         </attr>
         <attr name="pdfView_showDivider" format="boolean" />
+        <attr name="pdfView_show_page_num" format="boolean" />
         <attr name="pdfView_divider" format="reference" />
 
         <attr name="pdfView_enableLoadingForPages" format="reference|boolean" />
