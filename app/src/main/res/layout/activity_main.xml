@@ -18,11 +18,11 @@
         android:text="选择文件"/>
 
     <Button
-        android:id="@+id/mBtnPdf"
+        android:id="@+id/mBtnOnline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:textSize="18sp"
-        android:text="pdf viewer"/>
+        android:text="浏览在线文档"/>
 
 </LinearLayout>

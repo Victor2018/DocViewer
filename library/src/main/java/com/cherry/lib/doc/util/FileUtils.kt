@@ -3,7 +3,9 @@ package com.cherry.lib.doc.util
 import android.content.Context
 import android.net.Uri
 import android.os.Environment
+import com.cherry.lib.doc.bean.FileType
 import java.io.*
+import java.util.Locale
 
 /*
  * -----------------------------------------------------------------
@@ -17,6 +19,18 @@ import java.io.*
  */
 
 object FileUtils {
+    const val txtRe = "txt$"
+    const val pdfRe = "pdf$"
+    const val imageRe = "(?:jpg|gif|png|jpeg|webp)$"
+
+    const val docRe = "doc$"
+    const val docxRe = "docx$"
+
+    const val xlsRe = "xls$"
+    const val xlsxRe = "xlsx$"
+
+    const val pptRe = "ppt$"
+    const val pptxRe = "pptx$"
 
     @Throws(IOException::class)
     fun fileFromUri(context: Context, fileUri: String): File {
@@ -68,5 +82,21 @@ object FileUtils {
         }
         val outFile1 = File(dirPath, "/$fileName.pdf")
         copy(context.assets.open(assetName), outFile1)
+    }
+
+    fun getFileTypeForUrl(url: String?): Int {
+        val str = url?.lowercase(Locale.getDefault()) ?: ""
+        return when {
+            txtRe.toRegex().containsMatchIn(str) -> FileType.TXT
+            pdfRe.toRegex().containsMatchIn(str) -> FileType.PDF
+            imageRe.toRegex().containsMatchIn(str) -> FileType.IMAGE
+            docRe.toRegex().containsMatchIn(str) -> FileType.DOC
+            docxRe.toRegex().containsMatchIn(str) -> FileType.DOCX
+            xlsRe.toRegex().containsMatchIn(str) -> FileType.XLS
+            xlsxRe.toRegex().containsMatchIn(str) -> FileType.XLSX
+            pptRe.toRegex().containsMatchIn(str) -> FileType.PPT
+            pptxRe.toRegex().containsMatchIn(str) -> FileType.PPTX
+            else -> FileType.NOT_SUPPORT
+        }
     }
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+	<style name="title_background_drawable_vertical">
+		<item name="android:background">@android:color/background_light</item>
+	</style>
+
+	<style name="title_background_drawable_horizontal">
+		<item name="android:background">@android:color/background_light</item>
+	</style>
+
+	<style name="layoutStyleSecond">
+		<item name="android:backgroundTint">@color/backgroundColor</item>
+	</style>
+
+	<style name="PauseDialog" parent="@android:style/Theme.Dialog">
+		<item name="android:windowAnimationStyle">@style/PauseDialogAnimation</item>
+	</style>
+
+	<style name="PauseDialogAnimation">
+		<item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+		<item name="android:windowExitAnimation">@android:anim/fade_out</item>
+	</style>
+
+
+	<style name="layoutStyle">
+		<item name="android:backgroundTint">@color/white</item>
+	</style>
+
+	<style name="CustomBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+		<item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+	</style>
+	<style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+		<item name="android:background">@android:color/transparent</item>
+	</style>
+
+
+	<style name="title_background_vertical" parent="Theme.MaterialComponents.DayNight">
+		<item name="android:windowTitleBackgroundStyle">@style/title_background_drawable_vertical</item>
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+		<item name="height">15dp</item>
+		<item name="android:splitMotionEvents">true</item>
+		<item name="android:windowEnableSplitTouch">true</item>
+	</style>
+
+	<style name="title_background_horizontal" parent="Theme.MaterialComponents.DayNight">
+		<item name="android:windowTitleBackgroundStyle">@style/title_background_drawable_horizontal</item>
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+		<item name="height">15dp</item>
+		<item name="statusBarBackground">@android:color/background_light</item>
+	</style>
+
+	<style name="AdAttribution">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_gravity">left</item>
+		<item name="android:textColor">#FFFFFF</item>
+		<item name="android:textSize">12sp</item>
+		<item name="android:text">@string/ad_attribution</item>
+		<item name="android:background">@color/colorPrimary</item>
+		<item name="android:width">15dp</item>
+		<item name="android:height">15dp</item>
+	</style>
+
+</resources>

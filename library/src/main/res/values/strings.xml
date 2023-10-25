@@ -3,4 +3,97 @@
     <string name="pdfView_appName">Pdf View</string>
     <string name="content_des">PDF PAGE</string>
     <string name="pdfView_page_no">%1$d/%2$d</string>
+
+    <string name="sys_name">""</string>
+    <string name="sys_button_ok">OK</string>
+    <string name="sys_button_cancel">Cancel</string>
+    <string name="sys_button_memory_card">MemoryCard</string>
+    <string name="sys_button_search">Search</string>
+    <string name="sys_button_recently_files">Recently Files</string>
+    <string name="sys_button_mark_files">Marked Files</string>
+    <string name="sys_button_local_storage">Local Storage</string>
+    <string name="sys_menu_settings">Settings</string>
+    <string name="sys_menu_account">Account</string>
+    <string name="sys_menu_register">Register</string>
+    <string name="sys_menu_update">Update</string>
+    <string name="sys_menu_help">Help</string>
+    <string name="sys_menu_about">About</string>
+    <string name="sys_url_wxiwei">https://my.oschina.net/wxiwei</string>
+    <string name="sys_url_internet_search">http://www.baidu.com</string>
+    <string name="sys_search_hint">Search for files</string>
+    <string name="sys_no_match">No matches.</string>
+    <string name="sys_share_title">Sending mail…</string>
+    <string name="sys_progress_message_loading">Loading, please wait…</string>
+
+    <!--      file list         -->
+    <string name="file_toolsbar_create_folder">Create folder</string>
+    <string name="file_toolsbar_rename">Rename</string>
+    <string name="file_toolsbar_copy">Copy</string>
+    <string name="file_toolsbar_cut">Cut</string>
+    <string name="file_toolsbar_paste">Paste</string>
+    <string name="file_toolsbar_delete">Delete</string>
+    <string name="file_toolsbar_share">Share</string>
+    <string name="file_toolsbar_sort">Sort</string>
+    <string name="file_toolsbar_print">Printer</string>
+    <string name="file_toolsbar_mark_star">Mark</string>
+    <string name="file_toolsbar_unmark_star">UnMark</string>
+    <string name="file_message_empty_directory">Empty Folder</string>
+
+    <!--      application         -->
+    <string name="app_toolsbar_hyperlink">Goto</string>
+    <string name="app_toolsbar_find">Find</string>
+    <string name="app_toolsbar_share">Share</string>
+    <string name="app_toolsbar_internet_search">Internet Search</string>
+    <string name="app_toolsbar_read">Read</string>
+    <string name="app_toolsbar_approve">Approve</string>
+    <string name="app_toolsbar_generated_picture">Generated Picture</string>
+    <string name="app_toolsbar_draw">Draw Mode</string>
+    <string name="app_toolsbar_back">Back</string>
+    <string name="app_toolsbar_pen">UnDraw</string>
+    <string name="app_toolsbar_pen_check">Draw</string>
+    <string name="app_toolsbar_eraser">UnErase</string>
+    <string name="app_toolsbar_eraser_check">Erase</string>
+    <string name="app_toolsbar_color">Pen Settings</string>
+    <string name="app_searchbar_backward">Find Backward</string>
+    <string name="app_searchbar_forward">Find Forward</string>
+    <string name="app_searchbar_find">Find</string>
+    <string name="app_searchbar_failed">iOffice Reader cannot find the data you are searching for</string>
+    <string name="app_searchbar_reachedBegin">iOffice Reader has reached the beginning of the document</string>
+    <string name="app_searchbar_reachedEnd">iOffice Reader has reached the end of the document</string>
+
+    <!--      word         -->
+    <string name="wp_toolsbar_switch_view">Switch View</string>
+    <string name="wp_toolsbar_print_mode">Print Mode</string>
+    <string name="wp_toolsbar_select_text">Select Text</string>
+
+    <!--      excel         -->
+    <string name="ss_toolsbar_sheet_switch">Sheet Switch</string>
+
+    <!--      ppt         -->
+    <string name="pg_toolsbar_note">Note</string>
+    <string name="pg_slideshow">SlideShow</string>
+    <string name="pg_slideshow_pageup">Page Up</string>
+    <string name="pg_slideshow_pagedown">Page Down</string>
+
+    <!--     对话框         -->
+    <string name="dialog_encoding_title">Text Encoding</string>
+    <string name="dialog_folder_name">Folder Name</string>
+    <string name="dialog_create_folder_error">Failed to create folder</string>
+    <string name="dialog_file_name">File Name</string>
+    <string name="dialog_file_rename_error">Failed to rename file</string>
+    <string name="dialog_name_error">%s already exists.</string>
+    <string name="dialog_delete_file">Are you sure you want to delete the selected item(s)?</string>
+    <string name="dialog_move_file_error">You can not move or copy a folder into itself.</string>
+    <string name="dialog_overwrite_file">Do you want to overwrite it?</string>
+    <string name="dialog_error_title">Error</string>
+    <string name="dialog_descending">Descending</string>
+    <string name="dialog_ascending">Ascending</string>
+    <string name="dialog_insufficient_memory">Unable to complete operation due to insufficient memory</string>
+    <string name="dialog_system_crash_error">System crash, terminate running</string>
+    <string name="dialog_format_error">File format error</string>
+    <string name="dialog_old_document">The document is too old - Office 95 or older, which is not supported</string>
+    <string name="dialog_parse_error">File parsing error</string>
+    <string name="dialog_rtf_file">The document is really a RTF file, which is not supported</string>
+    <string name="ad_attribution">Ad</string>
+    <string name="image">image</string>
 </resources>

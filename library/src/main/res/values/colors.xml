@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primaryColor">#6db6ff</color>
+    <color name="colorPrimary">#6db6ff</color>
+    <color name="purple_200">@color/colorPrimary</color>
+    <color name="purple_500">@color/colorPrimary</color>
+    <color name="purple_700">#b0b3b9</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="bottom_color">#01a5b8</color>
+    <color name="background">#b0b3b9</color>
+    <color name="grey">#F3F3F3</color>
+    <color name="grey_dark">#CDCDCD</color>
+    <color name="purple">@color/colorPrimary</color>
+    <color name="thumbTint">#8c8c8c</color>
+    <color name="blue">#2190EA</color>
+    <color name="red">#FF6066</color>
+    <color name="secondaryColor">#d8f0f7</color>
+    <color name="red_">#FF637B</color>
+    <color name="green">#088877</color>
+    <color name="yellow">#D6A644</color>
+    <color name="orange">#FB8854</color>
+    <color name="card_text_color">#15A18E</color>
+
+    <color name="backgroundColor">#FAFAFE</color>
+
+    <!-- VIDEO TRIMMER -->
+    <color name="background_video_color">#2f3031</color>
+    <color name="background_progress_color">#6C6D6D</color>
+    <color name="progress_color">@color/primaryColor</color>
+    <color name="line_color">#ff5676</color>
+    <color name="shadow_color">#FF000000</color>
+    <color name="line_button">#565758</color>
+    <color name="black_translucent">#50000000</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="startRed">#FF3232</color>
+    <color name="endRed">#FF5B39</color>
+    <color name="shimerColor">#d8f0f7</color>
+
+    <color name="listItemColorPdf">#f2d6da</color>
+    <color name="listItemColorDoc">#d3e0f2</color>
+    <color name="listItemColorExcel">#d7e4dc</color>
+    <color name="listItemColorPPT">#f4e1d5</color>
+    <color name="listItemColorAny">#D8F0F7</color>
+
+</resources>

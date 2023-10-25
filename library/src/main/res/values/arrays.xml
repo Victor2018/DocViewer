@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<!-- Used in select encoding dialog -->
+    <string-array name="encoding_items">
+        <item>GBK</item>
+        <item>GB2312</item>
+        <item>BIG5</item>
+        <item>Unicode</item>
+        <item>UTF-8</item>
+        <item>UTF-16</item>
+        <item>UTF-16LE</item>
+        <item>UTF-16BE</item>
+        <item>UTF-7</item>
+        <item>UTF-32</item>
+        <item>UTF-32LE</item>
+        <item>UTF-32BE</item>
+        <item>US-ASCII</item>
+        <item>ISO-8859-1</item>
+        <item>ISO-8859-2</item>
+        <item>ISO-8859-3</item>
+        <item>ISO-8859-4</item>
+        <item>ISO-8859-5</item>
+        <item>ISO-8859-6</item>
+        <item>ISO-8859-7</item>
+        <item>ISO-8859-8</item>
+        <item>ISO-8859-9</item>
+        <item>ISO-8859-10</item>
+        <item>ISO-8859-11</item>
+        <item>ISO-8859-13</item>
+        <item>ISO-8859-14</item>
+        <item>ISO-8859-15</item>
+        <item>ISO-8859-16</item>
+        <item>ISO-2022-JP</item>
+        <item>ISO-2022-KR</item>
+        <item>ISO-2022-CN</item>
+        <item>ISO-2022-CN-EXT</item>
+        <item>UCS-2</item>
+        <item>UCS-4</item>
+        <item>Windows-1250</item>
+        <item>Windows-1251</item>
+        <item>Windows-1252</item>
+        <item>Windows-1253</item>
+        <item>Windows-1254</item>
+        <item>Windows-1255</item>
+        <item>Windows-1256</item>
+        <item>Windows-1257</item>
+        <item>Windows-1258</item>
+        <item>KOI8-R</item>
+        <item>Shift_JIS</item>
+        <item>CP864</item>
+        <item>EUC-JP</item>
+        <item>EUC-KR</item>
+        <item>BOCU-1</item>
+        <item>CESU-8</item>
+        <item>SCSU</item>
+        <item>HZ-GB-2312</item>
+        <item>TIS-620</item>
+        <item>macintosh</item>
+        <item>x-UTF-16LE-BOM</item>
+        <item>x-iscii-as</item>
+        <item>x-iscii-be</item>
+        <item>x-iscii-de</item>
+        <item>x-iscii-gu</item>
+        <item>x-iscii-ka</item>
+        <item>x-iscii-ma</item>
+        <item>x-iscii-or</item>
+        <item>x-iscii-pa</item>
+        <item>x-iscii-ta</item>
+        <item>x-iscii-te</item>
+        <item>x-mac-cyrillic</item>
+    </string-array>
+    
+    <!-- Used in file sort dialog -->
+    <string-array name="file_sort_items">
+        <item>Type</item>
+        <item>Date</item>
+        <item>Size</item>
+        <item>Name</item>
+	</string-array>
+	
+	<!-- Used in setting dialog -->
+    <string-array name="setting_items">
+        <item>Maximum count of recently files(1~20)</item>
+	</string-array>
+	
+</resources>
