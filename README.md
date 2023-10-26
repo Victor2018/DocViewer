@@ -2,7 +2,6 @@
 android 文档浏览器支持word excel ppt pdf txt image 文件本地及在线浏览
 
 ### 实现效果
-![image](https://s2.loli.net/2023/07/27/UVK5rJmWNXFE7IY.png)
 <img src="https://github.com/Victor2018/DocViewer/blob/main/SrceenShot/rendering.gif" width = "275" height = "569"  /><br>
 
 # Screenshot：
