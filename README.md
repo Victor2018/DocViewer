@@ -1,6 +1,20 @@
 # DocViewer
 android 文档浏览器支持word excel ppt pdf txt image 文件本地及在线浏览
 
+### 实现效果
+![image](https://s2.loli.net/2023/07/27/UVK5rJmWNXFE7IY.png)
+<img src="https://github.com/Victor2018/DocViewer/blob/main/SrceenShot/rendering.gif" width = "275" height = "569"  /><br>
+
+# Screenshot：
+![image](https://github.com/Victor2018/DocViewer/raw/master/SrceenShot/st_1.png)
+![image](https://github.com/Victor2018/DocViewer/raw/master/SrceenShot/st_2.png)
+![image](https://github.com/Victor2018/DocViewer/raw/master/SrceenShot/st_3.png)
+![image](https://github.com/Victor2018/DocViewer/raw/master/SrceenShot/st_4.png)
+![image](https://github.com/Victor2018/DocViewer/raw/master/SrceenShot/st_5.png)
+![image](https://github.com/Victor2018/DocViewer/raw/master/SrceenShot/st_6.png)
+![image](https://github.com/Victor2018/DocViewer/raw/master/SrceenShot/st_7.png)
+![image](https://github.com/Victor2018/DocViewer/raw/master/SrceenShot/st_8.png)
+
 ### 使用方法
 - Step 1. Add the JitPack repository to your build or setting file
 

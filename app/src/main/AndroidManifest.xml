@@ -18,7 +18,7 @@
         android:theme="@style/Theme.DocViewer"
         tools:targetApi="31">
         <activity
-            android:name=".DocViewerActivity"
+            android:name="com.cherry.lib.doc.DocViewerActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

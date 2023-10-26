@@ -58,7 +58,6 @@ public class WPControl extends AbstractControl
     
     /**
      * 
-     * @param appControl
      * @param doc
      * @param filePath
      */

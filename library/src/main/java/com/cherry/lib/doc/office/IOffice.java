@@ -10,13 +10,10 @@ import android.view.View;
 import com.cherry.lib.doc.office.common.IOfficeToPicture;
 import com.cherry.lib.doc.office.constant.EventConstant;
 import com.cherry.lib.doc.office.constant.wp.WPViewConstant;
-import com.cherry.lib.doc.office.pg.control.Presentation;
 import com.cherry.lib.doc.office.res.ResKit;
 import com.cherry.lib.doc.office.system.IMainFrame;
 import com.cherry.lib.doc.office.system.MainControl;
-import com.cherry.lib.doc.office.system.beans.pagelist.APageListView;
 import com.cherry.lib.doc.office.system.beans.pagelist.IPageListViewListener;
-import com.cherry.lib.doc.office.wp.control.Word;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -65,25 +62,21 @@ public abstract class IOffice implements IMainFrame {
 
             @Override
             public void setModeType(byte modeType) {
-                // TODO Auto-generated method stub
 
             }
 
             @Override
             public byte getModeType() {
-                // TODO Auto-generated method stub
                 return VIEW_CHANGE_END;
             }
 
             @Override
             public boolean isZoom() {
-                // TODO Auto-generated method stub
                 return false;
             }
 
             @Override
             public void dispose() {
-                // TODO Auto-generated method stub
 
             }
         });
@@ -116,8 +109,7 @@ public abstract class IOffice implements IMainFrame {
             fOut.flush();
             fOut.close();
         } catch (IOException e) {
-        } finally {
-            //bitmap.recycle();
+            e.printStackTrace();
         }
     }
 

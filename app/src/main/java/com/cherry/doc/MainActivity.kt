@@ -16,6 +16,7 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cherry.doc.util.DocUtil
+import com.cherry.lib.doc.DocViewerActivity
 import com.cherry.lib.doc.bean.DocSourceType
 import com.cherry.lib.doc.bean.FileType
 import com.cherry.lib.doc.util.FileUtils
@@ -28,7 +29,8 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity(),OnClickListener,OnItemClickListener {
 
     private val REQUEST_CODE_LOAD = 367
-    var url = "https://oss.hokkj.cn/hok_admin/data/7d8dd243b8074f439157958623247f16.pdf"
+    var url = "http://cdn07.foxitsoftware.cn/pub/foxit/manual/phantom/en_us/API%20Reference%20for%20Application%20Communication.pdf"
+//    var url = "https://xdts.xdocin.com/demo/resume3.docx"
 //    var url = "http://172.16.28.95:8080/data/test2.ppt"
 
     var mDocAdapter: DocAdapter? = null

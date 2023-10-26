@@ -29,7 +29,6 @@ import com.cherry.lib.doc.office.constant.EventConstant;
 import com.cherry.lib.doc.office.constant.MainConstant;
 import com.cherry.lib.doc.office.fc.doc.TXTKit;
 import com.cherry.lib.doc.office.fc.pdf.PDFLib;
-import com.cherry.lib.doc.office.pdf.PDFControl;
 import com.cherry.lib.doc.office.pg.control.PGControl;
 import com.cherry.lib.doc.office.pg.model.PGModel;
 import com.cherry.lib.doc.office.simpletext.model.IDocument;
@@ -193,11 +192,6 @@ public class MainControl extends AbstractControl {
         {
             appControl = new PGControl(this, (PGModel)obj, filePath);
         }
-        // PDF
-        else if (applicationType == MainConstant.APPLICATION_TYPE_PDF)
-        {
-            appControl = new PDFControl(this, (PDFLib)obj, filePath);
-        }       
 
         View view = appControl.getView();
         if(view != null)

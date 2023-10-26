@@ -47,6 +47,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1"
     implementation "androidx.lifecycle:lifecycle-common:2.4.1"
 
+    implementation("io.coil-kt:coil:1.4.0")
+
 }
 
 afterEvaluate {
