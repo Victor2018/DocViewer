@@ -1,5 +1,5 @@
 # DocViewer
-android 文档浏览器支持word excel ppt pdf txt image 文件本地及在线浏览
+android DocViewer support view word excel ppt pdf txt image in sdcard & uri & assets & url
 
 ### Rendering
 <img src="https://github.com/Victor2018/DocViewer/blob/main/SrceenShot/rendering.gif" width = "275" height = "569"  /><br>
@@ -58,7 +58,7 @@ https://github.com/vantinh689/AllDocumentViewerNew
 
 ## License
 
-Copyright (c) 2017 Victor
+Copyright (c) 2023 Victor
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
