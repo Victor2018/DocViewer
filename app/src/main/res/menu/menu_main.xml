@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.cherry.myapplication.MainActivity">
+    <item
+        android:id="@+id/action_assets"
+        android:orderInCategory="100"
+        android:title="浏览assets文档"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_online"
+        android:orderInCategory="100"
+        android:title="浏览在线文档"
+        app:showAsAction="never" />
+</menu>

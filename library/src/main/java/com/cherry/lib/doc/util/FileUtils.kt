@@ -3,8 +3,10 @@ package com.cherry.lib.doc.util
 import android.content.Context
 import android.net.Uri
 import android.os.Environment
+import com.cherry.lib.doc.bean.DocSourceType
 import com.cherry.lib.doc.bean.FileType
 import java.io.*
+import java.net.URL
 import java.util.Locale
 
 /*

@@ -7,37 +7,81 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.Settings
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.View.OnClickListener
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.cherry.doc.util.DocUtil
 import com.cherry.lib.doc.bean.DocSourceType
 import com.cherry.lib.doc.bean.FileType
 import com.cherry.lib.doc.util.FileUtils
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity(),OnClickListener {
+class MainActivity : AppCompatActivity(),OnClickListener,OnItemClickListener {
 
     private val REQUEST_CODE_LOAD = 367
     var url = "https://oss.hokkj.cn/hok_admin/data/7d8dd243b8074f439157958623247f16.pdf"
 //    var url = "http://172.16.28.95:8080/data/test2.ppt"
+
+    var mDocAdapter: DocAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         initView()
+        initData()
     }
 
-    fun initView() {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
 
-        mBtnSelectFile.setOnClickListener(this)
-        mBtnOnline.setOnClickListener(this)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        return when (item.itemId) {
+            R.id.action_assets -> {
+                openDoc("test.docx",DocSourceType.ASSETS)
+                return true
+            }
+            R.id.action_online -> {
+                openDoc(url,DocSourceType.URL)
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+    fun initView() {
+        setSupportActionBar(toolbar)
+
+        mDocAdapter = DocAdapter(this,this)
+        mRvDoc.adapter = mDocAdapter
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val isExternalStorageManager = Environment.isExternalStorageManager()
             if (!isExternalStorageManager) {
                 get11Permission()
+            }
+        }
+    }
+
+    fun initData() {
+        CoroutineScope(Dispatchers.IO).launch {
+            var datas = DocUtil.getDocFile(this@MainActivity)
+            CoroutineScope(Dispatchers.Main).launch {
+                mDocAdapter?.showDatas(datas)
             }
         }
     }
@@ -66,14 +110,11 @@ class MainActivity : AppCompatActivity(),OnClickListener {
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.mBtnSelectFile -> {
-                selectFileAction()
-            }
-            R.id.mBtnOnline -> {
-                if (checkSupport(url)) {
-                    openDoc(url,DocSourceType.URL)
-                }
-            }
+//            R.id.mBtnOnline -> {
+//                if (checkSupport(url)) {
+//                    openDoc(url,DocSourceType.URL)
+//                }
+//            }
         }
     }
 
@@ -113,6 +154,20 @@ class MainActivity : AppCompatActivity(),OnClickListener {
                 DocViewerActivity.launchDocViewer(this,docSourceType,path)
             }
         }
+    }
+
+    override fun onItemClick(p0: AdapterView<*>?, v: View?, position: Int, id: Long) {
+        when (v?.id) {
+            R.id.mCvDocCell -> {
+                val groupInfo = mDocAdapter?.datas?.get(id.toInt())
+                val docInfo = groupInfo?.docList?.get(position)
+                var path = docInfo?.path ?: ""
+                if (checkSupport(path)) {
+                    openDoc(path,DocSourceType.PATH)
+                }
+            }
+        }
+
     }
 
 }

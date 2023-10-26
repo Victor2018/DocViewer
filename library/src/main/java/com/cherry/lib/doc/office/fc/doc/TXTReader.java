@@ -6,11 +6,16 @@
  */
 package com.cherry.lib.doc.office.fc.doc;
 
+import android.net.Uri;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 
+import com.cherry.lib.doc.bean.DocSourceType;
 import com.cherry.lib.doc.office.constant.MainConstant;
 import com.cherry.lib.doc.office.constant.wp.WPModelConstant;
 import com.cherry.lib.doc.office.simpletext.model.AttrManage;
@@ -49,10 +54,11 @@ public class TXTReader extends AbstractReader
      * 
      * @param filePath
      */
-    public TXTReader(IControl control, String filePath, String encoding)
+    public TXTReader(IControl control, String filePath,int docSourceType, String encoding)
     {
         this.control = control;
         this.filePath = filePath;
+        this.docSourceType = docSourceType;
         this.encoding = encoding;
     }
     
@@ -128,8 +134,26 @@ public class TXTReader extends AbstractReader
         AttrManage.instance().setPageMarginBottom(attr, 1440);//section.getMarginBottom());            
         secElem.setStartOffset(offset);
         
-        File file = new File(filePath);
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), encoding));
+
+        InputStream is = null;
+        switch (docSourceType) {
+            case DocSourceType.URL:
+                URL url = new URL(filePath);
+                is = url.openStream();
+                break;
+            case DocSourceType.URI:
+                Uri uri = Uri.parse(filePath);
+                is = control.getActivity().getContentResolver().openInputStream(uri);
+                break;
+            case DocSourceType.PATH:
+                is = new FileInputStream(filePath);
+                break;
+            case DocSourceType.ASSETS:
+                is = control.getActivity().getAssets().open(filePath);
+                break;
+        }
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(is, encoding));
         String line;
         while ((line = br.readLine()) != null || offset == 0)
         {
@@ -232,6 +256,7 @@ public class TXTReader extends AbstractReader
     private long offset;
     //
     private String filePath;
+    private int docSourceType;
     //
     private String encoding;
     //

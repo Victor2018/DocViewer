@@ -43,7 +43,6 @@ public class PDFFind implements IFind
 
     /**
      * 
-     * @param word
      */
     public PDFFind(PDFView pdfView)
     {
@@ -307,7 +306,7 @@ public class PDFFind implements IFind
                 }
             }
         };  
-        safeSearchTask.safeExecute(null);
+        safeSearchTask.safeExecute();
     }
     
     

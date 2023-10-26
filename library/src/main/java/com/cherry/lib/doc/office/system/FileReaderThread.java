@@ -41,16 +41,16 @@ public class FileReaderThread extends Thread
    
     /**
      * 
-     * @param activity
      * @param handler
      * @param filePath
      * @param encoding
      */
-    public FileReaderThread(IControl control, Handler handler, String filePath, String encoding)
+    public FileReaderThread(IControl control, Handler handler, String filePath,int docSourceType, String encoding)
     {
         this.control = control;
         this.handler = handler;
         this.filePath = filePath;
+        this.docSourceType = docSourceType;
         this.encoding = encoding;
     }
     
@@ -75,25 +75,25 @@ public class FileReaderThread extends Thread
             if (fileName.endsWith(MainConstant.FILE_TYPE_DOC)
                 || fileName.endsWith(MainConstant.FILE_TYPE_DOT))
             {
-                reader = new DOCReader(control, filePath);
+                reader = new DOCReader(control, filePath,docSourceType);
             }
             // docx
             else if (fileName.endsWith(MainConstant.FILE_TYPE_DOCX)
                      || fileName.endsWith(MainConstant.FILE_TYPE_DOTX)
                      || fileName.endsWith(MainConstant.FILE_TYPE_DOTM))
             {
-                reader = new DOCXReader(control, filePath);;
+                reader = new DOCXReader(control, filePath,docSourceType);;
             }
             //
             else if (fileName.endsWith(MainConstant.FILE_TYPE_TXT))
             {
-                reader = new TXTReader(control, filePath, encoding);
+                reader = new TXTReader(control, filePath, docSourceType,encoding);
             }
             // xls
             else if (fileName.endsWith(MainConstant.FILE_TYPE_XLS)
                      || fileName.endsWith(MainConstant.FILE_TYPE_XLT))
             {
-                reader = new XLSReader(control, filePath);
+                reader = new XLSReader(control, filePath,docSourceType);
             }
             // xlsx
             else if (fileName.endsWith(MainConstant.FILE_TYPE_XLSX)
@@ -101,13 +101,13 @@ public class FileReaderThread extends Thread
                      || fileName.endsWith(MainConstant.FILE_TYPE_XLTM)
                      || fileName.endsWith(MainConstant.FILE_TYPE_XLSM))
             {
-                reader = new XLSXReader(control, filePath);
+                reader = new XLSXReader(control, filePath,docSourceType);
             }
             // ppt
             else if (fileName.endsWith(MainConstant.FILE_TYPE_PPT)
                      || fileName.endsWith(MainConstant.FILE_TYPE_POT))
             {
-                reader = new PPTReader(control, filePath);
+                reader = new PPTReader(control, filePath,docSourceType);
             }
             // pptx
             else if (fileName.endsWith(MainConstant.FILE_TYPE_PPTX)
@@ -115,7 +115,7 @@ public class FileReaderThread extends Thread
                      || fileName.endsWith(MainConstant.FILE_TYPE_POTX)
                      || fileName.endsWith(MainConstant.FILE_TYPE_POTM))
             {
-                reader = new PPTXReader(control, filePath);
+                reader = new PPTXReader(control, filePath,docSourceType);
             }
             // PDF document
             else if (fileName.endsWith(MainConstant.FILE_TYPE_PDF))
@@ -125,7 +125,7 @@ public class FileReaderThread extends Thread
             // other
             else
             {
-                reader = new TXTReader(control, filePath, encoding);
+                reader = new TXTReader(control, filePath, docSourceType,encoding);
             }
             // 把IReader实例传出
             Message mesReader = new Message();
@@ -168,6 +168,7 @@ public class FileReaderThread extends Thread
     private String encoding;
     //
     private String filePath;
+    private int docSourceType;
     //
     private Handler handler;
     //

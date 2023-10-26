@@ -55,7 +55,7 @@ public class TXTKit
      * @param handler
      * @param filePath
      */
-    public void readText(final IControl control, final Handler handler, final String filePath)
+    public void readText(final IControl control, final Handler handler, final String filePath,final int docSourceType)
     {              
         try
         {
@@ -82,7 +82,7 @@ public class TXTKit
             String code = control.isAutoTest() ? "GBK" : CharsetDetector.detect(filePath);
             if (code != null)
             {
-                new FileReaderThread(control, handler, filePath, code).start();
+                new FileReaderThread(control, handler, filePath,docSourceType, code).start();
                 return;
             }
             
@@ -113,7 +113,7 @@ public class TXTKit
                         }
                         else
                         {
-                            new FileReaderThread(control, handler, filePath, model.get(0).toString()).start();
+                            new FileReaderThread(control, handler, filePath,docSourceType, model.get(0).toString()).start();
                         }
                     }
                     
@@ -143,12 +143,12 @@ public class TXTKit
                     }
                     else
                     {
-                        new FileReaderThread(control, handler, filePath, "UTF-8").start();
+                        new FileReaderThread(control, handler, filePath,docSourceType, "UTF-8").start();
                     }
                 }
                 else
                 {
-                    new FileReaderThread(control, handler, filePath, encode).start();
+                    new FileReaderThread(control, handler, filePath,docSourceType, encode).start();
                 }
                 return;
             }
@@ -164,8 +164,8 @@ public class TXTKit
     /**
      * 
      */
-    public void reopenFile(final IControl control, final Handler handler, final String filePath, String encode)
+    public void reopenFile(final IControl control, final Handler handler, final String filePath,final int docSourceType, String encode)
     {
-        new FileReaderThread(control, handler, filePath, encode).start();
+        new FileReaderThread(control, handler, filePath,docSourceType, encode).start();
     }
 }

@@ -18,6 +18,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.cherry.lib.doc.bean.DocSourceType;
 import com.cherry.lib.doc.office.common.bg.BackgroundAndFill;
 import com.cherry.lib.doc.office.common.shape.IShape;
 import com.cherry.lib.doc.office.constant.EventConstant;
@@ -60,7 +61,6 @@ import com.cherry.lib.doc.office.system.AbortReaderError;
 import com.cherry.lib.doc.office.system.AbstractReader;
 import com.cherry.lib.doc.office.system.BackReaderThread;
 import com.cherry.lib.doc.office.system.IControl;
-import com.cherry.lib.doc.office.system.SocketClient;
 import com.cherry.lib.doc.office.system.StopReaderError;
 
 /**
@@ -338,11 +338,12 @@ public class PPTXReader extends AbstractReader
      * 
      * @param filePath
      */
-    public PPTXReader(IControl control, String filePath)
+    public PPTXReader(IControl control, String filePath,int docSourceType)
     {
         this.control = control;
         this.filePath = filePath;
-    }   
+        this.docSourceType = docSourceType;
+    }
     
     /**
      * 
@@ -366,18 +367,22 @@ public class PPTXReader extends AbstractReader
      */
     public void initPackagePart()  throws Exception
     {
-        InputStream is;
-        if (filePath.startsWith("http")) {
-            URL url = new URL(filePath);
-            is = url.openStream();
-        } else {
-            File file = new File(filePath);
-            if (file.exists()) {
-                is = new FileInputStream(filePath);
-            } else {
+        InputStream is = null;
+        switch (docSourceType) {
+            case DocSourceType.URL:
+                URL url = new URL(filePath);
+                is = url.openStream();
+                break;
+            case DocSourceType.URI:
                 Uri uri = Uri.parse(filePath);
                 is = control.getActivity().getContentResolver().openInputStream(uri);
-            }
+                break;
+            case DocSourceType.PATH:
+                is = new FileInputStream(filePath);
+                break;
+            case DocSourceType.ASSETS:
+                is = control.getActivity().getAssets().open(filePath);
+                break;
         }
         zipPackage = new ZipPackage(is);
 
@@ -1208,6 +1213,7 @@ public class PPTXReader extends AbstractReader
     private PGModel pgModel;
     //
     private String filePath;
+    private int docSourceType;
     //
     private ZipPackage zipPackage;
     //

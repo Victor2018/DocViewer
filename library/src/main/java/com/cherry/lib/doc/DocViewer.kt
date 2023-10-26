@@ -25,7 +25,7 @@ object DocViewer {
         PdfViewer.showPdf(docSourceType, pdfView, url)
     }
 
-    fun showDoc(activity: Activity, mDocContainer: ViewGroup?, url: String?) {
+    fun showDoc(activity: Activity, mDocContainer: ViewGroup?, url: String?,docSourceType: Int) {
         var iOffice: IOffice = object: IOffice() {
             override fun getActivity(): Activity {
                 return activity
@@ -56,6 +56,6 @@ object DocViewer {
             }
 
         }
-        iOffice.openFile(url)
+        iOffice.openFile(url,docSourceType)
     }
 }

@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
+import com.cherry.lib.doc.bean.DocSourceType;
 import com.cherry.lib.doc.office.fc.hssf.formula.eval.ErrorEval;
 import com.cherry.lib.doc.office.fc.hssf.model.InternalSheet;
 import com.cherry.lib.doc.office.fc.hssf.model.InternalWorkbook;
@@ -57,10 +58,11 @@ public class XLSReader extends SSReader
      * 
      * @param filePath
      */
-    public XLSReader(IControl control, String filePath)
+    public XLSReader(IControl control, String filePath,int docSourceType)
     {
         this.control = control;
         this.filePath = filePath;
+        this.docSourceType = docSourceType;
     }
     
     /**
@@ -68,19 +70,22 @@ public class XLSReader extends SSReader
      */
     public Object getModel() throws Exception
     {
-
-        InputStream is;
-        if (filePath.startsWith("http")) {
-            URL url = new URL(filePath);
-            is = url.openStream();
-        } else {
-            File file = new File(filePath);
-            if (file.exists()) {
-                is = new FileInputStream(filePath);
-            } else {
+        InputStream is = null;
+        switch (docSourceType) {
+            case DocSourceType.URL:
+                URL url = new URL(filePath);
+                is = url.openStream();
+                break;
+            case DocSourceType.URI:
                 Uri uri = Uri.parse(filePath);
                 is = control.getActivity().getContentResolver().openInputStream(uri);
-            }
+                break;
+            case DocSourceType.PATH:
+                is = new FileInputStream(filePath);
+                break;
+            case DocSourceType.ASSETS:
+                is = control.getActivity().getAssets().open(filePath);
+                break;
         }
         Workbook book = new AWorkbook(is, this);
 
@@ -229,4 +234,5 @@ public class XLSReader extends SSReader
     
     // 文件路径
     private String filePath;
+    private int docSourceType;
 }

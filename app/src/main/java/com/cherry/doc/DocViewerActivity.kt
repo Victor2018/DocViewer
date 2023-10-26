@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import coil.load
 import com.cherry.doc.util.Constant
 import com.cherry.doc.util.MainHandler
 import com.cherry.lib.doc.DocViewer
@@ -52,8 +53,15 @@ class DocViewerActivity : AppCompatActivity() {
             FileType.PDF -> {
                 DocViewer.showPdf(docSourceType,mPdfView,docUrl)
             }
+            FileType.IMAGE -> {
+                if (docSourceType == DocSourceType.PATH) {
+                    mIvImage.load(File(docUrl))
+                } else {
+                    mIvImage.load(docUrl)
+                }
+            }
             else -> {
-                DocViewer.showDoc(this,mFlDocContainer,docUrl)
+                DocViewer.showDoc(this,mFlDocContainer,docUrl,docSourceType)
             }
         }
     }

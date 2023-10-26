@@ -17,6 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.cherry.lib.doc.bean.DocSourceType;
 import com.cherry.lib.doc.office.common.PaintKit;
 import com.cherry.lib.doc.office.common.autoshape.ExtendPath;
 import com.cherry.lib.doc.office.common.autoshape.pathbuilder.ArrowPathAndTail;
@@ -143,20 +144,19 @@ public class PPTReader extends AbstractReader
     
     /**
      * 
-     * @param path
      */
-    public PPTReader(IControl control, String filePath)
+    public PPTReader(IControl control, String filePath,int docSourceType)
     {
-        this(control, filePath, false);
+        this(control, filePath, docSourceType,false);
     }
     /**
      * 
-     * @param path
      */
-    public PPTReader(IControl control, String filePath, boolean isGetThumbnail)
+    public PPTReader(IControl control, String filePath,int docSourceType, boolean isGetThumbnail)
     {
         this.filePath = filePath;
         this.control = control;
+        this.docSourceType = docSourceType;
         this.isGetThumbnail = isGetThumbnail;
     }
     
@@ -169,18 +169,22 @@ public class PPTReader extends AbstractReader
         {
             return model;
         }
-        InputStream is;
-        if (filePath.startsWith("http")) {
-            URL url = new URL(filePath);
-            is = url.openStream();
-        } else {
-            File file = new File(filePath);
-            if (file.exists()) {
-                is = new FileInputStream(filePath);
-            } else {
+        InputStream is = null;
+        switch (docSourceType) {
+            case DocSourceType.URL:
+                URL url = new URL(filePath);
+                is = url.openStream();
+                break;
+            case DocSourceType.URI:
                 Uri uri = Uri.parse(filePath);
                 is = control.getActivity().getContentResolver().openInputStream(uri);
-            }
+                break;
+            case DocSourceType.PATH:
+                is = new FileInputStream(filePath);
+                break;
+            case DocSourceType.ASSETS:
+                is = control.getActivity().getAssets().open(filePath);
+                break;
         }
         poiSlideShow = new SlideShow(new HSLFSlideShow(control,is));
 
@@ -1727,7 +1731,6 @@ public class PPTReader extends AbstractReader
     
     /**
      * 
-     * @param pgdoc
      * @param ts
      */
     private void processTextShape(TextBox tb, TextShape ts, Rectangle rect, int slideType, int placeHolderID)
@@ -1977,7 +1980,6 @@ public class PPTReader extends AbstractReader
     
     /**
      * 
-     * @param pgdoc
      * @param ts
      * @param start
      * @param end
@@ -2176,13 +2178,6 @@ public class PPTReader extends AbstractReader
         secElem.appendParagraph(paraElem, WPModelConstant.MAIN);
     }
     
-    /**
-     * 
-     * @param pgdoc
-     * @param ts
-     * @param start
-     * @param end
-     */
     private void processWordArtParagraph(SectionElement secElem, String text, int width, int height, int fontColor)
     {
         ParagraphElement paraElem = new ParagraphElement();
@@ -2498,9 +2493,7 @@ public class PPTReader extends AbstractReader
     
     /**
      * 
-     * @param parent
      * @param shape
-     * @param spPr
      */
     public void processGrpRotation(Shape shape, IShape autoShape)
     {
@@ -2577,6 +2570,7 @@ public class PPTReader extends AbstractReader
     private int currentReaderIndex;
     //
     private String filePath;
+    private int docSourceType;
     //
     private PGModel model;
     //

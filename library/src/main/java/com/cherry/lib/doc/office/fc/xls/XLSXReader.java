@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Iterator;
 
+import com.cherry.lib.doc.bean.DocSourceType;
 import com.cherry.lib.doc.office.fc.dom4j.Element;
 import com.cherry.lib.doc.office.fc.dom4j.ElementHandler;
 import com.cherry.lib.doc.office.fc.dom4j.ElementPath;
@@ -57,10 +58,11 @@ public class XLSXReader extends SSReader
      * 
      * @param filePath
      */
-    public XLSXReader(IControl control, String filePath)
+    public XLSXReader(IControl control, String filePath,int docSourceType)
     {
         this.control = control;
         this.filePath = filePath;
+        this.docSourceType = docSourceType;
     }
     
     /**
@@ -70,18 +72,22 @@ public class XLSXReader extends SSReader
     {        
         book = new Workbook(false);
 
-        InputStream is;
-        if (filePath.startsWith("http")) {
-            URL url = new URL(filePath);
-            is = url.openStream();
-        } else {
-            File file = new File(filePath);
-            if (file.exists()) {
-                is = new FileInputStream(filePath);
-            } else {
+        InputStream is = null;
+        switch (docSourceType) {
+            case DocSourceType.URL:
+                URL url = new URL(filePath);
+                is = url.openStream();
+                break;
+            case DocSourceType.URI:
                 Uri uri = Uri.parse(filePath);
                 is = control.getActivity().getContentResolver().openInputStream(uri);
-            }
+                break;
+            case DocSourceType.PATH:
+                is = new FileInputStream(filePath);
+                break;
+            case DocSourceType.ASSETS:
+                is = control.getActivity().getAssets().open(filePath);
+                break;
         }
         zipPackage = new ZipPackage(is);
 
@@ -443,6 +449,7 @@ public class XLSXReader extends SSReader
     
     //
     private String filePath;
+    private int docSourceType;
     //
     private ZipPackage zipPackage;
     

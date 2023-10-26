@@ -299,7 +299,7 @@ public class MainControl extends AbstractControl {
     /**
      * 
      */
-    public boolean openFile(String filePath)
+    public boolean openFile(String filePath,int docSourceType)
     {
         this.filePath = filePath;
         String fileName = filePath.toLowerCase();
@@ -348,7 +348,7 @@ public class MainControl extends AbstractControl {
         if (fileName.endsWith(MainConstant.FILE_TYPE_TXT)
             || !isSupport)
         {
-            TXTKit.instance().readText(this, handler, filePath);
+            TXTKit.instance().readText(this, handler, filePath,docSourceType);
         }
         else
         {  
@@ -366,7 +366,7 @@ public class MainControl extends AbstractControl {
             }
             else*/
             {
-                new FileReaderThread(this, handler, filePath, null).start();
+                new FileReaderThread(this, handler, filePath,docSourceType, null).start();
             }
         }
         return true;
@@ -507,7 +507,7 @@ public class MainControl extends AbstractControl {
                 break;
                 
             case EventConstant.TXT_DIALOG_FINISH_ID:
-                TXTKit.instance().reopenFile(this, handler, filePath, (String)obj);
+                TXTKit.instance().reopenFile(this, handler, filePath,docSourceType, (String)obj);
                 break;
                 
             case EventConstant.TXT_REOPNE_ID:
@@ -516,7 +516,7 @@ public class MainControl extends AbstractControl {
                 {
                     this.filePath = strings[0];
                     applicationType = MainConstant.APPLICATION_TYPE_WP;
-                    TXTKit.instance().reopenFile(this, handler, filePath, strings[1]);
+                    TXTKit.instance().reopenFile(this, handler, filePath,docSourceType, strings[1]);
                 }
                 break;
                 
@@ -818,6 +818,7 @@ public class MainControl extends AbstractControl {
     private DialogInterface.OnKeyListener onKeyListener;
     //
     private Handler handler;
+    private int docSourceType;
     //
     private IControl appControl;
     //

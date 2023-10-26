@@ -9,6 +9,7 @@ package com.cherry.lib.doc.office.fc;
 import java.io.File;
 import java.io.FileInputStream;
 
+import com.cherry.lib.doc.bean.DocSourceType;
 import com.cherry.lib.doc.office.common.picture.PictureManage;
 import com.cherry.lib.doc.office.fc.fs.filesystem.CFBFileSystem;
 import com.cherry.lib.doc.office.fc.fs.filesystem.Property;
@@ -257,7 +258,7 @@ public class ReaderThumbnail
         try
         {
             //long t = System.currentTimeMillis();
-            PPTReader reader  =  new PPTReader(null, filePath, true);
+            PPTReader reader  =  new PPTReader(null, filePath, DocSourceType.PATH,true);
             PGModel model = (PGModel)reader.getModel();
             //long t1 = System.currentTimeMillis();
             //Log.e("read time ", String.valueOf(t1 - t));
@@ -281,7 +282,6 @@ public class ReaderThumbnail
     
     /**
      * 
-     * @param file
      * @return
      */
     public Bitmap getThumbnailForPPTX(String filePath) throws Exception

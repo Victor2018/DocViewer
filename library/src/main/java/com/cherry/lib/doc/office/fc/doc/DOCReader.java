@@ -17,6 +17,7 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.cherry.lib.doc.bean.DocSourceType;
 import com.cherry.lib.doc.office.common.PaintKit;
 import com.cherry.lib.doc.office.common.autoshape.ExtendPath;
 import com.cherry.lib.doc.office.common.autoshape.pathbuilder.ArrowPathAndTail;
@@ -127,10 +128,11 @@ import android.net.Uri;
  */
 public class DOCReader extends AbstractReader
 {
-    public DOCReader(IControl control, String filePath)
+    public DOCReader(IControl control, String filePath,int docSourceType)
     {
         this.control = control;
         this.filePath = filePath;
+        this.docSourceType = docSourceType;
         //controlForReader = control;
     }
 
@@ -153,18 +155,22 @@ public class DOCReader extends AbstractReader
      */
     private void processDoc() throws Exception
     {
-        InputStream is;
-        if (filePath.startsWith("http")) {
-            URL url = new URL(filePath);
-            is = url.openStream();
-        } else {
-            File file = new File(filePath);
-            if (file.exists()) {
-                is = new FileInputStream(filePath);
-            } else {
+        InputStream is = null;
+        switch (docSourceType) {
+            case DocSourceType.URL:
+                URL url = new URL(filePath);
+                is = url.openStream();
+                break;
+            case DocSourceType.URI:
                 Uri uri = Uri.parse(filePath);
                 is = control.getActivity().getContentResolver().openInputStream(uri);
-            }
+                break;
+            case DocSourceType.PATH:
+                is = new FileInputStream(filePath);
+                break;
+            case DocSourceType.ASSETS:
+                is = control.getActivity().getAssets().open(filePath);
+                break;
         }
 
         poiDoc = new HWPFDocument(is);
@@ -2385,6 +2391,7 @@ public class DOCReader extends AbstractReader
     private long docRealOffset;
     //
     private String filePath;
+    private int docSourceType;
     //
     private WPDocument wpdoc;
     //
