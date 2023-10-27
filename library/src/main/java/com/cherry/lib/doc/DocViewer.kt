@@ -23,11 +23,14 @@ import java.io.File
  */
 
 object DocViewer {
+    val TAG = "DocViewer"
     fun showPdf(docSourceType: Int, pdfView: PdfRendererView?, url: String?) {
+        Log.e(TAG,"showPdf()......")
         PdfViewer.showPdf(docSourceType, pdfView, url)
     }
 
     fun showDoc(activity: Activity, mDocContainer: ViewGroup?, url: String?,docSourceType: Int,fileType: Int) {
+        Log.e(TAG,"showDoc()......")
         var iOffice: IOffice = object: IOffice() {
             override fun getActivity(): Activity {
                 return activity
@@ -46,7 +49,7 @@ object DocViewer {
             }
 
             override fun getAppName(): String {
-                return "DocViewer"
+                return "Loading..."
             }
 
             override fun getTemporaryDirectory(): File {

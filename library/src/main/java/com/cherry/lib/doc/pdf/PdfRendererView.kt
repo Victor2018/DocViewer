@@ -7,6 +7,7 @@ import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.webkit.WebResourceError
@@ -47,6 +48,8 @@ import java.net.URLEncoder
 class PdfRendererView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
+
+    private val TAG = "PdfRendererView"
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var mPlLoadProgress: ProgressBar
@@ -103,13 +106,16 @@ class PdfRendererView @JvmOverloads constructor(
         PdfDownloader(url, object : PdfDownloader.StatusListener {
             override fun getContext(): Context = context
             override fun onDownloadStart() {
+                Log.e(TAG,"initWithUrl-onDownloadStart()......")
                 statusListener?.onDownloadStart()
             }
 
             override fun onDownloadProgress(currentBytes: Long, totalBytes: Long) {
                 var progress = (currentBytes.toFloat() / totalBytes.toFloat() * 100F).toInt()
-                if (progress >= 100)
+                if (progress >= 100) {
                     progress = 100
+                }
+                Log.e(TAG,"initWithUrl-onDownloadProgress()......progress = $progress")
                 statusListener?.onDownloadProgress(progress, currentBytes, totalBytes)
 
                 mPlLoadProgress?.show()
@@ -117,6 +123,7 @@ class PdfRendererView @JvmOverloads constructor(
             }
 
             override fun onDownloadSuccess(absolutePath: String) {
+                Log.e(TAG,"initWithUrl-onDownloadSuccess()......")
                 initWithPath(absolutePath, pdfQuality)
                 statusListener?.onDownloadSuccess()
                 mPlLoadProgress?.hide()
@@ -124,6 +131,7 @@ class PdfRendererView @JvmOverloads constructor(
 
             override fun onError(error: Throwable) {
                 error.printStackTrace()
+                Log.e(TAG,"initWithUrl-onError()......${error.localizedMessage}")
                 statusListener?.onError(error)
                 mPlLoadProgress?.hide()
             }

@@ -38,6 +38,10 @@ class DocView : FrameLayout {
         inflate(context, R.layout.doc_view_layout, this)
     }
 
+    fun openDoc(activity: Activity, docUrl: String?, docSourceType: Int) {
+        openDoc(activity, docUrl, docSourceType,-1)
+    }
+
     fun openDoc(activity: Activity, docUrl: String?, docSourceType: Int, fileType: Int) {
         Log.e(TAG,"openDoc()......fileType = $fileType")
         var type = FileUtils.getFileTypeForUrl(docUrl)
