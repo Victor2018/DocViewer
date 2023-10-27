@@ -12,6 +12,8 @@ import com.cherry.lib.doc.bean.DocSourceType
 import com.cherry.lib.doc.bean.FileType
 import com.cherry.lib.doc.util.Constant
 import com.cherry.lib.doc.util.FileUtils
+import com.cherry.lib.doc.util.ViewUtils.hide
+import com.cherry.lib.doc.util.ViewUtils.show
 import kotlinx.android.synthetic.main.doc_view_layout.view.*
 import java.io.File
 
@@ -51,10 +53,18 @@ class DocView : FrameLayout {
         when (type) {
             FileType.PDF -> {
                 Log.e(TAG,"openDoc()......PDF")
+                mPWeb.hide()
+                mFlDocContainer.hide()
+                mPdfView.show()
+                mIvImage.hide()
                 DocViewer.showPdf(docSourceType,mPdfView,docUrl)
             }
             FileType.IMAGE -> {
                 Log.e(TAG,"openDoc()......")
+                mPWeb.hide()
+                mFlDocContainer.hide()
+                mPdfView.hide()
+                mIvImage.show()
                 if (docSourceType == DocSourceType.PATH) {
                     Log.e(TAG,"openDoc()......PATH")
                     mIvImage.load(File(docUrl))
@@ -65,10 +75,18 @@ class DocView : FrameLayout {
             }
             FileType.NOT_SUPPORT -> {
                 Log.e(TAG,"openDoc()......NOT_SUPPORT")
+                mPWeb.show()
+                mFlDocContainer.hide()
+                mPdfView.hide()
+                mIvImage.hide()
                 mPWeb.loadUrl(Constant.XDOC_VIEW_URL + docUrl)
             }
             else -> {
                 Log.e(TAG,"openDoc()......ELSE")
+                mPWeb.hide()
+                mFlDocContainer.show()
+                mPdfView.hide()
+                mIvImage.hide()
                 DocViewer.showDoc(activity,mFlDocContainer,docUrl,docSourceType,fileType)
             }
         }

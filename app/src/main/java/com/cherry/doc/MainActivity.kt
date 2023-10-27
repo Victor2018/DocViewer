@@ -61,8 +61,7 @@ class MainActivity : AppCompatActivity(),OnClickListener,OnItemClickListener {
                 return true
             }
             R.id.action_online -> {
-//                openDoc(url,DocSourceType.URL,null)
-                mDocView.openDoc(this,url,DocSourceType.URL,-1)
+                openDoc(url,DocSourceType.URL,null)
                 return true
             }
             else -> super.onOptionsItemSelected(item)
