@@ -169,14 +169,12 @@ public class DOCXReader extends AbstractReader
 
         zipPackage = new ZipPackage(is);
         
-        if (zipPackage.getParts().size() == 0)
-        {
+        if (zipPackage.getParts().size() == 0) {
             throw new Exception("Format error");
         }
         PackageRelationship coreRel = zipPackage.getRelationshipsByType(
             PackageRelationshipTypes.CORE_DOCUMENT).getRelationship(0);
-        if (!coreRel.getTargetURI().toString().equals("/word/document.xml"))
-        {
+        if (!coreRel.getTargetURI().toString().equals("/word/document.xml")) {
             throw new Exception("Format error");
         }
             
@@ -201,19 +199,14 @@ public class DOCXReader extends AbstractReader
         Document doc = saxreader.read(packagePart.getInputStream());
         // page background color
         Element br = doc.getRootElement().element("background");
-        if (br != null)
-        {
+        if (br != null) {
         	BackgroundAndFill fill = null;
-        	if(br.element("background") != null)
-        	{
+        	if(br.element("background") != null) {
         		//gradient background or tile
         		fill = processBackgroundAndFill(br.element("background"));
-        	}
-        	else 
-        	{
+        	} else {
         		String value = br.attributeValue("color");
-                if (value != null)
-                {
+                if (value != null) {
                 	fill = new BackgroundAndFill();
                 	fill.setForegroundColor(Color.parseColor("#aabb" + value));
                 }
@@ -223,7 +216,6 @@ public class DOCXReader extends AbstractReader
         }
         
         processSection(doc.getRootElement().element("body"));
-        
         //
         processRelativeShapeSize();
     }

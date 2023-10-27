@@ -14,4 +14,5 @@ package com.cherry.lib.doc.util
 object Constant {
     const val INTENT_DATA_KEY = "INTENT_DATA_KEY"
     const val INTENT_SOURCE_KEY = "INTENT_SOURCE_KEY"
+    const val INTENT_TYPE_KEY = "INTENT_TYPE_KEY"
 }

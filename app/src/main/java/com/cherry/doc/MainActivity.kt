@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity(),OnClickListener,OnItemClickListener {
     var url = "http://cdn07.foxitsoftware.cn/pub/foxit/manual/phantom/en_us/API%20Reference%20for%20Application%20Communication.pdf"
 //    var url = "https://xdts.xdocin.com/demo/resume3.docx"
 //    var url = "http://172.16.28.95:8080/data/test2.ppt"
+//    var url = "http://172.16.28.95:8080/data/testdocx.ll"
 
     var mDocAdapter: DocAdapter? = null
 
@@ -59,7 +60,7 @@ class MainActivity : AppCompatActivity(),OnClickListener,OnItemClickListener {
                 return true
             }
             R.id.action_online -> {
-                openDoc(url,DocSourceType.URL)
+                openDoc(url,DocSourceType.URL,null)
                 return true
             }
             else -> super.onOptionsItemSelected(item)
@@ -145,15 +146,18 @@ class MainActivity : AppCompatActivity(),OnClickListener,OnItemClickListener {
         return true
     }
 
-    fun openDoc(path: String,docSourceType: Int) {
+    fun openDoc(path: String,docSourceType: Int,type: Int? = null) {
         var fileType = FileUtils.getFileTypeForUrl(path)
+        if (type != null) {
+            fileType = type
+        }
         Log.e(javaClass.simpleName,"fileType = $fileType")
         when (fileType) {
             FileType.NOT_SUPPORT -> {
                 Toast.makeText(this,"不支持的文档格式",Toast.LENGTH_SHORT).show()
             }
             else -> {
-                DocViewerActivity.launchDocViewer(this,docSourceType,path)
+                DocViewerActivity.launchDocViewer(this,docSourceType,path,fileType)
             }
         }
     }

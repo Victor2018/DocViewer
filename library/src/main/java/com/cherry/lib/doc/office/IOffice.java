@@ -117,8 +117,8 @@ public abstract class IOffice implements IMainFrame {
         return control.getView();
     }
 
-    public void openFile(String filepath,int docSourceType) {
-        getControl().openFile(filepath,docSourceType);
+    public void openFile(String filepath,int docSourceType,String fileType) {
+        getControl().openFile(filepath,docSourceType,fileType);
     }
 
     /**

@@ -2,6 +2,7 @@ package com.cherry.lib.doc
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.cherry.lib.doc.bean.DocSourceType
@@ -14,15 +15,18 @@ import java.io.File
 class DocViewerActivity : AppCompatActivity() {
 
     companion object {
-        fun launchDocViewer (activity: AppCompatActivity,docSourceType: Int, path: String?) {
+        fun launchDocViewer (activity: AppCompatActivity,docSourceType: Int, path: String?,
+                             fileType: Int? = null) {
             var intent = Intent(activity, DocViewerActivity::class.java)
             intent.putExtra(Constant.INTENT_SOURCE_KEY, docSourceType)
             intent.putExtra(Constant.INTENT_DATA_KEY,path)
+            intent.putExtra(Constant.INTENT_TYPE_KEY,fileType)
             activity.startActivity(intent)
         }
     }
 
     var docSourceType = 0
+    var fileType = -1
     var docUrl: String? = null//文件地址
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,9 +43,13 @@ class DocViewerActivity : AppCompatActivity() {
     fun initData(intent: Intent?) {
         docUrl = intent?.getStringExtra(Constant.INTENT_DATA_KEY)
         docSourceType = intent?.getIntExtra(Constant.INTENT_SOURCE_KEY,0) ?: 0
+        fileType = intent?.getIntExtra(Constant.INTENT_TYPE_KEY,-1) ?: -1
 
-        var fileType = FileUtils.getFileTypeForUrl(docUrl)
-        when (fileType) {
+        var type = FileUtils.getFileTypeForUrl(docUrl)
+        if (fileType > 0) {
+            type = fileType
+        }
+        when (type) {
             FileType.PDF -> {
                 DocViewer.showPdf(docSourceType,mPdfView,docUrl)
             }
@@ -53,7 +61,7 @@ class DocViewerActivity : AppCompatActivity() {
                 }
             }
             else -> {
-                DocViewer.showDoc(this,mFlDocContainer,docUrl,docSourceType)
+                DocViewer.showDoc(this,mFlDocContainer,docUrl,docSourceType,fileType)
             }
         }
     }

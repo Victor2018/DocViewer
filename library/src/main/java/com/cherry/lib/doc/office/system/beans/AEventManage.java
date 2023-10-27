@@ -47,7 +47,6 @@ public abstract class AEventManage implements OnTouchListener,
 {    
     /**
      * 
-     * @param spreadsheet
      */
     public AEventManage(Context context, IControl control)
     {
@@ -57,7 +56,7 @@ public abstract class AEventManage implements OnTouchListener,
         ViewConfiguration configuration = ViewConfiguration.get(context);
         mMinimumVelocity = configuration.getScaledMinimumFlingVelocity();
         mMaximumVelocity = configuration.getScaledMaximumFlingVelocity();
-        toast = Toast.makeText(context, "", 0);
+        toast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
     }
     
     /**

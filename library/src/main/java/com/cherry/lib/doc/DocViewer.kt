@@ -1,12 +1,14 @@
 package com.cherry.lib.doc
 
 import android.app.Activity
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import com.cherry.lib.doc.bean.FileType
 import com.cherry.lib.doc.office.IOffice
+import com.cherry.lib.doc.office.constant.MainConstant
 import com.cherry.lib.doc.pdf.PdfRendererView
 import com.cherry.lib.doc.pdf.PdfViewer
-import com.cherry.lib.doc.util.FileUtils
 import java.io.File
 
 /*
@@ -25,7 +27,7 @@ object DocViewer {
         PdfViewer.showPdf(docSourceType, pdfView, url)
     }
 
-    fun showDoc(activity: Activity, mDocContainer: ViewGroup?, url: String?,docSourceType: Int) {
+    fun showDoc(activity: Activity, mDocContainer: ViewGroup?, url: String?,docSourceType: Int,fileType: Int) {
         var iOffice: IOffice = object: IOffice() {
             override fun getActivity(): Activity {
                 return activity
@@ -56,6 +58,7 @@ object DocViewer {
             }
 
         }
-        iOffice.openFile(url,docSourceType)
+        iOffice.openFile(url,docSourceType, fileType.toString())
     }
+
 }

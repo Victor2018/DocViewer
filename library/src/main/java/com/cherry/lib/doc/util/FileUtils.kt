@@ -3,8 +3,10 @@ package com.cherry.lib.doc.util
 import android.content.Context
 import android.net.Uri
 import android.os.Environment
+import android.util.Log
 import com.cherry.lib.doc.bean.DocSourceType
 import com.cherry.lib.doc.bean.FileType
+import com.cherry.lib.doc.office.constant.MainConstant
 import java.io.*
 import java.net.URL
 import java.util.Locale
@@ -101,4 +103,5 @@ object FileUtils {
             else -> FileType.NOT_SUPPORT
         }
     }
+
 }

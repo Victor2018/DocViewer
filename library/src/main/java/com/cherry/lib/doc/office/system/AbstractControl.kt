@@ -8,6 +8,7 @@ package com.cherry.lib.doc.office.system
 
 import android.app.Activity
 import android.app.Dialog
+import android.content.Intent
 import android.view.View
 import com.cherry.lib.doc.office.common.ICustomDialog
 import com.cherry.lib.doc.office.common.IOfficeToPicture
@@ -107,7 +108,7 @@ abstract class AbstractControl : IControl {
         return null
     }
 
-    override fun getApplicationType(): Byte {
+    override fun getApplicationType(): Int {
         return -1
     }
 }

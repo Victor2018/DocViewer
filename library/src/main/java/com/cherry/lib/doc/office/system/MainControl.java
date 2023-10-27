@@ -16,11 +16,14 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.cherry.lib.doc.bean.FileType;
 import com.cherry.lib.doc.office.common.ICustomDialog;
 import com.cherry.lib.doc.office.common.IOfficeToPicture;
 import com.cherry.lib.doc.office.common.ISlideShow;
@@ -35,6 +38,7 @@ import com.cherry.lib.doc.office.simpletext.model.IDocument;
 import com.cherry.lib.doc.office.ss.control.SSControl;
 import com.cherry.lib.doc.office.ss.model.baseModel.Workbook;
 import com.cherry.lib.doc.office.wp.control.WPControl;
+import com.cherry.lib.doc.util.FileUtils;
 
 import java.lang.reflect.Method;
 import java.util.Objects;
@@ -293,76 +297,59 @@ public class MainControl extends AbstractControl {
     /**
      * 
      */
-    public boolean openFile(String filePath,int docSourceType)
+    public boolean openFile(String filePath,int docSourceType,String fileType)
     {
+        Log.e("openFile","openFile-fileType = " + fileType);
         this.filePath = filePath;
-        String fileName = filePath.toLowerCase();
-        // word
-        if (fileName.endsWith(MainConstant.FILE_TYPE_DOC)
-            || fileName.endsWith(MainConstant.FILE_TYPE_DOCX)
-            || fileName.endsWith(MainConstant.FILE_TYPE_TXT)
-            || fileName.endsWith(MainConstant.FILE_TYPE_DOT)
-            || fileName.endsWith(MainConstant.FILE_TYPE_DOTX)
-            || fileName.endsWith(MainConstant.FILE_TYPE_DOTM))
-        {
-            applicationType = MainConstant.APPLICATION_TYPE_WP;
-        }
-        // excel
-        else if (fileName.endsWith(MainConstant.FILE_TYPE_XLS)
-                 || fileName.endsWith(MainConstant.FILE_TYPE_XLSX)
-                 || fileName.endsWith(MainConstant.FILE_TYPE_XLT)
-                 || fileName.endsWith(MainConstant.FILE_TYPE_XLTX)
-                 || fileName.endsWith(MainConstant.FILE_TYPE_XLTM)
-                 || fileName.endsWith(MainConstant.FILE_TYPE_XLSM))
-        {
-            applicationType = MainConstant.APPLICATION_TYPE_SS;
-        }
-        // PowerPoint
-        else if (fileName.endsWith(MainConstant.FILE_TYPE_PPT)
-                 || fileName.endsWith(MainConstant.FILE_TYPE_PPTX)
-                 || fileName.endsWith(MainConstant.FILE_TYPE_POT)
-                 || fileName.endsWith(MainConstant.FILE_TYPE_PPTM)
-                 || fileName.endsWith(MainConstant.FILE_TYPE_POTX)
-                 || fileName.endsWith(MainConstant.FILE_TYPE_POTM))
-        {
-            applicationType = MainConstant.APPLICATION_TYPE_PPT;
-        }
-        // PDF document
-        else if (fileName.endsWith(MainConstant.FILE_TYPE_PDF))
-        {
-            applicationType = MainConstant.APPLICATION_TYPE_PDF;
-        }
-        else
-        {
-            applicationType = MainConstant.APPLICATION_TYPE_WP;
-        }
-        
-        boolean isSupport = FileKit.instance().isSupport(fileName);
-        // txt or no support
-        if (fileName.endsWith(MainConstant.FILE_TYPE_TXT)
-            || !isSupport)
-        {
-            TXTKit.instance().readText(this, handler, filePath,docSourceType);
-        }
-        else
-        {  
-            /*if (applicationType == MainConstant.APPLICATION_TYPE_PDF)
-            {
-                try                
-                {
-                    reader = new PDFReader(this, filePath);
-                    createApplication(reader.getModel());
-                }
-                catch (Exception e)
-                {
-                    ErrorUtil.instance().writerLog(e, true);
-                }
+        if (!TextUtils.isEmpty(fileType)) {
+            applicationType = getDocFileType(Integer.parseInt(fileType));;
+            new FileReaderThread(this, handler, filePath,docSourceType,Integer.parseInt(fileType), null).start();
+        } else {
+            String fileName = filePath.toLowerCase();
+            // word
+            if (fileName.endsWith(MainConstant.FILE_TYPE_DOC)
+                    || fileName.endsWith(MainConstant.FILE_TYPE_DOCX)
+                    || fileName.endsWith(MainConstant.FILE_TYPE_TXT)
+                    || fileName.endsWith(MainConstant.FILE_TYPE_DOT)
+                    || fileName.endsWith(MainConstant.FILE_TYPE_DOTX)
+                    || fileName.endsWith(MainConstant.FILE_TYPE_DOTM)) {
+                applicationType = MainConstant.APPLICATION_TYPE_WP;
             }
-            else*/
-            {
-                new FileReaderThread(this, handler, filePath,docSourceType, null).start();
+            // excel
+            else if (fileName.endsWith(MainConstant.FILE_TYPE_XLS)
+                    || fileName.endsWith(MainConstant.FILE_TYPE_XLSX)
+                    || fileName.endsWith(MainConstant.FILE_TYPE_XLT)
+                    || fileName.endsWith(MainConstant.FILE_TYPE_XLTX)
+                    || fileName.endsWith(MainConstant.FILE_TYPE_XLTM)
+                    || fileName.endsWith(MainConstant.FILE_TYPE_XLSM)) {
+                applicationType = MainConstant.APPLICATION_TYPE_SS;
+            }
+            // PowerPoint
+            else if (fileName.endsWith(MainConstant.FILE_TYPE_PPT)
+                    || fileName.endsWith(MainConstant.FILE_TYPE_PPTX)
+                    || fileName.endsWith(MainConstant.FILE_TYPE_POT)
+                    || fileName.endsWith(MainConstant.FILE_TYPE_PPTM)
+                    || fileName.endsWith(MainConstant.FILE_TYPE_POTX)
+                    || fileName.endsWith(MainConstant.FILE_TYPE_POTM)) {
+                applicationType = MainConstant.APPLICATION_TYPE_PPT;
+            }
+            // PDF document
+            else if (fileName.endsWith(MainConstant.FILE_TYPE_PDF)) {
+                applicationType = MainConstant.APPLICATION_TYPE_PDF;
+            } else {
+                applicationType = MainConstant.APPLICATION_TYPE_WP;
+            }
+
+            boolean isSupport = FileKit.instance().isSupport(fileName);
+            // txt or no support
+            if (fileName.endsWith(MainConstant.FILE_TYPE_TXT)
+                    || !isSupport) {
+                TXTKit.instance().readText(this, handler, filePath,docSourceType);
+            } else {
+                new FileReaderThread(this, handler, filePath,docSourceType, -1,null).start();
             }
         }
+
         return true;
     }
     
@@ -665,9 +652,9 @@ public class MainControl extends AbstractControl {
      * 
      *
      */
-    public byte getApplicationType()
+    public int getApplicationType()
     {
-        return  applicationType;
+        return applicationType;
     }
     
     
@@ -771,7 +758,25 @@ public class MainControl extends AbstractControl {
             sysKit.dispose();
         }
     }
-    
+
+    private int getDocFileType(int fileType) {
+        switch (fileType) {
+            case FileType.DOC:
+            case FileType.DOCX:
+            case FileType.TXT:
+                return MainConstant.APPLICATION_TYPE_WP;
+            case FileType.XLS:
+            case FileType.XLSX:
+                return MainConstant.APPLICATION_TYPE_SS;
+            case FileType.PPT:
+            case FileType.PPTX:
+                return MainConstant.APPLICATION_TYPE_PPT;
+            case FileType.PDF:
+                return MainConstant.APPLICATION_TYPE_PDF;
+        }
+        return -1;
+    }
+
     /**
      * 
      */
@@ -791,7 +796,7 @@ public class MainControl extends AbstractControl {
     // 自动化测试
     private boolean isAutoTest;    
     //
-    private byte applicationType = -1;
+    private int applicationType = -1;
     // 文件路径
     private String filePath;
     //

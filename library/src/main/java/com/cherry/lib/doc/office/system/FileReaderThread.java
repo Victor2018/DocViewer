@@ -6,6 +6,7 @@
  */
 package com.cherry.lib.doc.office.system;
 
+import com.cherry.lib.doc.bean.FileType;
 import com.cherry.lib.doc.office.constant.MainConstant;
 import com.cherry.lib.doc.office.fc.doc.DOCReader;
 import com.cherry.lib.doc.office.fc.doc.DOCXReader;
@@ -18,6 +19,7 @@ import com.cherry.lib.doc.office.fc.xls.XLSXReader;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 
 /**
@@ -45,11 +47,12 @@ public class FileReaderThread extends Thread
      * @param filePath
      * @param encoding
      */
-    public FileReaderThread(IControl control, Handler handler, String filePath,int docSourceType, String encoding)
+    public FileReaderThread(IControl control, Handler handler, String filePath,int docSourceType,int fileType, String encoding)
     {
         this.control = control;
         this.handler = handler;
         this.filePath = filePath;
+        this.fileType = fileType;
         this.docSourceType = docSourceType;
         this.encoding = encoding;
     }
@@ -73,25 +76,28 @@ public class FileReaderThread extends Thread
             String fileName = filePath.toLowerCase();
             // doc
             if (fileName.endsWith(MainConstant.FILE_TYPE_DOC)
-                || fileName.endsWith(MainConstant.FILE_TYPE_DOT))
+                || fileName.endsWith(MainConstant.FILE_TYPE_DOT)
+                || fileType == FileType.DOC)
             {
                 reader = new DOCReader(control, filePath,docSourceType);
             }
             // docx
             else if (fileName.endsWith(MainConstant.FILE_TYPE_DOCX)
                      || fileName.endsWith(MainConstant.FILE_TYPE_DOTX)
-                     || fileName.endsWith(MainConstant.FILE_TYPE_DOTM))
+                     || fileName.endsWith(MainConstant.FILE_TYPE_DOTM)
+                    || fileType == FileType.DOCX)
             {
                 reader = new DOCXReader(control, filePath,docSourceType);;
             }
             //
-            else if (fileName.endsWith(MainConstant.FILE_TYPE_TXT))
+            else if (fileName.endsWith(MainConstant.FILE_TYPE_TXT) || fileType == FileType.TXT)
             {
                 reader = new TXTReader(control, filePath, docSourceType,encoding);
             }
             // xls
             else if (fileName.endsWith(MainConstant.FILE_TYPE_XLS)
-                     || fileName.endsWith(MainConstant.FILE_TYPE_XLT))
+                     || fileName.endsWith(MainConstant.FILE_TYPE_XLT)
+                    || fileType == FileType.XLS)
             {
                 reader = new XLSReader(control, filePath,docSourceType);
             }
@@ -99,13 +105,15 @@ public class FileReaderThread extends Thread
             else if (fileName.endsWith(MainConstant.FILE_TYPE_XLSX)
                      || fileName.endsWith(MainConstant.FILE_TYPE_XLTX)
                      || fileName.endsWith(MainConstant.FILE_TYPE_XLTM)
-                     || fileName.endsWith(MainConstant.FILE_TYPE_XLSM))
+                     || fileName.endsWith(MainConstant.FILE_TYPE_XLSM)
+                    || fileType == FileType.XLSX)
             {
                 reader = new XLSXReader(control, filePath,docSourceType);
             }
             // ppt
             else if (fileName.endsWith(MainConstant.FILE_TYPE_PPT)
-                     || fileName.endsWith(MainConstant.FILE_TYPE_POT))
+                     || fileName.endsWith(MainConstant.FILE_TYPE_POT)
+                    ||fileType == FileType.PPT)
             {
                 reader = new PPTReader(control, filePath,docSourceType);
             }
@@ -113,12 +121,13 @@ public class FileReaderThread extends Thread
             else if (fileName.endsWith(MainConstant.FILE_TYPE_PPTX)
                      || fileName.endsWith(MainConstant.FILE_TYPE_PPTM)
                      || fileName.endsWith(MainConstant.FILE_TYPE_POTX)
-                     || fileName.endsWith(MainConstant.FILE_TYPE_POTM))
+                     || fileName.endsWith(MainConstant.FILE_TYPE_POTM)
+                    || fileType == FileType.PPTX)
             {
                 reader = new PPTXReader(control, filePath,docSourceType);
             }
             // PDF document
-            else if (fileName.endsWith(MainConstant.FILE_TYPE_PDF))
+            else if (fileName.endsWith(MainConstant.FILE_TYPE_PDF) ||fileType == FileType.PDF)
             {
                 reader = new PDFReader(control, filePath);
             }
@@ -127,6 +136,7 @@ public class FileReaderThread extends Thread
             {
                 reader = new TXTReader(control, filePath, docSourceType,encoding);
             }
+            Log.e(getName(),"reader = " + reader.getClass().getSimpleName());
             // 把IReader实例传出
             Message mesReader = new Message();
             mesReader.obj = reader;
@@ -168,6 +178,7 @@ public class FileReaderThread extends Thread
     private String encoding;
     //
     private String filePath;
+    private int fileType;
     private int docSourceType;
     //
     private Handler handler;

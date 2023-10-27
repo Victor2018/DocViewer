@@ -219,12 +219,6 @@ public class LayoutKit
      * 
      * @param doc
      * @param para
-     * @param startOffset
-     * @param x
-     * @param y
-     * @param w
-     * @param h
-     * @param flag
      * @return
      */
     public int buildLine(IDocument doc, ParagraphView para)

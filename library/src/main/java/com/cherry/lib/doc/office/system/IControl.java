@@ -111,7 +111,7 @@ public interface IControl
     /**
      * 
      */
-    public byte getApplicationType();
+    public int getApplicationType();
     
     /**
      * 

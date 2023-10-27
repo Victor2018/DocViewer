@@ -495,7 +495,7 @@ public class SSControl extends AbstractControl
      * 
      *
      */
-    public byte getApplicationType()
+    public int getApplicationType()
     {
         return  MainConstant.APPLICATION_TYPE_SS;
     }    
