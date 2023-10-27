@@ -45,27 +45,6 @@ class DocViewerActivity : AppCompatActivity() {
         docSourceType = intent?.getIntExtra(Constant.INTENT_SOURCE_KEY,0) ?: 0
         fileType = intent?.getIntExtra(Constant.INTENT_TYPE_KEY,-1) ?: -1
 
-        var type = FileUtils.getFileTypeForUrl(docUrl)
-        if (fileType > 0) {
-            type = fileType
-        }
-        when (type) {
-            FileType.PDF -> {
-                DocViewer.showPdf(docSourceType,mPdfView,docUrl)
-            }
-            FileType.IMAGE -> {
-                if (docSourceType == DocSourceType.PATH) {
-                    mIvImage.load(File(docUrl))
-                } else {
-                    mIvImage.load(docUrl)
-                }
-            }
-            FileType.NOT_SUPPORT -> {
-                mPWeb.loadUrl(Constant.XDOC_VIEW_URL + docUrl)
-            }
-            else -> {
-                DocViewer.showDoc(this,mFlDocContainer,docUrl,docSourceType,fileType)
-            }
-        }
+        mDocView.openDoc(this,docUrl,docSourceType,fileType)
     }
 }

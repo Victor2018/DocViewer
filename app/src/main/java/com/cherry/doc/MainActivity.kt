@@ -147,12 +147,7 @@ class MainActivity : AppCompatActivity(),OnClickListener,OnItemClickListener {
     }
 
     fun openDoc(path: String,docSourceType: Int,type: Int? = null) {
-        var fileType = FileUtils.getFileTypeForUrl(path)
-        if (type != null) {
-            fileType = type
-        }
-        Log.e(javaClass.simpleName,"fileType = $fileType")
-        DocViewerActivity.launchDocViewer(this,docSourceType,path,fileType)
+        DocViewerActivity.launchDocViewer(this,docSourceType,path,type)
     }
 
     override fun onItemClick(p0: AdapterView<*>?, v: View?, position: Int, id: Long) {

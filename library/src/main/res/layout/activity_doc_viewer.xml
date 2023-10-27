@@ -6,23 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.cherry.lib.doc.ProgressWebView
-        android:id="@+id/mPWeb"
+    <com.cherry.lib.doc.widget.DocView
+        android:id="@+id/mDocView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
-    <com.cherry.lib.doc.pdf.PdfRendererView
-        android:id="@+id/mPdfView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:pdfView_show_page_num="true"
-        app:pdfView_showDivider="true"
-        app:pdfView_page_pb_height="2dp"/>
-
-    <ImageView
-        android:id="@+id/mIvImage"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitCenter"/>
 
 </FrameLayout>

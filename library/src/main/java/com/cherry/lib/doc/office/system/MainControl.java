@@ -301,8 +301,8 @@ public class MainControl extends AbstractControl {
     {
         Log.e("openFile","openFile-fileType = " + fileType);
         this.filePath = filePath;
-        if (!TextUtils.isEmpty(fileType)) {
-            applicationType = getDocFileType(Integer.parseInt(fileType));;
+        if (!TextUtils.isEmpty(fileType) && !TextUtils.equals("-1",fileType)) {
+            applicationType = getDocFileType(Integer.parseInt(fileType));
             new FileReaderThread(this, handler, filePath,docSourceType,Integer.parseInt(fileType), null).start();
         } else {
             String fileName = filePath.toLowerCase();
