@@ -20,6 +20,7 @@
     <color name="green">#088877</color>
     <color name="yellow">#D6A644</color>
     <color name="orange">#FB8854</color>
+    <color name="color_F9F9F9">#F9F9F9</color>
     <color name="card_text_color">#15A18E</color>
 
     <color name="backgroundColor">#FAFAFE</color>

@@ -152,14 +152,7 @@ class MainActivity : AppCompatActivity(),OnClickListener,OnItemClickListener {
             fileType = type
         }
         Log.e(javaClass.simpleName,"fileType = $fileType")
-        when (fileType) {
-            FileType.NOT_SUPPORT -> {
-                Toast.makeText(this,"不支持的文档格式",Toast.LENGTH_SHORT).show()
-            }
-            else -> {
-                DocViewerActivity.launchDocViewer(this,docSourceType,path,fileType)
-            }
-        }
+        DocViewerActivity.launchDocViewer(this,docSourceType,path,fileType)
     }
 
     override fun onItemClick(p0: AdapterView<*>?, v: View?, position: Int, id: Long) {

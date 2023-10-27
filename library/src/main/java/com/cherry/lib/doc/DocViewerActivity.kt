@@ -60,6 +60,9 @@ class DocViewerActivity : AppCompatActivity() {
                     mIvImage.load(docUrl)
                 }
             }
+            FileType.NOT_SUPPORT -> {
+                mPWeb.loadUrl(Constant.XDOC_VIEW_URL + docUrl)
+            }
             else -> {
                 DocViewer.showDoc(this,mFlDocContainer,docUrl,docSourceType,fileType)
             }

@@ -34,8 +34,8 @@ class DocViewHolder : RecyclerView.ViewHolder,OnClickListener {
     fun bindData(data: DocGroupInfo?) {
         itemView.mTvTypeName.text = data?.typeName
 
-        itemView.mRvDocCell.onFlingListener = null
-        LinearSnapHelper().attachToRecyclerView(itemView.mRvDocCell)
+//        itemView.mRvDocCell.onFlingListener = null
+//        LinearSnapHelper().attachToRecyclerView(itemView.mRvDocCell)
 
         var cellAdapter = DocCellAdapter(itemView.context,mOnItemClickListener,
             adapterPosition)

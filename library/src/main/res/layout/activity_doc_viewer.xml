@@ -6,6 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.cherry.lib.doc.ProgressWebView
+        android:id="@+id/mPWeb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <com.cherry.lib.doc.pdf.PdfRendererView
         android:id="@+id/mPdfView"
         android:layout_width="match_parent"
