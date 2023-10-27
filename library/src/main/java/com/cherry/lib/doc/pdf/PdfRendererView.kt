@@ -82,6 +82,8 @@ class PdfRendererView @JvmOverloads constructor(
         mPlLoadProgress = findViewById(R.id.mPlLoadProgress)
         pageNo = findViewById(R.id.pageNumber)
 
+        recyclerView.visibility = View.VISIBLE
+        webView.visibility = View.GONE
     }
     interface StatusCallBack {
         fun onDownloadStart() {}

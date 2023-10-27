@@ -4,6 +4,12 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
     <com.cherry.lib.doc.pdf.PinchZoomRecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
@@ -19,12 +25,6 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:progressDrawable="@drawable/pb_webview_layer"
         android:visibility="gone"/>
-
-    <WebView
-        android:id="@+id/webView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
 
     <include
         android:id="@+id/pageNumber"
