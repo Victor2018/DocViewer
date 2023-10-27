@@ -203,7 +203,7 @@ public class MainControl extends AbstractControl {
         	Object bg = frame.getViewBackground();
         	if(bg != null)
         	{
-        		if(bg  instanceof Integer)
+        		if(bg instanceof Integer)
             	{
             		view.setBackgroundColor((Integer)bg);
             	}

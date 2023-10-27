@@ -86,7 +86,7 @@ public class PGPrintMode extends FrameLayout implements IPageListViewListener
         paint = new Paint();
         paint.setAntiAlias(true);
         paint.setTypeface(Typeface.SANS_SERIF);
-        paint.setTextSize(24);
+        paint.setTextSize(36);
     } 
     
     public void setVisible(boolean visible)
@@ -665,10 +665,10 @@ public class PGPrintMode extends FrameLayout implements IPageListViewListener
             int w =  (int)paint.measureText(pn);
             int h =  (int)(paint.descent() - paint.ascent());
             int x = (int)((getWidth() - w) / 2);
-            int y = (int)((getHeight() - h) - 20);
+            int y = (int)((getHeight() - h) - 50);
             
             Drawable drawable = SysKit.getPageNubmerDrawable();
-            drawable.setBounds((int)(x - 10), y - 10, x + w + 10, y + h + 10);
+            drawable.setBounds((int)(x - 20), y - 10, x + w + 20, y + h + 10);
             drawable.draw(canvas);
             
             y -= paint.ascent();

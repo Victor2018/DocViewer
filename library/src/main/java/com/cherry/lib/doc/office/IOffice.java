@@ -28,7 +28,7 @@ public abstract class IOffice implements IMainFrame {
     private MainControl control;
     private boolean writeLog = true;
     //view background
-    private Object bg = Color.DKGRAY;
+    private Object bg = Color.LTGRAY;
     private String tempFilePath;
 
     public IOffice() {

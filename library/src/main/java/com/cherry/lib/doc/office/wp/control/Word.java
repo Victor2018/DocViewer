@@ -42,6 +42,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -70,16 +71,11 @@ public class Word extends LinearLayout implements IWord
         this.doc = doc;
         int defaultMode = control.getMainFrame().getWordDefaultView();
         setCurrentRootType(defaultMode);
-        if (defaultMode == WPViewConstant.NORMAL_ROOT)
-        {
+        if (defaultMode == WPViewConstant.NORMAL_ROOT) {
             normalRoot = new NormalRoot(this);
-        }
-        else if (defaultMode == WPViewConstant.PAGE_ROOT)
-        {
+        } else if (defaultMode == WPViewConstant.PAGE_ROOT) {
             pageRoot = new PageRoot(this);
-        }
-        else if (defaultMode == WPViewConstant.PRINT_ROOT)
-        {
+        } else if (defaultMode == WPViewConstant.PRINT_ROOT) {
             pageRoot = new PageRoot(this);
             printWord = new PrintWord(context, control, pageRoot);
             addView(printWord);
@@ -263,7 +259,6 @@ public class Word extends LinearLayout implements IWord
 
     /**
      * 
-     * @param destBitmap
      * @return
      */
     public Bitmap getSnapshot(Bitmap bitmap)
@@ -731,10 +726,10 @@ public class Word extends LinearLayout implements IWord
             int w = (int)paint.measureText(pn);
             int h = (int)(paint.descent() - paint.ascent());
             int x = (int)((rect.right + getScrollX() - w) / 2);
-            int y = (int)((rect.bottom - h) - 20);
+            int y = (int)((rect.bottom - h) - 50);
 
             Drawable drawable = SysKit.getPageNubmerDrawable(); 
-            drawable.setBounds((int)(x - 10), y - 10, x + w + 10, y + h + 10);
+            drawable.setBounds((int)(x - 20), y - 10, x + w + 20, y + h + 10);
             drawable.draw(canvas);
 
             y -= paint.ascent();
@@ -881,7 +876,6 @@ public class Word extends LinearLayout implements IWord
     }
 
     /**
-     * @param wordWidth The wordWidth to set.
      */
     public void setWordWidth(int mWidth)
     {
@@ -889,7 +883,6 @@ public class Word extends LinearLayout implements IWord
     }
 
     /**
-     * @param wordHeight The wordHeight to set.
      */
     public void setWordHeight(int mHeight)
     {
@@ -942,7 +935,6 @@ public class Word extends LinearLayout implements IWord
      * 
      * @param index     page index
      * 
-     * @param dircetion
      */
     protected void showPage(int index, int direction)
     {
@@ -1004,10 +996,6 @@ public class Word extends LinearLayout implements IWord
     /**
      * specific area of page to image. if area is not completely contained in the page, return null
      * @param pageNumber page number
-     * @param x The x coordinate
-     * @param y The y coordinate
-     * @param width area width
-     * @param height area height
      * @return
      */
     public Bitmap pageAreaToImage(int pageNumber, int srcLeft, int srcTop, int srcWidth, int srcHeight, int desWidth, int desHeight)
@@ -1195,7 +1183,6 @@ public class Word extends LinearLayout implements IWord
 
     /**
      * 
-     * @param para
      * @return
      */
     public FadeAnimation getParagraphAnimation(int pargraphID)

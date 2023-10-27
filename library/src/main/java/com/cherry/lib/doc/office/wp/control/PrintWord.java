@@ -73,20 +73,20 @@ public class PrintWord extends FrameLayout implements IPageListViewListener
         super(context);
         this.control = control;
         this.pageRoot = pageRoot;
-        
+
         listView = new APageListView(context, this);
         addView(listView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         
         paint = new Paint();
         paint.setAntiAlias(true);
         paint.setTypeface(Typeface.SANS_SERIF);
-        paint.setTextSize(24);
+        paint.setTextSize(36);
     } 
     
     /**
      * 
      */
-    public void setBackgroundColor(int color) 
+    public void setBackgroundColor(int color)
     {
         super.setBackgroundColor(color);
         if (listView != null)
@@ -664,10 +664,10 @@ public class PrintWord extends FrameLayout implements IPageListViewListener
             int w =  (int)paint.measureText(pn);
             int h =  (int)(paint.descent() - paint.ascent());
             int x = (int)((getWidth() - w) / 2);
-            int y = (int)((getHeight() - h) - 20);
+            int y = (int)((getHeight() - h) - 50);
             
             Drawable drawable = SysKit.getPageNubmerDrawable();
-            drawable.setBounds((int)(x - 10), y - 10, x + w + 10, y + h + 10);
+            drawable.setBounds((int)(x - 20), y - 10, x + w + 20, y + h + 10);
             drawable.draw(canvas);
             
             y -= paint.ascent();
