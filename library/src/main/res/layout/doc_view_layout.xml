@@ -21,7 +21,7 @@
         android:layout_height="match_parent"
         app:pdfView_show_page_num="true"
         app:pdfView_showDivider="true"
-        app:pdfView_page_pb_height="2dp"/>
+        app:pdfView_page_pb_height="2dp" />
 
     <ImageView
         android:id="@+id/mIvImage"

@@ -4,12 +4,14 @@ import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
+import android.view.View
 import android.widget.FrameLayout
 import coil.load
 import com.cherry.lib.doc.DocViewer
 import com.cherry.lib.doc.R
 import com.cherry.lib.doc.bean.DocSourceType
 import com.cherry.lib.doc.bean.FileType
+import com.cherry.lib.doc.pdf.PdfRendererView
 import com.cherry.lib.doc.util.Constant
 import com.cherry.lib.doc.util.FileUtils
 import com.cherry.lib.doc.util.ViewUtils.hide
@@ -90,5 +92,9 @@ class DocView : FrameLayout {
                 DocViewer.showDoc(activity,mFlDocContainer,docUrl,docSourceType,fileType)
             }
         }
+    }
+    
+    fun getPdfView(): PdfRendererView {
+        return mPdfView
     }
 }

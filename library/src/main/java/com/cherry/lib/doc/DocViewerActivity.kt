@@ -1,8 +1,10 @@
 package com.cherry.lib.doc
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.cherry.lib.doc.bean.DocSourceType
@@ -46,5 +48,9 @@ class DocViewerActivity : AppCompatActivity() {
         fileType = intent?.getIntExtra(Constant.INTENT_TYPE_KEY,-1) ?: -1
 
         mDocView.openDoc(this,docUrl,docSourceType,fileType)
+
+        Log.e(javaClass.simpleName,"initData-docUrl = $docUrl")
+        Log.e(javaClass.simpleName,"initData-docSourceType = $docSourceType")
+        Log.e(javaClass.simpleName,"initData-fileType = $fileType")
     }
 }
