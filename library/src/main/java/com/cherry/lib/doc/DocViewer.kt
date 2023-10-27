@@ -38,6 +38,7 @@ object DocViewer {
 
             override fun openFileFinish() {
                 mDocContainer?.postDelayed({
+                    mDocContainer.removeAllViews()
                     mDocContainer.addView(
                         view,
                         RelativeLayout.LayoutParams(
