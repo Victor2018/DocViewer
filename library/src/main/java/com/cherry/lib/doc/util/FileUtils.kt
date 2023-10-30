@@ -104,4 +104,20 @@ object FileUtils {
         }
     }
 
+    fun getFileFormatForUrl(url: String?): String {
+        val str = url?.lowercase(Locale.getDefault()) ?: ""
+        return when {
+            txtRe.toRegex().containsMatchIn(str) -> "txt"
+            pdfRe.toRegex().containsMatchIn(str) -> "pdf"
+            imageRe.toRegex().containsMatchIn(str) -> "png"
+            docRe.toRegex().containsMatchIn(str) -> "doc"
+            docxRe.toRegex().containsMatchIn(str) -> "docx"
+            xlsRe.toRegex().containsMatchIn(str) -> "xls"
+            xlsxRe.toRegex().containsMatchIn(str) -> "xlsx"
+            pptRe.toRegex().containsMatchIn(str) -> "ppt"
+            pptxRe.toRegex().containsMatchIn(str) -> "pptx"
+            else -> "unknown"
+        }
+    }
+
 }

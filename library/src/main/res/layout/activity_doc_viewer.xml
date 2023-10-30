@@ -9,6 +9,7 @@
     <com.cherry.lib.doc.widget.DocView
         android:id="@+id/mDocView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        app:pdfView_page_pb_height="5dp"/>
 
 </FrameLayout>

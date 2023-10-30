@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.cherry.lib.doc.ProgressWebView
+        android:id="@+id/mPWeb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <FrameLayout
+        android:id="@+id/mFlDocContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <ImageView
+        android:id="@+id/mIvImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter"/>
+
+    <com.cherry.lib.doc.pdf.PinchZoomRecyclerView
+        android:id="@+id/mRvPdf"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:scrollbars="vertical"
+        tools:listitem="@layout/list_item_pdf_page" />
+
+    <ProgressBar
+        android:id="@+id/mPlLoadProgress"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/pb_webview_layer"
+        android:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/mPdfPageNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="18dp"
+        android:background="@drawable/page_counter"
+        android:paddingStart="12dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="4dp"
+        android:textColor="#A19D9D"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+</FrameLayout>

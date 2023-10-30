@@ -5,7 +5,10 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.view.View
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import coil.load
 import com.cherry.lib.doc.bean.DocSourceType
 import com.cherry.lib.doc.bean.FileType

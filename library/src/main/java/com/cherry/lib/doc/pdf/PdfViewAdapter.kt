@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.pdf_view_page_loading_layout.view.*
  */
 
 internal class PdfViewAdapter(
-    private val renderer: PdfRendererCore,
+    private val renderer: PdfRendererCore?,
     private val pageSpacing: Rect,
     private val enableLoadingForPages: Boolean
 ) :
@@ -41,7 +41,7 @@ internal class PdfViewAdapter(
     }
 
     override fun getItemCount(): Int {
-        return renderer.getPageCount()
+        return renderer?.getPageCount() ?: 0
     }
 
     override fun onBindViewHolder(holder: PdfPageViewHolder, position: Int) {
@@ -55,7 +55,7 @@ internal class PdfViewAdapter(
                 return
             }
 
-            if (renderer.pageExistInCache(position)) {
+            if (renderer?.pageExistInCache(position) == true) {
                 itemView.pdf_view_page_loading_progress.hide()
             } else {
                 itemView.pdf_view_page_loading_progress.show()
@@ -68,7 +68,7 @@ internal class PdfViewAdapter(
 
         override fun onViewAttachedToWindow(p0: View) {
             handleLoadingForPage(adapterPosition)
-            renderer.renderPage(adapterPosition) { bitmap: Bitmap?, pageNo: Int ->
+            renderer?.renderPage(adapterPosition) { bitmap: Bitmap?, pageNo: Int ->
                 if (pageNo == adapterPosition) {
                     bitmap?.let {
                         itemView.container_view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
