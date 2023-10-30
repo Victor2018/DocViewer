@@ -21,17 +21,4 @@
         <attr name="pdfView_page_pb_height" format="reference|dimension"  />
     </declare-styleable>
 
-    <!-- icons -->
-    <attr name="pdfView_backIcon" format="reference" />
-    <attr name="pdfView_downloadIcon" format="reference" />
-
-    <!-- icon color -->
-    <attr name="pdfView_downloadIconTint" format="reference|color" />
-    <attr name="pdfView_actionBarTint" format="reference|color" />
-
-    <!-- Text Appearance Customizations - Common -->
-    <attr name="pdfView_titleTextStyle" format="reference" />
-
-    <attr name="pdfView_progressBar" format="reference"/>
-    <attr name="pdfView_backgroundColor" format="reference|color"/>
 </resources>

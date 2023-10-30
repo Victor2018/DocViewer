@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <com.cherry.lib.doc.ProgressWebView
+    <com.cherry.lib.doc.DocWebView
         android:id="@+id/mPWeb"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

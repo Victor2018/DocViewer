@@ -26,10 +26,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
  * -----------------------------------------------------------------
  */
 
-class ProgressWebView constructor(context: Context, attributeset: AttributeSet) : ConstraintLayout(context, attributeset),
+class DocWebView constructor(context: Context, attributeset: AttributeSet) : ConstraintLayout(context, attributeset),
     DownloadListener {
 
-    val TAG = "ProgressWebView"
+    val TAG = "DocWebView"
     var progressBar: ProgressBar
     var webview: WebView
     var isLastLoadSuccess = false//是否成功加载完成过web，成功过后的网络异常 不改变web

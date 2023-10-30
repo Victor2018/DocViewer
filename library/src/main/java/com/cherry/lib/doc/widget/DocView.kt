@@ -66,7 +66,7 @@ class DocView : FrameLayout {
     var pageMargin: Rect = Rect(0,0,0,0)
     var statusListener: StatusCallBack? = null
 
-    val totalPageCount = pdfRendererCore?.getPageCount() ?: 0
+    var totalPageCount = 0
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -110,7 +110,8 @@ class DocView : FrameLayout {
 
     fun openDoc(activity: Activity, docUrl: String?, docSourceType: Int) {
         mActivity = activity
-        if (docSourceType == DocSourceType.URL) {
+        var fileType = FileUtils.getFileTypeForUrl(docUrl)
+        if (docSourceType == DocSourceType.URL && fileType != FileType.IMAGE) {
             downloadFile(docUrl ?: "")
             return
         }
@@ -121,7 +122,7 @@ class DocView : FrameLayout {
     fun openDoc(activity: Activity?, docUrl: String?, docSourceType: Int, fileType: Int) {
         mActivity = activity
         Log.e(TAG,"openDoc()......fileType = $fileType")
-        if (docSourceType == DocSourceType.URL) {
+        if (docSourceType == DocSourceType.URL && fileType != FileType.IMAGE) {
             downloadFile(docUrl ?: "")
             return
         }
@@ -132,9 +133,6 @@ class DocView : FrameLayout {
         }
         when (type) {
             FileType.PDF -> {
-                if (showPageNum) {
-                    showPageNum = false
-                }
                 Log.e(TAG,"openDoc()......PDF")
                 mPWeb.hide()
                 mFlDocContainer.hide()
@@ -169,10 +167,13 @@ class DocView : FrameLayout {
                 mFlDocContainer.hide()
                 mRvPdf.hide()
                 mIvImage.hide()
-                mPWeb.loadUrl(Constant.XDOC_VIEW_URL + docUrl)
+                mPWeb.loadUrl(Constant.VIEW_MATERIAL_URL + docUrl)
             }
             else -> {
                 Log.e(TAG,"openDoc()......ELSE")
+                if (showPageNum) {
+                    showPageNum = false
+                }
                 mPWeb.hide()
                 mFlDocContainer.show()
                 mRvPdf.hide()
@@ -243,6 +244,7 @@ class DocView : FrameLayout {
     private fun showPdf(file: File, pdfQuality: PdfQuality) {
         Log.e(javaClass.simpleName,"initView-exists = ${file.exists()}")
         pdfRendererCore = PdfRendererCore(context, file, pdfQuality)
+        totalPageCount = pdfRendererCore?.getPageCount() ?: 0
         pdfRendererCoreInitialised = true
         pdfViewAdapter = PdfViewAdapter(pdfRendererCore, pageMargin, enableLoadingForPages)
 
