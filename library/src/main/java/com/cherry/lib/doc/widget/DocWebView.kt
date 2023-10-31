@@ -1,4 +1,4 @@
-package com.cherry.lib.doc
+package com.cherry.lib.doc.widget
 
 import android.annotation.SuppressLint
 import android.app.DownloadManager
@@ -10,10 +10,11 @@ import android.os.Environment
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.webkit.*
-import android.widget.ProgressBar
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.cherry.lib.doc.R
+import com.cherry.lib.doc.interfaces.OnWebLoadListener
+import kotlinx.android.synthetic.main.doc_web_view.view.*
 
 /*
  * -----------------------------------------------------------------
@@ -26,76 +27,37 @@ import androidx.constraintlayout.widget.ConstraintLayout
  * -----------------------------------------------------------------
  */
 
-class DocWebView constructor(context: Context, attributeset: AttributeSet) : ConstraintLayout(context, attributeset),
-    DownloadListener {
+class DocWebView: ConstraintLayout, DownloadListener {
 
     val TAG = "DocWebView"
-    var progressBar: ProgressBar
-    var webview: WebView
     var isLastLoadSuccess = false//是否成功加载完成过web，成功过后的网络异常 不改变web
     var isError = false
 
     var openLinkBySysBrowser = false//是否使用系统浏览器打开http链接
 
-    init {
-        val rootView = LayoutInflater.from(context).inflate(R.layout.web_progress_view, this, true)
-        progressBar = rootView.findViewById(R.id.pb_webview)
-        webview = rootView.findViewById(R.id.web_view)
-        webview.webChromeClient = MyWebChromeClient()
-        webview.webViewClient = MyWebViewClient()
-        webview.settings.javaScriptEnabled = true
-        webview.settings.domStorageEnabled = true
-        webview.settings.allowFileAccess = true
-        webview.settings.allowFileAccessFromFileURLs =true
-        webview.settings.allowUniversalAccessFromFileURLs = true
-        webview.settings.cacheMode = WebSettings.LOAD_NO_CACHE
-        webview.setDownloadListener(this)
+    var mOnWebLoadListener: OnWebLoadListener? = null
 
+    constructor(context: Context) : this(context, null)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle) {
+        initView()
     }
 
-    private inner class MyWebChromeClient : WebChromeClient() {
-
-        override fun onProgressChanged(view: WebView, newProgress: Int) {
-            super.onProgressChanged(view, newProgress)
-            setProgress(newProgress)
-        }
-
-        override fun onReceivedTitle(view: WebView, title: String) {
-            super.onReceivedTitle(view, title)
-            if (title.contains("html")) {
-                return
-            }
-            listener?.onTitle(title)
-        }
+    fun initView() {
+        LayoutInflater.from(context).inflate(R.layout.doc_web_view, this, true)
+        mDocView.webChromeClient = DocWebChromeClient()
+        mDocView.webViewClient = DocWebViewClient()
+        mDocView.settings.javaScriptEnabled = true
+        mDocView.settings.domStorageEnabled = true
+        mDocView.settings.allowFileAccess = true
+        mDocView.settings.allowFileAccessFromFileURLs =true
+        mDocView.settings.allowUniversalAccessFromFileURLs = true
+        mDocView.settings.cacheMode = WebSettings.LOAD_NO_CACHE
+        mDocView.setDownloadListener(this)
     }
 
     private fun setProgress(newProgress: Int) {
-        if (newProgress == 100) {
-            progressBar.visibility = View.GONE
-        } else {
-            progressBar.progress = newProgress
-        }
-    }
-
-    private inner class MyWebViewClient : WebViewClient() {
-
-        override fun onPageFinished(view: WebView, url: String) {
-            super.onPageFinished(view, url)
-            //在访问失败的时候会首先回调onReceivedError，然后再回调onPageFinished。
-            if (!isError) {
-                isLastLoadSuccess = true
-                listener?.success()
-            }
-        }
-
-        override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceError) {
-            super.onReceivedError(view, request, error)
-            //在访问失败的时候会首先回调onReceivedError，然后再回调onPageFinished。
-            isError = true
-            if (!isLastLoadSuccess) {//之前成功加载完成过，不会回调
-                listener?.error()
-            }
-        }
+        mOnWebLoadListener?.OnWebLoadProgress(newProgress)
     }
 
     /**
@@ -103,30 +65,30 @@ class DocWebView constructor(context: Context, attributeset: AttributeSet) : Con
      */
     @SuppressLint("JavascriptInterface")
     fun addJavascriptInterface(jsInterface: Any) {
-        webview.addJavascriptInterface(jsInterface, "SSDJsBirdge")
+        mDocView.addJavascriptInterface(jsInterface, "SSDJsBirdge")
     }
 
     fun reload() {
         isError = false
-        webview.reload()
+        mDocView.reload()
     }
 
     fun loadUrl(url: String) {
         isError = false
         try {
-            webview.loadUrl(url)
+            mDocView.loadUrl(url)
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
     fun loadData (htmlData: String) {
-        webview.loadData(htmlData,"text/html","utf-8")
+        mDocView.loadData(htmlData,"text/html","utf-8")
     }
 
     fun loadData (htmlData: String,secondLinkBySysBrowser: Boolean) {
         openLinkBySysBrowser = secondLinkBySysBrowser
-        webview.loadData(htmlData,"text/html","utf-8")
+        mDocView.loadData(htmlData,"text/html","utf-8")
     }
 
     fun downloadFile(url: String?,contentDisposition: String?,mimeType: String?) {
@@ -151,7 +113,7 @@ class DocWebView constructor(context: Context, attributeset: AttributeSet) : Con
         request.setDestinationInExternalPublicDir(Environment.getExternalStorageDirectory().toString() + "/Download/", fileName)
 
 
-        val downloadManager = webview.context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        val downloadManager = mDocView.context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         // 添加一个下载任务
         val downloadId = downloadManager.enqueue(request)
     }
@@ -166,33 +128,33 @@ class DocWebView constructor(context: Context, attributeset: AttributeSet) : Con
     }
 
     fun canGoBack(): Boolean {
-        val canGoBack = webview.canGoBack()
+        val canGoBack = mDocView.canGoBack()
         if (canGoBack) {
-            webview.goBack()
+            mDocView.goBack()
         }
         return canGoBack
     }
 
     fun onPause () {
-        webview.pauseTimers()
+        mDocView.pauseTimers()
 
     }
 
     fun onResume () {
-        webview.resumeTimers()
+        mDocView.resumeTimers()
     }
 
     /**
      * must be called on the main thread
      */
-    fun onDestory() {
+    fun onDestroy() {
         try {
-            webview.clearHistory();
-            webview.clearCache(true)
-            webview.loadUrl("about:blank") // clearView() should be changed to loadUrl("about:blank"), since clearView() is deprecated now
-            webview.freeMemory()
-            webview.pauseTimers()
-            webview.destroy() // Note that mWebView.destroy() and mWebView = null do the exact same thing
+            mDocView.clearHistory();
+            mDocView.clearCache(true)
+            mDocView.loadUrl("about:blank") // clearView() should be changed to loadUrl("about:blank"), since clearView() is deprecated now
+            mDocView.freeMemory()
+            mDocView.pauseTimers()
+            mDocView.destroy() // Note that mWebView.destroy() and mWebView = null do the exact same thing
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -205,17 +167,46 @@ class DocWebView constructor(context: Context, attributeset: AttributeSet) : Con
         }
     }
 
-    private var listener: OnWebLoadStatusListener? = null
-
-    fun setOnLoadStatueListener(listener: OnWebLoadStatusListener) {
-        this.listener = listener
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        onDestroy()
     }
 
-    interface OnWebLoadStatusListener {
-        fun error()
+    private inner class DocWebChromeClient : WebChromeClient() {
 
-        fun success()
+        override fun onProgressChanged(view: WebView, newProgress: Int) {
+            super.onProgressChanged(view, newProgress)
+            setProgress(newProgress)
+        }
 
-        fun onTitle(title: String)
+        override fun onReceivedTitle(view: WebView, title: String) {
+            super.onReceivedTitle(view, title)
+            if (title.contains("html")) {
+                return
+            }
+            mOnWebLoadListener?.onTitle(title)
+        }
     }
+
+    private inner class DocWebViewClient : WebViewClient() {
+
+        override fun onPageFinished(view: WebView, url: String) {
+            super.onPageFinished(view, url)
+            //在访问失败的时候会首先回调onReceivedError，然后再回调onPageFinished。
+            if (!isError) {
+                isLastLoadSuccess = true
+                mOnWebLoadListener?.OnWebLoadProgress(100)
+            }
+        }
+
+        override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceError) {
+            super.onReceivedError(view, request, error)
+            //在访问失败的时候会首先回调onReceivedError，然后再回调onPageFinished。
+            isError = true
+            if (!isLastLoadSuccess) {//之前成功加载完成过，不会回调
+                mOnWebLoadListener?.OnWebLoadProgress(100)
+            }
+        }
+    }
+
 }

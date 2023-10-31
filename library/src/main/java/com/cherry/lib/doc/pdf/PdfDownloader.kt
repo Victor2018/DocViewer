@@ -1,6 +1,7 @@
 package com.cherry.lib.doc.pdf
 
 import android.content.Context
+import com.cherry.lib.doc.interfaces.OnDownloadListener
 import com.cherry.lib.doc.util.FileUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,15 +21,7 @@ import java.net.URL
  * -----------------------------------------------------------------
  */
 
-internal class PdfDownloader(url: String, private val listener: StatusListener) {
-    interface StatusListener {
-        fun getContext(): Context
-        fun onDownloadStart() {}
-        fun onDownloadProgress(currentBytes: Long, totalBytes: Long) {}
-        fun onDownloadSuccess(absolutePath: String) {}
-        fun onError(error: Throwable) {}
-        fun getCoroutineScope(): CoroutineScope
-    }
+internal class PdfDownloader(url: String, private val listener: OnDownloadListener) {
 
     init {
         listener.getCoroutineScope().launch(Dispatchers.IO) { download(url) }
@@ -37,7 +30,7 @@ internal class PdfDownloader(url: String, private val listener: StatusListener) 
     private fun download(downloadUrl: String) {
         var format = FileUtils.getFileFormatForUrl(downloadUrl)
         listener.getCoroutineScope().launch(Dispatchers.Main) { listener.onDownloadStart() }
-        val outputFile = File(listener.getContext().cacheDir, "doc.$format")
+        val outputFile = File(listener.getDownloadContext().cacheDir, "doc.$format")
         if (outputFile.exists())
             outputFile.delete()
         try {

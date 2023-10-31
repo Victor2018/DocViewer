@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <com.cherry.lib.doc.DocWebView
-        android:id="@+id/mPWeb"
+    <com.cherry.lib.doc.widget.DocWebView
+        android:id="@+id/mDocWeb"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

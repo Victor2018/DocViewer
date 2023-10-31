@@ -24,10 +24,15 @@ object Constant {
      * Excel：xlsx、xlsb、xls、xlsm
      * PowerPoint: pptx、 ppsx、 ppt、 pps、 potx、 ppsm
      */
-    const val VIEW_MATERIAL_URL = "https://view.officeapps.live.com/op/view.aspx?src="//Office 平台在线预览
+    const val MICROSOFT_URL = "https://view.officeapps.live.com/op/view.aspx?src="
 
     /**
      * XDOC文档预览服务 支持pdf在线浏览
      */
-    const val XDOC_VIEW_URL = "http://www.xdocin.com/xdoc?_func=to&_format=html&_cache=true&_xdoc="//Office 平台在线预览
+    const val XDOC_VIEW_URL = "http://www.xdocin.com/xdoc?_func=to&_format=html&_cache=true&_xdoc="
+
+    /**
+     * google文档预览服务，科学上网
+     */
+    const val GOOGLE_URL = "https://drive.google.com/viewer/viewer?hl=en&embedded=true&url="
 }

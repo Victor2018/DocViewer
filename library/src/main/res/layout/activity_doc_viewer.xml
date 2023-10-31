@@ -10,6 +10,8 @@
         android:id="@+id/mDocView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:pdfView_page_pb_height="5dp"/>
+        app:dv_page_pb_height="2dp"
+        app:dv_page_pb_color="@color/yellow"
+        app:dv_engine="internal" />
 
 </FrameLayout>
