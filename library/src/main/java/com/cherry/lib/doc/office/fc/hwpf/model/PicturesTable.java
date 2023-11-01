@@ -175,9 +175,7 @@ public final class PicturesTable
    * @param run
    * @param fillBytes if true, Picture will be returned with filled byte array that represent picture's contents. If you don't want
    * to have that byte array in memory but only write picture's contents to stream, pass false and then use Picture.writeImageContent
-   * @see Picture#writeImageContent(java.io.OutputStream)
    * @return a Picture object if picture exists for specified CharacterRun, null otherwise. PicturesTable.hasPicture is used to determine this.
-   * @see #hasPicture(arc.fc.hwpf.usermodel.poi.hwpf.usermodel.CharacterRun)
    */
   public Picture extractPicture(String tempPath, CharacterRun run, boolean fillBytes) {
     if (hasPicture(run)) 

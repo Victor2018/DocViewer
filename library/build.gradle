@@ -49,6 +49,10 @@ dependencies {
 
     implementation("io.coil-kt:coil:1.4.0")
 
+    implementation 'org.apache.poi:poi-scratchpad:3.17'
+    // read file
+    implementation 'commons-io:commons-io:2.0.1'
+
 }
 
 afterEvaluate {

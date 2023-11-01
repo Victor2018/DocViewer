@@ -13,9 +13,10 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.cherry.doc.util.BasicSet
 import com.cherry.doc.util.DocUtil
+import com.cherry.doc.util.WordUtils
 import com.cherry.lib.doc.DocViewerActivity
 import com.cherry.lib.doc.bean.DocSourceType
 import com.cherry.lib.doc.bean.FileType
@@ -158,9 +159,27 @@ class MainActivity : AppCompatActivity(),OnClickListener,OnItemClickListener {
                 if (checkSupport(path)) {
                     openDoc(path,DocSourceType.PATH)
                 }
+
+//                word2Html(path)
+//                WordActivity.launchDocViewer(this,path)
             }
         }
+    }
 
+    fun word2Html(sourceFilePath: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val htmlFilePath = cacheDir.absolutePath + "/html"
+            val htmlFileName = "word_pdf"
+
+            var bs = BasicSet(this@MainActivity,sourceFilePath,htmlFilePath, htmlFileName)
+            bs.picturePath = htmlFilePath
+
+            WordUtils.getInstance(bs).word2html()
+
+            CoroutineScope(Dispatchers.Main).launch {
+
+            }
+        }
     }
 
 }
