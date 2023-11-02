@@ -47,12 +47,26 @@ class DocWebView: ConstraintLayout, DownloadListener {
         LayoutInflater.from(context).inflate(R.layout.doc_web_view, this, true)
         mDocView.webChromeClient = DocWebChromeClient()
         mDocView.webViewClient = DocWebViewClient()
+        //设置可以支持缩放
+        mDocView.settings.setSupportZoom(true)
+        //设置出现缩放工具
+        mDocView.settings.builtInZoomControls = true
+        //设定缩放控件隐藏
+        mDocView.settings.displayZoomControls = true
+        //设置可在大视野范围内上下左右拖动，并且可以任意比例缩放
+        mDocView.settings.useWideViewPort = true
+        //设置默认加载的可视范围是大视野范围
+        mDocView.settings.loadWithOverviewMode = true
+        //自适应屏幕 SINGLE_COLUMN：把所有内容放大到webview等宽的一列中 NORMAL：正常显示不做任何渲染。NARROW_COLUMNS：可能的话让所有列的宽度不超过屏幕宽度
+        mDocView.settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
+
         mDocView.settings.javaScriptEnabled = true
         mDocView.settings.domStorageEnabled = true
         mDocView.settings.allowFileAccess = true
         mDocView.settings.allowFileAccessFromFileURLs =true
         mDocView.settings.allowUniversalAccessFromFileURLs = true
         mDocView.settings.cacheMode = WebSettings.LOAD_NO_CACHE
+
         mDocView.setDownloadListener(this)
     }
 
