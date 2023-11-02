@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="DocView">
+        <attr name="dv_moving_orientation" format="enum">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
         <attr name="dv_quality" format="enum">
             <enum name="fast" value="1" />
             <enum name="normal" value="2" />

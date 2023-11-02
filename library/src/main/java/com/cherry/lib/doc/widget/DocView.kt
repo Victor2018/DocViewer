@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.cherry.lib.doc.R
 import com.cherry.lib.doc.bean.DocEngine
+import com.cherry.lib.doc.bean.DocMovingOrientation
 import com.cherry.lib.doc.bean.DocSourceType
 import com.cherry.lib.doc.bean.FileType
 import com.cherry.lib.doc.interfaces.OnDownloadListener
@@ -62,6 +63,7 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener {
     var lifecycleScope: LifecycleCoroutineScope = (context as AppCompatActivity).lifecycleScope
     private var pdfRendererCore: PdfRendererCore? = null
     private var pdfViewAdapter: PdfViewAdapter? = null
+    private var mMovingOrientation = DocMovingOrientation.HORIZONTAL
     private var quality = PdfQuality.NORMAL
     private var engine = DocEngine.INTERNAL
     private var showDivider = true
@@ -94,6 +96,9 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener {
 
         val typedArray =
             context.obtainStyledAttributes(attrs, R.styleable.DocView, defStyle, 0)
+        val orientation =
+            typedArray.getInt(R.styleable.DocView_dv_moving_orientation, DocMovingOrientation.HORIZONTAL.orientation)
+        mMovingOrientation = DocMovingOrientation.values().first { it.orientation == orientation }
         val ratio =
             typedArray.getInt(R.styleable.DocView_dv_quality, PdfQuality.NORMAL.ratio)
         quality = PdfQuality.values().first { it.ratio == ratio }
@@ -254,6 +259,10 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener {
             }
 
             override fun fullScreen(fullscreen: Boolean) {
+            }
+
+            override fun getMovingOrientation(): Int {
+                return mMovingOrientation.orientation
             }
 
         }

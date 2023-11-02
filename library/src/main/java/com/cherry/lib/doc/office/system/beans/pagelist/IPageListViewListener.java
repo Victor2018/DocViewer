@@ -83,7 +83,6 @@ public interface IPageListViewListener
     * @param       e2            MotionEvent instance
     * @param       velocityX     x axis velocity
     * @param       velocityY     y axis velocity  
-    * @param       eventNethodType  event method      
     *              @see TouchEventListener#EVENT_CLICK
     *              @see TouchEventListener#EVENT_DOUBLE_TAP
     *              @see TouchEventListener#EVENT_DOUBLE_TAP_EVENT
@@ -101,7 +100,6 @@ public interface IPageListViewListener
    /**
     * action派发
     *
-    * @param actionID 动作ID  
     * @param obj 动作ID的Value
     */
    public void updateStutus(Object obj);
@@ -136,7 +134,6 @@ public interface IPageListViewListener
     *  set change page flag, Only when effectively the PageSize greater than ViewSize.
     *  (for PPT, word print mode, PDF)
     *  
-    *  @param b    = true, change page
     *              = false, don't change page
     */
    public boolean isChangePage();
@@ -162,7 +159,6 @@ public interface IPageListViewListener
    
    /**
     * page list view moving position
-    * @param position horizontal or vertical
     */
-   public byte getPageListViewMovingPosition();
+   public int getPageListViewMovingPosition();
 }

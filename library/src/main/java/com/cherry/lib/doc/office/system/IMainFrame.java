@@ -326,7 +326,7 @@ public interface IMainFrame
      * page list view moving position
      * @param position horizontal or vertical
      */
-    public byte getPageListViewMovingPosition();
+    public int getPageListViewMovingPosition();
     
     /**
      * 

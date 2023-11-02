@@ -217,6 +217,7 @@ public abstract class IOffice implements IMainFrame {
      *
      */
     public abstract String getAppName();
+    public abstract int getMovingOrientation();
 
     /**
      * 是否绘制页码
@@ -376,8 +377,8 @@ public abstract class IOffice implements IMainFrame {
         return false;
     }
 
-    public byte getPageListViewMovingPosition() {
-        return IPageListViewListener.Moving_Horizontal;
+    public int getPageListViewMovingPosition() {
+        return getMovingOrientation();
     }
 
     /**
