@@ -51,7 +51,7 @@ class DocViewerActivity : AppCompatActivity() {
         docSourceType = intent?.getIntExtra(Constant.INTENT_SOURCE_KEY,0) ?: 0
         fileType = intent?.getIntExtra(Constant.INTENT_TYPE_KEY,-1) ?: -1
 
-        mDocView.openDoc(this,docUrl,docSourceType,fileType)
+        mDocView.openDoc(this,docUrl,docSourceType,fileType,DocEngine.MICROSOFT)
 
         Log.e(javaClass.simpleName,"initData-docUrl = $docUrl")
         Log.e(javaClass.simpleName,"initData-docSourceType = $docSourceType")

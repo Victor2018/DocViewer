@@ -5,13 +5,21 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <com.cherry.lib.doc.widget.DocWebView
-        android:id="@+id/mDocWeb"
+    <com.cherry.lib.doc.pdf.PinchZoomRecyclerView
+        android:id="@+id/mRvPdf"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:scrollbars="vertical"
+        tools:listitem="@layout/list_item_pdf_page" />
 
     <FrameLayout
         android:id="@+id/mFlDocContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.cherry.lib.doc.widget.DocWebView
+        android:id="@+id/mDocWeb"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
@@ -20,14 +28,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitCenter"/>
-
-    <com.cherry.lib.doc.pdf.PinchZoomRecyclerView
-        android:id="@+id/mRvPdf"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/transparent"
-        android:scrollbars="vertical"
-        tools:listitem="@layout/list_item_pdf_page" />
 
     <ProgressBar
         android:id="@+id/mPlLoadProgress"

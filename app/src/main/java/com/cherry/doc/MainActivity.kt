@@ -29,7 +29,8 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(),OnClickListener,OnItemClickListener {
     private val REQUEST_CODE_LOAD = 367
-    var url = "http://cdn07.foxitsoftware.cn/pub/foxit/manual/phantom/en_us/API%20Reference%20for%20Application%20Communication.pdf"
+//    var url = "http://cdn07.foxitsoftware.cn/pub/foxit/manual/phantom/en_us/API%20Reference%20for%20Application%20Communication.pdf"
+    var url = "https://hok-one.oss-cn-beijing.aliyuncs.com/hok_admin/data/07414915ada34c5bacb38e285eb9dc5c.docx"
 //    var url = "https://xdts.xdocin.com/demo/resume3.docx"
 //    var url = "http://172.16.28.95:8080/data/test2.ppt"
 //    var url = "http://172.16.28.95:8080/data/testdocx.ll"
