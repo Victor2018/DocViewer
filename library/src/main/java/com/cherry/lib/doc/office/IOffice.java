@@ -14,10 +14,12 @@ import com.cherry.lib.doc.office.res.ResKit;
 import com.cherry.lib.doc.office.system.IMainFrame;
 import com.cherry.lib.doc.office.system.MainControl;
 import com.cherry.lib.doc.office.system.beans.pagelist.IPageListViewListener;
+import com.cherry.lib.doc.office.wp.control.Word;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**

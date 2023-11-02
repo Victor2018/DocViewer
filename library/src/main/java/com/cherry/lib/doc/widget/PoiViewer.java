@@ -1,9 +1,8 @@
 package com.cherry.lib.doc.widget;
 
-import static kotlinx.coroutines.CoroutineScopeKt.CoroutineScope;
-
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.os.AsyncTask;
 import android.text.Html;
 import android.text.SpannableString;
@@ -12,6 +11,8 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.cherry.lib.doc.util.WordConverter;
 
@@ -115,6 +116,7 @@ public class PoiViewer {
             mProgressDialog.dismiss();
             if (TextUtils.isEmpty(returnString)) {
                 Toast.makeText(mContext, "文件打开失败", Toast.LENGTH_SHORT).show();
+                scanForActivity(mContext).finish();
                 return;
             }
             mWebView.loadUrl(returnString);
@@ -128,4 +130,14 @@ public class PoiViewer {
         mContext = null;
     }
 
+    public AppCompatActivity scanForActivity(Context context) {
+        if (context == null) return null;
+        if (context instanceof AppCompatActivity) {
+            return (AppCompatActivity) context;
+        } else if (context instanceof ContextWrapper) {
+            ContextWrapper cw = (ContextWrapper)context;
+            return scanForActivity(cw.getBaseContext());
+        }
+        return null;
+    }
 }

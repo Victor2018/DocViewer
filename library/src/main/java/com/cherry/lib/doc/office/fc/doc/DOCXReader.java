@@ -91,7 +91,6 @@ import com.cherry.lib.doc.office.wp.model.HFElement;
 import com.cherry.lib.doc.office.wp.model.RowElement;
 import com.cherry.lib.doc.office.wp.model.TableElement;
 import com.cherry.lib.doc.office.wp.model.WPDocument;
-import com.cherry.lib.doc.util.FileUtils;
 
 import android.graphics.Color;
 import android.graphics.Matrix;

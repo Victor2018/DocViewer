@@ -119,11 +119,11 @@ public class MainControl extends AbstractControl {
                     case MainConstant.HANDLER_MESSAGE_ERROR:
                         post(() -> {
                             dismissProgressDialog();
-//                            if (message.obj instanceof Throwable) {
-//                                sysKit.getErrorKit().writerLog((Throwable)message.obj, true);
-//                            }
-                            Toast.makeText(getActivity(), "File cannot be open", Toast.LENGTH_SHORT).show();
-                            Objects.requireNonNull(getActivity()).finish();
+
+                           /* Toast.makeText(getActivity(), "File cannot be open", Toast.LENGTH_SHORT).show();
+                            Objects.requireNonNull(getActivity()).finish();*/
+
+                            frame.openFileFailed();
                         });
                         break;
                         

@@ -62,16 +62,27 @@ public class WordConverter {
 
     public void read() {
         String fileExt = nameStr.substring(nameStr.lastIndexOf("."));
+
         if (fileExt.equalsIgnoreCase(".doc")) {
-            this.getRange();
-            this.makeFile();
-            this.readDOC();
-            returnPath = "file:///" + this.htmlPath;
+            try {
+                this.getRange();
+                this.makeFile();
+                this.readDOC();
+                returnPath = "file:///" + this.htmlPath;
+            } catch (Exception e) {
+                e.printStackTrace();
+                returnPath = null;
+            }
         }
         if (fileExt.equalsIgnoreCase(".docx")) {
-            this.makeFile();
-            this.readDOCX();
-            returnPath = "file:///" + this.htmlPath;
+            try {
+                this.makeFile();
+                this.readDOCX();
+                returnPath = "file:///" + this.htmlPath;
+            } catch (Exception e) {
+                e.printStackTrace();
+                returnPath = null;
+            }
         }
     }
 
@@ -348,10 +359,13 @@ public class WordConverter {
             this.output.write(end.getBytes());
         } catch (ZipException e) {
             e.printStackTrace();
+            Log.e(getClass().getSimpleName(),"errr-----------1");
         } catch (IOException e) {
             e.printStackTrace();
+            Log.e(getClass().getSimpleName(),"errr-----------2");
         } catch (XmlPullParserException e) {
             e.printStackTrace();
+            Log.e(getClass().getSimpleName(),"errr-----------3");
         }
         if (river == null) {
             river = "???????????????";

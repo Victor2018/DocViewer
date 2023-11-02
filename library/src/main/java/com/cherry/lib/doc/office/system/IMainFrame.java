@@ -75,6 +75,8 @@ public interface IMainFrame
      * reader file finish call this method
      */
     public void openFileFinish();
+
+    public void openFileFailed();
     
     /**
      * update tool bar status

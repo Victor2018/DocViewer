@@ -1236,4 +1236,8 @@ public class APageListView extends AdapterView<Adapter>
     // but with more sensible indexing
     private LinkedList<APageListItem> pageViewCache = new LinkedList<APageListItem>();
 
+    public LinkedList<APageListItem> getPageViewCache() {
+        return pageViewCache;
+    }
+
 }

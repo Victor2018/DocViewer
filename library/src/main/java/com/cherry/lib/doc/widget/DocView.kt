@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
@@ -80,6 +81,8 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener {
 
     var mOnDocPageChangeListener: OnDocPageChangeListener? = null
 
+    var sourceFilePath: String? = null
+
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle) {
@@ -136,8 +139,13 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener {
     fun openDoc(activity: Activity?, docUrl: String?,
                 docSourceType: Int, fileType: Int,
                 engine: DocEngine = this.engine) {
-        mActivity = activity
         Log.e(TAG,"openDoc()......fileType = $fileType")
+        mActivity = activity
+        if (docSourceType == DocSourceType.PATH) {
+            sourceFilePath = docUrl
+        } else {
+            sourceFilePath = null
+        }
         if (docSourceType == DocSourceType.URL && fileType != FileType.IMAGE) {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP
                 || engine == DocEngine.MICROSOFT
@@ -224,6 +232,16 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener {
                         )
                     )
                 },200)
+            }
+
+            override fun openFileFailed() {
+                try {
+                    var mPoiViewer = PoiViewer(context)
+                    mPoiViewer?.loadFile(mFlDocContainer, sourceFilePath)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Toast.makeText(context, "打开失败", Toast.LENGTH_SHORT).show()
+                }
             }
 
             override fun getAppName(): String {
@@ -341,6 +359,9 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener {
             DocEngine.GOOGLE -> {
                 engineUrl = Constant.GOOGLE_URL
             }
+            else -> {
+                engineUrl = Constant.XDOC_VIEW_URL
+            }
         }
         mDocWeb.loadUrl("$engineUrl${URLEncoder.encode(url, "UTF-8")}")
     }
@@ -363,6 +384,7 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener {
     override fun onDownloadSuccess(absolutePath: String) {
         Log.e(TAG,"initWithUrl-onDownloadSuccess()......")
         showLoadingProgress(100)
+        sourceFilePath = absolutePath
         openDoc(mActivity, absolutePath, DocSourceType.PATH,-1)
     }
 
