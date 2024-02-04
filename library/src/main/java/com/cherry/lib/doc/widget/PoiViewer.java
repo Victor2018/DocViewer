@@ -74,7 +74,6 @@ public class PoiViewer {
         mRootView = fileLayout;
         mFilePath = filePath;
         mFileExt = filePath.substring(filePath.lastIndexOf("."));
-
         mProgressDialog.show();
         new ConvertTask().execute(filePath);
     }
@@ -92,7 +91,6 @@ public class PoiViewer {
 //                excelConverter.readExcelToHtml();
 //                return excelConverter.mUrlPath;
 //            }
-
             if (mFileExt.equalsIgnoreCase(".txt")) {
                 try {
                     String txtString = FileUtils.readFileToString(new File(filePath), "UTF-8");
@@ -135,7 +133,7 @@ public class PoiViewer {
         if (context instanceof AppCompatActivity) {
             return (AppCompatActivity) context;
         } else if (context instanceof ContextWrapper) {
-            ContextWrapper cw = (ContextWrapper)context;
+            ContextWrapper cw = (ContextWrapper) context;
             return scanForActivity(cw.getBaseContext());
         }
         return null;

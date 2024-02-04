@@ -299,7 +299,6 @@ class SysKit(
     /**
      * @return Returns the control.
      */
-
     //
     private var animationMgr: AnimationManager? = null
 

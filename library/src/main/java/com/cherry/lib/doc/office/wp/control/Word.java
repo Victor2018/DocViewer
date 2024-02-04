@@ -1,11 +1,24 @@
 /*
  * 文件名称:          WPRead.java
- *  
+ *
  * 编译器:            android2.2
  * 时间:              下午2:11:03
  */
 
 package com.cherry.lib.doc.office.wp.control;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.util.AttributeSet;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.cherry.lib.doc.office.common.IOfficeToPicture;
 import com.cherry.lib.doc.office.common.picture.PictureKit;
@@ -32,41 +45,21 @@ import com.cherry.lib.doc.office.wp.view.PageRoot;
 import com.cherry.lib.doc.office.wp.view.PageView;
 import com.cherry.lib.doc.office.wp.view.WPViewKit;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.View;
-import android.widget.LinearLayout;
-
-public class Word extends LinearLayout implements IWord
-{
+public class Word extends LinearLayout implements IWord {
 
     /**
-     * 
      * @param context
      * @param attrs
      */
-    public Word(Context context, AttributeSet attrs)
-    {
+    public Word(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
     /**
-     * 
      * @param context
      */
-    public Word(Context context, IDocument doc, String filePath, IControl control)
-    {
+    public Word(Context context, IDocument doc, String filePath, IControl control) {
         super(context);
-
         this.control = control;
         this.doc = doc;
         int defaultMode = control.getMainFrame().getWordDefaultView();
@@ -81,26 +74,21 @@ public class Word extends LinearLayout implements IWord
             addView(printWord);
         }
         dialogAction = new WPDialogAction(control);
-
         paint = new Paint();
         paint.setAntiAlias(true);
         paint.setTypeface(Typeface.SANS_SERIF);
         paint.setTextSize(24);
-
         visibleRect = new Rectangle();
-
         initManage();
-        if (defaultMode == WPViewConstant.PRINT_ROOT)
-        {
+        if (defaultMode == WPViewConstant.PRINT_ROOT) {
             setOnClickListener(null);
         }
     }
 
     /**
-     * 
+     *
      */
-    private void initManage()
-    {
+    private void initManage() {
         //
         eventManage = new WPEventManage(this, control);
         setOnTouchListener(eventManage);
@@ -116,128 +104,97 @@ public class Word extends LinearLayout implements IWord
     /**
      * 初始化
      */
-    public void init()
-    {
-        if (normalRoot != null)
-        {
+    public void init() {
+        if (normalRoot != null) {
             normalRoot.doLayout(0, 0, mWidth, mHeight, Integer.MAX_VALUE, 0);
-        }
-        else
-        {
+        } else {
             pageRoot.doLayout(0, 0, mWidth, mHeight, Integer.MAX_VALUE, 0);
         }
         initFinish = true;
-        if (printWord != null)
-        {
+        if (printWord != null) {
             printWord.init();
         }
-        if (getCurrentRootType() == WPViewConstant.PRINT_ROOT)
-        {
+        if (getCurrentRootType() == WPViewConstant.PRINT_ROOT) {
             return;
         }
         // to picture
-        post(new Runnable()
-        {
+        post(new Runnable() {
 
-            @ Override
-            public void run()
-            {
+            @Override
+            public void run() {
                 control.actionEvent(EventConstant.APP_GENERATED_PICTURE_ID, null);
             }
         });
     }
 
     /**
-     * 
      *
      */
-    public void onDraw(Canvas canvas)
-    {
-        if (!initFinish || currentRootType == WPViewConstant.PRINT_ROOT)
-        {
+    public void onDraw(Canvas canvas) {
+        if (!initFinish || currentRootType == WPViewConstant.PRINT_ROOT) {
             return;
         }
-        try
-        {
-            if (getCurrentRootType() == WPViewConstant.PAGE_ROOT)
-            {
+        try {
+            if (getCurrentRootType() == WPViewConstant.PAGE_ROOT) {
                 pageRoot.draw(canvas, 0, 0, zoom);
                 drawPageNubmer(canvas, zoom);
-            }
-            else if (getCurrentRootType() == WPViewConstant.NORMAL_ROOT)
-            {
+            } else if (getCurrentRootType() == WPViewConstant.NORMAL_ROOT) {
                 normalRoot.draw(canvas, 0, 0, normalZoom);
             }
             // to picture
             IOfficeToPicture otp = control.getOfficeToPicture();
-            if (otp != null && otp.getModeType() == IOfficeToPicture.VIEW_CHANGING)
-            {
+            if (otp != null && otp.getModeType() == IOfficeToPicture.VIEW_CHANGING) {
                 toPicture(otp);
             }
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             control.getSysKit().getErrorKit().writerLog(e);
         }
     }
 
     /**
-     * 
+     *
      */
-    public void createPicture()
-    {
+    public void createPicture() {
         IOfficeToPicture otp = control.getOfficeToPicture();
-        if (otp != null && otp.getModeType() == IOfficeToPicture.VIEW_CHANGE_END)
-        {
-            try
-            {
+        if (otp != null && otp.getModeType() == IOfficeToPicture.VIEW_CHANGE_END) {
+            try {
                 toPicture(otp);
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
             }
         }
     }
 
     /**
-     * 
+     *
      */
-    private void toPicture(IOfficeToPicture otp)
-    {
-        if (getCurrentRootType() == WPViewConstant.PRINT_ROOT)
-        {
-        	WPPageListItem item = (WPPageListItem)printWord.getListView().getCurrentPageView();
+    private void toPicture(IOfficeToPicture otp) {
+        if (getCurrentRootType() == WPViewConstant.PRINT_ROOT) {
+            WPPageListItem item = (WPPageListItem) printWord.getListView().getCurrentPageView();
             item.addRepaintImageView(null);
             return;
         }
         boolean b = PictureKit.instance().isDrawPictrue();
         PictureKit.instance().setDrawPictrue(true);
-
         Bitmap bitmap = otp.getBitmap(getWidth(), getHeight());
-        if (bitmap == null)
-        {
+        if (bitmap == null) {
             return;
         }
         float paintZoom = getZoom();
         float tX = -getScrollX();
         float tY = -getScrollY();
-        if (bitmap.getWidth() != getWidth() || bitmap.getHeight() != getHeight())
-        {
-            float newZoom = Math.min((float)bitmap.getWidth() / getWidth(),
-                (float)bitmap.getHeight() / getHeight())
-                * getZoom();
+        if (bitmap.getWidth() != getWidth() || bitmap.getHeight() != getHeight()) {
+            float newZoom = Math.min((float) bitmap.getWidth() / getWidth(),
+                    (float) bitmap.getHeight() / getHeight())
+                    * getZoom();
             float pageWidth = pageRoot != null ? pageRoot.getChildView().getWidth() * newZoom : 0;
             float x = 0;
-            if (pageWidth > bitmap.getWidth() || getCurrentRootType() == WPViewConstant.NORMAL_ROOT)
-            {
+            if (pageWidth > bitmap.getWidth() || getCurrentRootType() == WPViewConstant.NORMAL_ROOT) {
                 //x = (int)(pageWidth - getWidth()) / 2;
                 x = getScrollX() / paintZoom * newZoom;
                 x = Math.min(x, getWordWidth() * newZoom - bitmap.getWidth());
-
             }
             float y = getScrollY() / paintZoom * newZoom;
             y = Math.min(y, getWordHeight() * newZoom - getHeight());
-
             tX = -Math.max(0, x);
             tY = -Math.max(0, y);
             paintZoom = newZoom;
@@ -245,12 +202,9 @@ public class Word extends LinearLayout implements IWord
         Canvas canvas = new Canvas(bitmap);
         canvas.translate(tX, tY);
         canvas.drawColor(Color.GRAY);
-        if (getCurrentRootType() == WPViewConstant.PAGE_ROOT)
-        {
+        if (getCurrentRootType() == WPViewConstant.PAGE_ROOT) {
             pageRoot.draw(canvas, 0, 0, paintZoom);
-        }
-        else if (getCurrentRootType() == WPViewConstant.NORMAL_ROOT)
-        {
+        } else if (getCurrentRootType() == WPViewConstant.NORMAL_ROOT) {
             normalRoot.draw(canvas, 0, 0, paintZoom);
         }
         otp.callBack(bitmap);
@@ -258,44 +212,33 @@ public class Word extends LinearLayout implements IWord
     }
 
     /**
-     * 
      * @return
      */
-    public Bitmap getSnapshot(Bitmap bitmap)
-    {
-    	if (bitmap == null)
-        {
+    public Bitmap getSnapshot(Bitmap bitmap) {
+        if (bitmap == null) {
             return null;
         }
-    	
-    	if (getCurrentRootType() == WPViewConstant.PRINT_ROOT && printWord != null)
-        {
-    		return printWord.getSnapshot(bitmap);
+        if (getCurrentRootType() == WPViewConstant.PRINT_ROOT && printWord != null) {
+            return printWord.getSnapshot(bitmap);
         }
-    	
         boolean b = PictureKit.instance().isDrawPictrue();
         PictureKit.instance().setDrawPictrue(true);
-        
         float paintZoom = getZoom();
         float tX = -getScrollX();
         float tY = -getScrollY();
-        if (bitmap.getWidth() != getWidth() || bitmap.getHeight() != getHeight())
-        {
-            float newZoom = Math.min((float)bitmap.getWidth() / getWidth(),
-                (float)bitmap.getHeight() / getHeight())
-                * getZoom();
+        if (bitmap.getWidth() != getWidth() || bitmap.getHeight() != getHeight()) {
+            float newZoom = Math.min((float) bitmap.getWidth() / getWidth(),
+                    (float) bitmap.getHeight() / getHeight())
+                    * getZoom();
             float pageWidth = pageRoot != null ? pageRoot.getChildView().getWidth() * newZoom : 0;
             float x = 0;
-            if (pageWidth > bitmap.getWidth() || getCurrentRootType() == WPViewConstant.NORMAL_ROOT)
-            {
+            if (pageWidth > bitmap.getWidth() || getCurrentRootType() == WPViewConstant.NORMAL_ROOT) {
                 //x = (int)(pageWidth - getWidth()) / 2;
                 x = getScrollX() / paintZoom * newZoom;
                 x = Math.min(x, getWordWidth() * newZoom - bitmap.getWidth());
-
             }
             float y = getScrollY() / paintZoom * newZoom;
             y = Math.min(y, getWordHeight() * newZoom - getHeight());
-
             tX = -Math.max(0, x);
             tY = -Math.max(0, y);
             paintZoom = newZoom;
@@ -303,90 +246,70 @@ public class Word extends LinearLayout implements IWord
         Canvas canvas = new Canvas(bitmap);
         canvas.translate(tX, tY);
         canvas.drawColor(Color.GRAY);
-        if (getCurrentRootType() == WPViewConstant.PAGE_ROOT)
-        {
+        if (getCurrentRootType() == WPViewConstant.PAGE_ROOT) {
             pageRoot.draw(canvas, 0, 0, paintZoom);
-        }
-        else if (getCurrentRootType() == WPViewConstant.NORMAL_ROOT)
-        {
+        } else if (getCurrentRootType() == WPViewConstant.NORMAL_ROOT) {
             normalRoot.draw(canvas, 0, 0, paintZoom);
         }
-
         PictureKit.instance().setDrawPictrue(b);
-        
-    	return bitmap;
+        return bitmap;
     }
-    
+
     /**
      * This is called during layout when the size of this view has changed. If
      * you were just added to the view hierarchy, you're called with the old
      * values of 0.
      *
-     * @param w Current width of this view.
-     * @param h Current height of this view.
+     * @param w    Current width of this view.
+     * @param h    Current height of this view.
      * @param oldw Old width of this view.
      * @param oldh Old height of this view.
      */
-    protected void onSizeChanged(int w, int h, int oldw, int oldh)
-    {
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        if (!initFinish)
-        {
+        if (!initFinish) {
             return;
         }
         eventManage.stopFling();
         LayoutKit.instance().layoutAllPage(pageRoot, zoom);
-        if (currentRootType == WPViewConstant.PAGE_ROOT)
-        {
+        if (currentRootType == WPViewConstant.PAGE_ROOT) {
             Rectangle r = getVisibleRect();
             int sX = r.x;
             int sY = r.y;
-            int wW = (int)(getWordWidth() * zoom);
-            int wH = (int)(getWordHeight() * zoom);
-            if (r.x + r.width > wW)
-            {
+            int wW = (int) (getWordWidth() * zoom);
+            int wH = (int) (getWordHeight() * zoom);
+            if (r.x + r.width > wW) {
                 sX = wW - r.width;
             }
-            if (r.y + r.height > wH)
-            {
+            if (r.y + r.height > wH) {
                 sY = wH - r.height;
             }
-            if (sX != r.x || sY != r.y)
-            {
+            if (sX != r.x || sY != r.y) {
                 scrollTo(Math.max(0, sX), Math.max(0, sY));
             }
         }
-        if (w != oldw && control.getMainFrame().isZoomAfterLayoutForWord())
-        {
+        if (w != oldw && control.getMainFrame().isZoomAfterLayoutForWord()) {
             layoutNormal();
             setExportImageAfterZoom(true);
         }
+        post(new Runnable() {
 
-        post(new Runnable()
-        {
-
-            @ Override
-            public void run()
-            {
+            @Override
+            public void run() {
                 control.actionEvent(EventConstant.APP_GENERATED_PICTURE_ID, null);
             }
         });
     }
 
     /**
-     * 
+     *
      */
-    public void layoutNormal()
-    {
-        if (normalRoot != null)
-        {   
+    public void layoutNormal() {
+        if (normalRoot != null) {
             normalRoot.stopBackLayout();
-            post(new Runnable()
-            {
-                public void run()
-                {
-                    if (currentRootType == WPViewConstant.NORMAL_ROOT)
-                    {
+            post(new Runnable() {
+                public void run() {
+                    if (currentRootType == WPViewConstant.NORMAL_ROOT) {
                         scrollTo(0, getScrollY());
                     }
                     normalRoot.layoutAll();
@@ -395,24 +318,19 @@ public class Word extends LinearLayout implements IWord
             });
         }
     }
-    
+
     /**
-     * 
+     *
      */
-    public void layoutPrintMode()
-    {
-        post(new Runnable()
-        {
-            
-            @ Override
-            public void run()
-            {
+    public void layoutPrintMode() {
+        post(new Runnable() {
+
+            @Override
+            public void run() {
                 if (currentRootType == WPViewConstant.PRINT_ROOT
-                    && printWord != null)
-                {
+                        && printWord != null) {
                     APageListView listView = printWord.getListView();
-                    if (listView != null && listView.getChildCount() == 1)
-                    {
+                    if (listView != null && listView.getChildCount() == 1) {
                         listView.requestLayout();
                     }
                 }
@@ -421,120 +339,90 @@ public class Word extends LinearLayout implements IWord
     }
 
     /**
-     * 
+     *
      */
-    public void computeScroll()
-    {
-        if (getCurrentRootType() == WPViewConstant.PRINT_ROOT)
-        {
+    public void computeScroll() {
+        if (getCurrentRootType() == WPViewConstant.PRINT_ROOT) {
             return;
         }
         eventManage.computeScroll();
     }
 
     /**
-     * 
+     *
      */
-    public void switchView(int rootType)
-    {
-        if (rootType == getCurrentRootType())
-        {
+    public void switchView(int rootType) {
+        if (rootType == getCurrentRootType()) {
             return;
         }
         eventManage.stopFling();
         setCurrentRootType(rootType);
         PictureKit.instance().setDrawPictrue(true);
-        if (getCurrentRootType() == WPViewConstant.NORMAL_ROOT)
-        {
-            if (normalRoot == null)
-            {
+        if (getCurrentRootType() == WPViewConstant.NORMAL_ROOT) {
+            if (normalRoot == null) {
                 normalRoot = new NormalRoot(this);
                 normalRoot.doLayout(0, 0, mWidth, mHeight, Integer.MAX_VALUE, 0);
             }
             setOnTouchListener(eventManage);
-            if (printWord != null)
-            {
+            if (printWord != null) {
                 printWord.setVisibility(INVISIBLE);
             }
-        }
-        else if (getCurrentRootType() == WPViewConstant.PAGE_ROOT)
-        {
-            if (pageRoot == null)
-            {
+        } else if (getCurrentRootType() == WPViewConstant.PAGE_ROOT) {
+            if (pageRoot == null) {
                 pageRoot = new PageRoot(this);
                 pageRoot.doLayout(0, 0, mWidth, mHeight, Integer.MAX_VALUE, 0);
-            }
-            else
-            {
+            } else {
                 LayoutKit.instance().layoutAllPage(pageRoot, zoom);
             }
             setOnTouchListener(eventManage);
-            if (printWord != null)
-            {
+            if (printWord != null) {
                 printWord.setVisibility(INVISIBLE);
             }
-        }
-        else if (getCurrentRootType() == WPViewConstant.PRINT_ROOT)
-        {
-            if (pageRoot == null)
-            {
+        } else if (getCurrentRootType() == WPViewConstant.PRINT_ROOT) {
+            if (pageRoot == null) {
                 pageRoot = new PageRoot(this);
                 pageRoot.doLayout(0, 0, mWidth, mHeight, Integer.MAX_VALUE, 0);
             }
-            if (printWord == null)
-            {
+            if (printWord == null) {
                 printWord = new PrintWord(getContext(), control, pageRoot);
-                
                 //print view background
-                Object bg = control.getMainFrame().getViewBackground();;
-            	if(bg != null)
-            	{
-            		if(bg  instanceof Integer)
-                	{
-            			printWord.setBackgroundColor((Integer)bg);
-                	}
-                	else if(bg instanceof Drawable)
-                	{
-                		printWord.setBackgroundDrawable((Drawable)bg);
-                	}
-            	}
-            	
+                Object bg = control.getMainFrame().getViewBackground();
+                ;
+                if (bg != null) {
+                    if (bg instanceof Integer) {
+                        printWord.setBackgroundColor((Integer) bg);
+                    } else if (bg instanceof Drawable) {
+                        printWord.setBackgroundDrawable((Drawable) bg);
+                    }
+                }
                 addView(printWord);
-                post(new Runnable()
-                {
-                    public void run()
-                    {
+                post(new Runnable() {
+                    public void run() {
                         printWord.init();
                         printWord.postInvalidate();
                     }
                 });
-            }
-            else
-            {
+            } else {
                 printWord.setVisibility(VISIBLE);
             }
             scrollTo(0, 0);
             setOnClickListener(null);
             return;
         }
-        post(new Runnable()
-        {
+        post(new Runnable() {
 
-            @ Override
-            public void run()
-            {
+            @Override
+            public void run() {
                 scrollTo(0, getScrollY());
                 postInvalidate();
             }
         });
-
     }
 
     /**
-     * 
+     *
      */
-    public Rectangle getVisibleRect()
-    {
+    public Rectangle getVisibleRect() {
         visibleRect.x = getScrollX();
         visibleRect.y = getScrollY();
         visibleRect.width = this.getWidth();
@@ -545,133 +433,106 @@ public class Word extends LinearLayout implements IWord
     /**
      * @param zoom The zoom to set.
      */
-    public void setZoom(float zoom, int pointX, int pointY)
-    {
+    public void setZoom(float zoom, int pointX, int pointY) {
         float oldZoom = 1.0f;
-        if (currentRootType == WPViewConstant.PAGE_ROOT)
-        {
+        if (currentRootType == WPViewConstant.PAGE_ROOT) {
             oldZoom = this.zoom;
             this.zoom = zoom;
             LayoutKit.instance().layoutAllPage(pageRoot, zoom);
-        }
-        else if (currentRootType == WPViewConstant.PRINT_ROOT)
-        {
+        } else if (currentRootType == WPViewConstant.PRINT_ROOT) {
             printWord.setZoom(zoom, pointX, pointY);
             return;
-        }
-        else if (currentRootType == WPViewConstant.NORMAL_ROOT)
-        {
+        } else if (currentRootType == WPViewConstant.NORMAL_ROOT) {
             oldZoom = this.normalZoom;
             this.normalZoom = zoom;
         }
-        
         scrollToFocusXY(zoom, oldZoom, pointX, pointY);
     }
-    
+
     /**
      * set fit size for PPT，Word view mode, PDf
-     * 
-     * @param  value  fit size mode
-     *          = 0, fit size of get minimum value of pageWidth / viewWidth and pageHeight / viewHeight;
-     *          = 1, fit size of pageWidth
-     *          = 2, fit size of PageHeight
+     *
+     * @param value fit size mode
+     *              = 0, fit size of get minimum value of pageWidth / viewWidth and pageHeight / viewHeight;
+     *              = 1, fit size of pageWidth
+     *              = 2, fit size of PageHeight
      */
-    public void setFitSize(int value)
-    {
-        if (currentRootType == WPViewConstant.PRINT_ROOT)
-        {
+    public void setFitSize(int value) {
+        if (currentRootType == WPViewConstant.PRINT_ROOT) {
             printWord.setFitSize(value);
         }
     }
-    
+
     /**
      * get fit size statue
-     * 
+     *
      * @return fit size statue
-     *          = 0, left/right and top/bottom don't alignment 
-     *          = 1, top/bottom alignment
-     *          = 2, left/right alignment
-     *          = 3, left/right and top/bottom alignment 
-     */ 
-    public int getFitSizeState()
-    {
-        if (currentRootType == WPViewConstant.PRINT_ROOT)
-        {
+     * = 0, left/right and top/bottom don't alignment
+     * = 1, top/bottom alignment
+     * = 2, left/right alignment
+     * = 3, left/right and top/bottom alignment
+     */
+    public int getFitSizeState() {
+        if (currentRootType == WPViewConstant.PRINT_ROOT) {
             return printWord.getFitSizeState();
         }
         return 0;
     }
 
     /**
-     * 
      * @param newScale
      * @param oldScale
      * @param focusScreenX
      * @param focusScreenY
      */
-    private void scrollToFocusXY(float newScale, float oldScale, int focusScreenX, int focusScreenY)
-    {
-        if (focusScreenX == Integer.MIN_VALUE && focusScreenY == Integer.MIN_VALUE)
-        {
+    private void scrollToFocusXY(float newScale, float oldScale, int focusScreenX, int focusScreenY) {
+        if (focusScreenX == Integer.MIN_VALUE && focusScreenY == Integer.MIN_VALUE) {
             focusScreenX = getWidth() / 2;
             focusScreenY = getHeight() / 2;
         }
         float viewpageWidth = 0;
         float viewpageHeight = 0;
         if (getCurrentRootType() == WPViewConstant.PAGE_ROOT
-            && pageRoot != null && pageRoot.getChildView() != null)
-        {
+                && pageRoot != null && pageRoot.getChildView() != null) {
             viewpageWidth = pageRoot.getChildView().getWidth();
             viewpageHeight = pageRoot.getChildView().getHeight();
-        }
-        else
-        {
+        } else {
             viewpageWidth = getWidth();
             viewpageHeight = getHeight();
         }
-
-        int lastpageHeight = (int)(viewpageHeight * (oldScale));
+        int lastpageHeight = (int) (viewpageHeight * (oldScale));
         float ratioY = 1.0f * (getScrollY() + focusScreenY) / lastpageHeight;
-
-        int lastpageWidth = (int)(viewpageWidth * (oldScale));
+        int lastpageWidth = (int) (viewpageWidth * (oldScale));
         float ratioX = 1.0f * (getScrollX() + focusScreenX) / lastpageWidth;
-
         //do scroll by, so that the view scale from the center of pointers
-        int pageHeight = (int)(viewpageHeight * (newScale));
-        int pageWidth = (int)(viewpageWidth * (newScale));
-
-        scrollBy((int)((pageWidth - lastpageWidth) * ratioX),
-            (int)((pageHeight - lastpageHeight) * ratioY));
+        int pageHeight = (int) (viewpageHeight * (newScale));
+        int pageWidth = (int) (viewpageWidth * (newScale));
+        scrollBy((int) ((pageWidth - lastpageWidth) * ratioX),
+                (int) ((pageHeight - lastpageHeight) * ratioY));
     }
 
     /**
-     * 
      *
      */
-    public void scrollTo(int x, int y)
-    {
-        x = Math.min(Math.max(x, 0), (int)(getWordWidth() * getZoom() - getWidth()));
-        y = Math.min(Math.max(y, 0), (int)(getWordHeight() * getZoom() - getHeight())); 
+    public void scrollTo(int x, int y) {
+        x = Math.min(Math.max(x, 0), (int) (getWordWidth() * getZoom() - getWidth()));
+        y = Math.min(Math.max(y, 0), (int) (getWordHeight() * getZoom() - getHeight()));
         super.scrollTo(Math.max(x, 0), Math.max(y, 0));
     }
 
     /**
-     * 
+     *
      */
-    public int getCurrentPageNumber()
-    {
-        if (currentRootType == WPViewConstant.NORMAL_ROOT || pageRoot == null)
-        {
+    public int getCurrentPageNumber() {
+        if (currentRootType == WPViewConstant.NORMAL_ROOT || pageRoot == null) {
             return 1;
         }
-        if (getCurrentRootType() == WPViewConstant.PRINT_ROOT)
-        {
+        if (getCurrentRootType() == WPViewConstant.PRINT_ROOT) {
             return printWord.getCurrentPageNumber();
         }
-        PageView pv = WPViewKit.instance().getPageView(pageRoot, (int)(getScrollX() / zoom),
-            (int)(getScrollY() / zoom) + getHeight() / 3);
-        if (pv == null)
-        {
+        PageView pv = WPViewKit.instance().getPageView(pageRoot, (int) (getScrollX() / zoom),
+                (int) (getScrollY() / zoom) + getHeight() / 3);
+        if (pv == null) {
             return 1;
         }
         return pv.getPageNumber();
@@ -679,26 +540,23 @@ public class Word extends LinearLayout implements IWord
 
     /**
      * get page size
+     *
      * @param pageIndex based on 1
      * @return
      */
-    public Rectangle getPageSize(int pageIndex)
-    {
-        if (pageRoot == null || currentRootType == WPViewConstant.NORMAL_ROOT)
-        {
+    public Rectangle getPageSize(int pageIndex) {
+        if (pageRoot == null || currentRootType == WPViewConstant.NORMAL_ROOT) {
             return new Rectangle(0, 0, getWidth(), getHeight());
         }
-        if (pageIndex < 0 || pageIndex > pageRoot.getChildCount())
-        {
+        if (pageIndex < 0 || pageIndex > pageRoot.getChildCount()) {
             return null;
         }
-        PageView pv = WPViewKit.instance().getPageView(pageRoot, (int)(getScrollX() / zoom),
-            (int)(getScrollY() / zoom) + getHeight() / 5);
-        if (pv == null)
-        {
+        PageView pv = WPViewKit.instance().getPageView(pageRoot, (int) (getScrollX() / zoom),
+                (int) (getScrollY() / zoom) + getHeight() / 5);
+        if (pv == null) {
             IAttributeSet attr = doc.getSection(0).getAttribute();
-            int pageWidth = (int)(AttrManage.instance().getPageWidth(attr) * MainConstant.TWIPS_TO_PIXEL);
-            int pageHeight = (int)(AttrManage.instance().getPageHeight(attr) * MainConstant.TWIPS_TO_PIXEL);
+            int pageWidth = (int) (AttrManage.instance().getPageWidth(attr) * MainConstant.TWIPS_TO_PIXEL);
+            int pageHeight = (int) (AttrManage.instance().getPageHeight(attr) * MainConstant.TWIPS_TO_PIXEL);
             return new Rectangle(0, 0, pageWidth, pageHeight);
         }
         return new Rectangle(0, 0, pv.getWidth(), pv.getHeight());
@@ -706,38 +564,32 @@ public class Word extends LinearLayout implements IWord
 
     /**
      * 绘制页信息
+     *
      * @param canvas
      * @param zoom
      */
-    private void drawPageNubmer(Canvas canvas, float zoom)
-    {
+    private void drawPageNubmer(Canvas canvas, float zoom) {
         int currentNumber = getCurrentPageNumber();
-        if (control.getMainFrame().isDrawPageNumber() && pageRoot != null)
-        {
+        if (control.getMainFrame().isDrawPageNumber() && pageRoot != null) {
             Rect rect = canvas.getClipBounds();
             if (rect.width() != getWidth()
-                || rect.height() != getHeight())
-            {
+                    || rect.height() != getHeight()) {
                 return;
             }
             String pn = String.valueOf(currentNumber) + " / "
-                + String.valueOf(pageRoot.getPageCount());
-            
-            int w = (int)paint.measureText(pn);
-            int h = (int)(paint.descent() - paint.ascent());
-            int x = (int)((rect.right + getScrollX() - w) / 2);
-            int y = (int)((rect.bottom - h) - 50);
-
-            Drawable drawable = SysKit.getPageNubmerDrawable(); 
-            drawable.setBounds((int)(x - 20), y - 10, x + w + 20, y + h + 10);
+                    + String.valueOf(pageRoot.getPageCount());
+            int w = (int) paint.measureText(pn);
+            int h = (int) (paint.descent() - paint.ascent());
+            int x = (int) ((rect.right + getScrollX() - w) / 2);
+            int y = (int) ((rect.bottom - h) - 50);
+            Drawable drawable = SysKit.getPageNubmerDrawable();
+            drawable.setBounds((int) (x - 20), y - 10, x + w + 20, y + h + 10);
             drawable.draw(canvas);
-
             y -= paint.ascent();
             canvas.drawText(pn, x, y, paint);
-        }        
+        }
         if (preShowPageIndex != currentNumber
-            || prePageCount != getPageCount())
-        {
+                || prePageCount != getPageCount()) {
             control.getMainFrame().changePage();
             preShowPageIndex = currentNumber;
             prePageCount = getPageCount();
@@ -748,183 +600,147 @@ public class Word extends LinearLayout implements IWord
      * @param x 为100%的值
      * @param y 为100%的值
      */
-    public long viewToModel(int x, int y, boolean isBack)
-    {
-        if (getCurrentRootType() == WPViewConstant.PAGE_ROOT)
-        {
+    public long viewToModel(int x, int y, boolean isBack) {
+        if (getCurrentRootType() == WPViewConstant.PAGE_ROOT) {
             return pageRoot.viewToModel(x, y, isBack);
-        }
-        else if(getCurrentRootType() == WPViewConstant.NORMAL_ROOT)
-        {
+        } else if (getCurrentRootType() == WPViewConstant.NORMAL_ROOT) {
             return normalRoot.viewToModel(x, y, isBack);
-        }
-        else if (getCurrentRootType() == WPViewConstant.PRINT_ROOT)
-        {
+        } else if (getCurrentRootType() == WPViewConstant.PRINT_ROOT) {
             return printWord.viewToModel(x, y, isBack);
         }
         return 0;
     }
 
     /**
-     * 
+     *
      */
-    public Rectangle modelToView(long offset, Rectangle rect, boolean isBack)
-    {
-        if (getCurrentRootType() == WPViewConstant.PAGE_ROOT)
-        {
+    public Rectangle modelToView(long offset, Rectangle rect, boolean isBack) {
+        if (getCurrentRootType() == WPViewConstant.PAGE_ROOT) {
             return pageRoot.modelToView(offset, rect, isBack);
-        }
-        else  if(getCurrentRootType() == WPViewConstant.NORMAL_ROOT)
-        {
+        } else if (getCurrentRootType() == WPViewConstant.NORMAL_ROOT) {
             return normalRoot.modelToView(offset, rect, isBack);
-        }
-        else if (getCurrentRootType() == WPViewConstant.PRINT_ROOT)
-        {
+        } else if (getCurrentRootType() == WPViewConstant.PRINT_ROOT) {
             return printWord.modelToView(offset, rect, isBack);
         }
         return rect;
     }
 
     /**
-     * 
+     *
      */
-    public IView getRoot(int rootType)
-    {
-        if (rootType == WPViewConstant.PAGE_ROOT)
-        {
+    public IView getRoot(int rootType) {
+        if (rootType == WPViewConstant.PAGE_ROOT) {
             return pageRoot;
-        }
-        else if (rootType == WPViewConstant.NORMAL_ROOT)
-        {
+        } else if (rootType == WPViewConstant.NORMAL_ROOT) {
             return normalRoot;
         }
         return null;
     }
 
     /**
-     * 
+     *
      */
-    public String getText(long start, long end)
-    {
+    public String getText(long start, long end) {
         return doc.getText(start, end);
     }
 
     /**
      * @return Returns the dialogAction.
      */
-    public IDialogAction getDialogAction()
-    {
+    public IDialogAction getDialogAction() {
         return dialogAction;
     }
 
     /**
-     * 
+     *
      */
-    public WPFind getFind()
-    {
+    public WPFind getFind() {
         return wpFind;
     }
 
     /**
      * @return Returns the filePath.
      */
-    public String getFilePath()
-    {
+    public String getFilePath() {
         return filePath;
     }
 
     /**
-     * 
      *
      */
-    public IHighlight getHighlight()
-    {
+    public IHighlight getHighlight() {
         return highlight;
     }
 
     /**
-     * 
      *
      */
-    public IDocument getDocument()
-    {
+    public IDocument getDocument() {
         return doc;
     }
 
     /**
-     * 
+     *
      */
-    public IControl getControl()
-    {
+    public IControl getControl() {
         return control;
     }
 
     /**
      * @return Returns the status.
      */
-    public StatusManage getStatus()
-    {
+    public StatusManage getStatus() {
         return status;
     }
 
     /**
-     * 
+     *
      */
-    public WPEventManage getEventManage()
-    {
+    public WPEventManage getEventManage() {
         return eventManage;
     }
 
     /**
+     *
      */
-    public void setWordWidth(int mWidth)
-    {
+    public void setWordWidth(int mWidth) {
         this.mWidth = mWidth;
     }
 
     /**
+     *
      */
-    public void setWordHeight(int mHeight)
-    {
+    public void setWordHeight(int mHeight) {
         this.mHeight = mHeight;
     }
 
     /**
-     * 
+     *
      */
-    public void setSize(int w, int h)
-    {
+    public void setSize(int w, int h) {
         mWidth = w;
         mHeight = h;
     }
 
     /**
-     * 
+     *
      */
-    public int getWordHeight()
-    {
-        if (getCurrentRootType() == WPViewConstant.PAGE_ROOT)
-        {
+    public int getWordHeight() {
+        if (getCurrentRootType() == WPViewConstant.PAGE_ROOT) {
             return mHeight;
-        }
-        else if (getCurrentRootType() == WPViewConstant.NORMAL_ROOT)
-        {
+        } else if (getCurrentRootType() == WPViewConstant.NORMAL_ROOT) {
             return normalRoot.getHeight();
         }
         return getHeight();
     }
 
     /**
-     * 
+     *
      */
-    public int getWordWidth()
-    {
-        if (getCurrentRootType() == WPViewConstant.PAGE_ROOT)
-        {
+    public int getWordWidth() {
+        if (getCurrentRootType() == WPViewConstant.PAGE_ROOT) {
             return mWidth;
-        }
-        else  if (getCurrentRootType() == WPViewConstant.NORMAL_ROOT)
-        {
+        } else if (getCurrentRootType() == WPViewConstant.NORMAL_ROOT) {
             return normalRoot.getWidth();
         }
         return getWidth();
@@ -932,144 +748,110 @@ public class Word extends LinearLayout implements IWord
 
     /**
      * switch page for page index (base 0)
-     * 
-     * @param index     page index
-     * 
+     *
+     * @param index page index
      */
-    protected void showPage(int index, int direction)
-    {
+    protected void showPage(int index, int direction) {
         if (index < 0 || index >= getPageCount()
-            || getCurrentRootType() == WPViewConstant.NORMAL_ROOT)
-        {
+                || getCurrentRootType() == WPViewConstant.NORMAL_ROOT) {
             return;
         }
-        if (getCurrentRootType() == WPViewConstant.PRINT_ROOT)
-        {
-            if (direction == EventConstant.APP_PAGE_UP_ID)
-            {
+        if (getCurrentRootType() == WPViewConstant.PRINT_ROOT) {
+            if (direction == EventConstant.APP_PAGE_UP_ID) {
                 printWord.previousPageview();
-            }
-            else if (direction == EventConstant.APP_PAGE_DOWN_ID)
-            {
+            } else if (direction == EventConstant.APP_PAGE_DOWN_ID) {
                 printWord.nextPageView();
-            }
-            else
-            {
+            } else {
                 printWord.showPDFPageForIndex(index);
             }
             return;
         }
         IView view = pageRoot.getPageView(index);
-        if (view != null)
-        {
-            this.scrollTo(getScrollX(), (int)(view.getY() * zoom));
+        if (view != null) {
+            this.scrollTo(getScrollX(), (int) (view.getY() * zoom));
         }
     }
 
     /**
      * page to image for page number (base 1)
-     * 
+     *
      * @return bitmap raw data
      */
-    public Bitmap pageToImage(int pageNumber)
-    {
+    public Bitmap pageToImage(int pageNumber) {
         if (pageNumber <= 0 || pageNumber > getPageCount()
-            || pageRoot == null || pageRoot.getChildView() == null
-            || getCurrentRootType() == WPViewConstant.NORMAL_ROOT)
-        {
+                || pageRoot == null || pageRoot.getChildView() == null
+                || getCurrentRootType() == WPViewConstant.NORMAL_ROOT) {
             return null;
         }
-        
         IView view = pageRoot.getPageView(pageNumber - 1);
-        if (view == null)
-        {
+        if (view == null) {
             return null;
         }
         Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         canvas.translate(-view.getX(), -view.getY());
         canvas.drawColor(Color.WHITE);
-        ((PageView)view).draw(canvas, 0, 0, 1);
+        ((PageView) view).draw(canvas, 0, 0, 1);
         return bitmap;
-    }    
-    
+    }
+
     /**
      * specific area of page to image. if area is not completely contained in the page, return null
+     *
      * @param pageNumber page number
      * @return
      */
-    public Bitmap pageAreaToImage(int pageNumber, int srcLeft, int srcTop, int srcWidth, int srcHeight, int desWidth, int desHeight)
-    {
+    public Bitmap pageAreaToImage(int pageNumber, int srcLeft, int srcTop, int srcWidth, int srcHeight, int desWidth, int desHeight) {
         if (pageNumber <= 0 || pageNumber > getPageCount()
-            || pageRoot == null || pageRoot.getChildView() == null
-            || getCurrentRootType() == WPViewConstant.NORMAL_ROOT)
-        {
+                || pageRoot == null || pageRoot.getChildView() == null
+                || getCurrentRootType() == WPViewConstant.NORMAL_ROOT) {
             return null;
         }
-        
         IView view = pageRoot.getPageView(pageNumber - 1);
-        
-        if(view != null && SysKit.isValidateRect(view.getWidth(), view.getHeight(), srcLeft, srcTop, srcWidth, srcHeight))
-        {
+        if (view != null && SysKit.isValidateRect(view.getWidth(), view.getHeight(), srcLeft, srcTop, srcWidth, srcHeight)) {
             boolean b = PictureKit.instance().isDrawPictrue();
             PictureKit.instance().setDrawPictrue(true);
-
-            float paintZoom = Math.min(desWidth / (float)srcWidth, desHeight / (float)srcHeight);
+            float paintZoom = Math.min(desWidth / (float) srcWidth, desHeight / (float) srcHeight);
             Bitmap bitmap = null;
-            try
-            {
-                bitmap = Bitmap.createBitmap((int)(srcWidth * paintZoom), (int)(srcHeight * paintZoom),  Config.ARGB_8888);
-            }
-            catch(OutOfMemoryError e)
-            {                
+            try {
+                bitmap = Bitmap.createBitmap((int) (srcWidth * paintZoom), (int) (srcHeight * paintZoom), Config.ARGB_8888);
+            } catch (OutOfMemoryError e) {
                 return null;
             }
-            
-            if (bitmap == null)
-            {
+            if (bitmap == null) {
                 return null;
             }
-            
             float tX = -(srcLeft + view.getX()) * paintZoom;
             float tY = -(srcTop + view.getY()) * paintZoom;
-
             Canvas canvas = new Canvas(bitmap);
             canvas.translate(tX, tY);
             canvas.drawColor(Color.WHITE);
-            ((PageView)view).draw(canvas, 0, 0, paintZoom);
-            
+            ((PageView) view).draw(canvas, 0, 0, paintZoom);
             PictureKit.instance().setDrawPictrue(b);
             return bitmap;
         }
-        
         return null;
     }
-    
+
     /**
-     * 
      * @param zoom
      * @return
      */
-    public Bitmap getThumbnail(float zoom)
-    {
+    public Bitmap getThumbnail(float zoom) {
         Rectangle size = getPageSize(1);
-        if(size !=  null)
-        {
+        if (size != null) {
             int thumbnailWidth = Math.round(size.width * zoom);
             int thumbnailHeight = Math.round(size.height * zoom);
-            
             return pageAreaToImage(1, 0, 0, size.width, size.height, thumbnailWidth, thumbnailHeight);
         }
         return null;
     }
-    
+
     /**
-     * 
+     *
      */
-    public int getPageCount()
-    {
-        if (currentRootType == WPViewConstant.NORMAL_ROOT || pageRoot == null)
-        {
+    public int getPageCount() {
+        if (currentRootType == WPViewConstant.NORMAL_ROOT || pageRoot == null) {
             return 1;
         }
         return pageRoot.getPageCount();
@@ -1078,233 +860,185 @@ public class Word extends LinearLayout implements IWord
     /**
      * @return Returns the currentRootType.
      */
-    public int getCurrentRootType()
-    {
+    public int getCurrentRootType() {
         return currentRootType;
     }
 
     /**
      * @param currentRootType The currentRootType to set.
      */
-    public void setCurrentRootType(int currentRootType)
-    {
+    public void setCurrentRootType(int currentRootType) {
         this.currentRootType = currentRootType;
     }
 
     /**
      * @return Returns the zoom.
      */
-    public float getZoom()
-    {
-        if (currentRootType == WPViewConstant.NORMAL_ROOT)
-        {
+    public float getZoom() {
+        if (currentRootType == WPViewConstant.NORMAL_ROOT) {
             return normalZoom;
-        }
-        else if (currentRootType == WPViewConstant.PAGE_ROOT)
-        {
+        } else if (currentRootType == WPViewConstant.PAGE_ROOT) {
             return zoom;
-        }
-        else if (currentRootType == WPViewConstant.PRINT_ROOT)
-        {
-            if (printWord != null)
-            {
+        } else if (currentRootType == WPViewConstant.PRINT_ROOT) {
+            if (printWord != null) {
                 return printWord.getZoom();
-            }
-            else 
-            {
+            } else {
                 return zoom;
             }
         }
-        
         return zoom;
     }
 
     /**
-     * 
+     *
      */
-    public float getFitZoom()
-    {
-        if (currentRootType == WPViewConstant.NORMAL_ROOT)
-        {
+    public float getFitZoom() {
+        if (currentRootType == WPViewConstant.NORMAL_ROOT) {
             return 0.5f;
         }
-        if (pageRoot == null)
-        {
+        if (pageRoot == null) {
             return 1.f;
         }
         float z = 1.f;
         // print mode
-        if (currentRootType == WPViewConstant.PRINT_ROOT)
-        {
+        if (currentRootType == WPViewConstant.PRINT_ROOT) {
             return printWord.getFitZoom();
         }
         // page mode
-        else if (currentRootType == WPViewConstant.PAGE_ROOT)
-        {
+        else if (currentRootType == WPViewConstant.PAGE_ROOT) {
             IView view = pageRoot.getChildView();
-            int pageWidth = view == null  ? 0 : view.getWidth();
-            if (pageWidth == 0)
-            {
-                pageWidth = (int)(AttrManage.instance().getPageWidth(doc.getSection(0).getAttribute()) * MainConstant.TWIPS_TO_PIXEL);
+            int pageWidth = view == null ? 0 : view.getWidth();
+            if (pageWidth == 0) {
+                pageWidth = (int) (AttrManage.instance().getPageWidth(doc.getSection(0).getAttribute()) * MainConstant.TWIPS_TO_PIXEL);
             }
             int viewWidth = getWidth();
-            if (viewWidth == 0)
-            {
-                viewWidth = ((View)getParent()).getWidth();
+            if (viewWidth == 0) {
+                viewWidth = ((View) getParent()).getWidth();
             }
-            z = (float)(viewWidth - WPViewConstant.PAGE_SPACE) / pageWidth;
+            z = (float) (viewWidth - WPViewConstant.PAGE_SPACE) / pageWidth;
         }
         return Math.min(z, 1.0f);
     }
-    
+
     /**
-     * 
+     *
      */
-    public byte getEditType()
-    {
+    public byte getEditType() {
         return MainConstant.APPLICATION_TYPE_PPT;
     }
 
     /**
      * @return Returns the isExportImageAfterZoom.
      */
-    public boolean isExportImageAfterZoom()
-    {
+    public boolean isExportImageAfterZoom() {
         return isExportImageAfterZoom;
     }
 
     /**
      * @param isExportImageAfterZoom The isExportImageAfterZoom to set.
      */
-    public void setExportImageAfterZoom(boolean isExportImageAfterZoom)
-    {
+    public void setExportImageAfterZoom(boolean isExportImageAfterZoom) {
         this.isExportImageAfterZoom = isExportImageAfterZoom;
     }
 
     /**
-     * 
      * @return
      */
-    public FadeAnimation getParagraphAnimation(int pargraphID)
-    {
+    public FadeAnimation getParagraphAnimation(int pargraphID) {
         return null;
     }
-    
+
     /**
-     * 
+     *
      */
-    public IShape getTextBox()
-    {
+    public IShape getTextBox() {
         return null;
     }
-    
-    
+
     /**
-     * 
+     *
      */
-    public void setBackgroundColor(int color) 
-    {
+    public void setBackgroundColor(int color) {
         super.setBackgroundColor(color);
-        if (printWord != null)
-        {
+        if (printWord != null) {
             printWord.setBackgroundColor(color);
         }
     }
-    
+
     /**
-     * 
      *
      */
-    public void setBackgroundResource(int resid)
-    {
+    public void setBackgroundResource(int resid) {
         super.setBackgroundResource(resid);
-        if (printWord != null)
-        {
+        if (printWord != null) {
             printWord.setBackgroundResource(resid);
         }
     }
-    
+
     /**
-     * 
      *
      */
-    public void setBackgroundDrawable(Drawable d) 
-    {
-       super.setBackgroundDrawable(d);
-       if (printWord != null)
-       {
-           printWord.setBackgroundDrawable(d);
-       }
+    public void setBackgroundDrawable(Drawable d) {
+        super.setBackgroundDrawable(d);
+        if (printWord != null) {
+            printWord.setBackgroundDrawable(d);
+        }
     }
-    
+
     /**
-     * 
+     *
      */
-    public PrintWord getPrintWord()
-    {
+    public PrintWord getPrintWord() {
         return printWord;
     }
-    
+
     /**
      * update total pages after layout completed
      */
-    public void updateFieldText()
-    {
-    	if(pageRoot != null && pageRoot.checkUpdateHeaderFooterFieldText())
-    	{
-    		control.actionEvent(EventConstant.APP_GENERATED_PICTURE_ID, null);
-    	}
+    public void updateFieldText() {
+        if (pageRoot != null && pageRoot.checkUpdateHeaderFooterFieldText()) {
+            control.actionEvent(EventConstant.APP_GENERATED_PICTURE_ID, null);
+        }
     }
-    
+
     /**
-     * 
+     *
      */
-    public void dispose()
-    {
+    public void dispose() {
         control = null;
-        if (status != null)
-        {
+        if (status != null) {
             status.dispose();
             status = null;
         }
-        if (highlight != null)
-        {
+        if (highlight != null) {
             highlight.dispose();
             highlight = null;
         }
-        if (eventManage != null)
-        {
+        if (eventManage != null) {
             eventManage.dispose();
             eventManage = null;
         }
-
-        if (pageRoot != null)
-        {
+        if (pageRoot != null) {
             pageRoot.dispose();
             pageRoot = null;
         }
-        if (normalRoot != null)
-        {
+        if (normalRoot != null) {
             normalRoot.dispose();
             normalRoot = null;
         }
-        if (dialogAction != null)
-        {
+        if (dialogAction != null) {
             dialogAction.dispose();
             dialogAction = null;
         }
-        if (wpFind != null)
-        {
+        if (wpFind != null) {
             wpFind.dispose();
             wpFind = null;
         }
-        if (doc != null)
-        {
+        if (doc != null) {
             doc.dispose();
             doc = null;
         }
-        if (printWord != null)
-        {
+        if (printWord != null) {
             printWord.dispose();
         }
         setOnClickListener(null);
@@ -1354,7 +1088,6 @@ public class Word extends LinearLayout implements IWord
     private Paint paint;
     //
     private WPFind wpFind;
-        //
+    //
     private Rectangle visibleRect;
-
 }

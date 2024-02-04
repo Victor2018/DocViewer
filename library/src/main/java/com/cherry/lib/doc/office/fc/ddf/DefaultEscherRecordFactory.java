@@ -26,23 +26,20 @@ import java.util.Map;
  *
  * @author Glen Stampoultzis
  * @author Nick Burch   (nick at torchbox . com)
- *
  * @see EscherRecordFactory
  */
-public class DefaultEscherRecordFactory implements EscherRecordFactory
-{
-    private static Class< ? >[] escherRecordClasses = {EscherBSERecord.class,
-        EscherOptRecord.class, EscherTertiaryOptRecord.class, EscherClientAnchorRecord.class,
-        EscherDgRecord.class, EscherSpgrRecord.class, EscherSpRecord.class,
-        EscherClientDataRecord.class, EscherDggRecord.class, EscherSplitMenuColorsRecord.class,
-        EscherChildAnchorRecord.class, EscherTextboxRecord.class, EscherBinaryTagRecord.class};
-    private static Map<Short, Constructor< ? extends EscherRecord>> recordsMap = recordsToMap(escherRecordClasses);
+public class DefaultEscherRecordFactory implements EscherRecordFactory {
+    private static Class<?>[] escherRecordClasses = {EscherBSERecord.class,
+            EscherOptRecord.class, EscherTertiaryOptRecord.class, EscherClientAnchorRecord.class,
+            EscherDgRecord.class, EscherSpgrRecord.class, EscherSpRecord.class,
+            EscherClientDataRecord.class, EscherDggRecord.class, EscherSplitMenuColorsRecord.class,
+            EscherChildAnchorRecord.class, EscherTextboxRecord.class, EscherBinaryTagRecord.class};
+    private static Map<Short, Constructor<? extends EscherRecord>> recordsMap = recordsToMap(escherRecordClasses);
 
     /**
      * Creates an instance of the escher record factory
      */
-    public DefaultEscherRecordFactory()
-    {
+    public DefaultEscherRecordFactory() {
         // no instance initialisation
     }
 
@@ -54,62 +51,47 @@ public class DefaultEscherRecordFactory implements EscherRecordFactory
      * @param offset The starting offset into the byte array
      * @return The generated escher record
      */
-    public EscherRecord createRecord(byte[] data, int offset)
-    {
+    public EscherRecord createRecord(byte[] data, int offset) {
         EscherRecord.EscherRecordHeader header = EscherRecord.EscherRecordHeader.readHeader(data,
-            offset);
-
+                offset);
         // Options of 0x000F means container record
         // However, EscherTextboxRecord are containers of records for the
         //  host application, not of other Escher records, so treat them
         //  differently
-        if ((header.getOptions() & (short)0x000F) == (short)0x000F
-            && header.getRecordId() != EscherTextboxRecord.RECORD_ID)
-        {
+        if ((header.getOptions() & (short) 0x000F) == (short) 0x000F
+                && header.getRecordId() != EscherTextboxRecord.RECORD_ID) {
             EscherContainerRecord r = new EscherContainerRecord();
             r.setRecordId(header.getRecordId());
             r.setOptions(header.getOptions());
             return r;
         }
-
         if (header.getRecordId() >= EscherBlipRecord.RECORD_ID_START
-            && header.getRecordId() <= EscherBlipRecord.RECORD_ID_END)
-        {
+                && header.getRecordId() <= EscherBlipRecord.RECORD_ID_END) {
             EscherBlipRecord r;
             if (header.getRecordId() == EscherBitmapBlip.RECORD_ID_DIB
-                || header.getRecordId() == EscherBitmapBlip.RECORD_ID_JPEG
-                || header.getRecordId() == EscherBitmapBlip.RECORD_ID_PNG)
-            {
+                    || header.getRecordId() == EscherBitmapBlip.RECORD_ID_JPEG
+                    || header.getRecordId() == EscherBitmapBlip.RECORD_ID_PNG) {
                 r = new EscherBitmapBlip();
-            }
-            else if (header.getRecordId() == EscherMetafileBlip.RECORD_ID_EMF
-                || header.getRecordId() == EscherMetafileBlip.RECORD_ID_WMF
-                || header.getRecordId() == EscherMetafileBlip.RECORD_ID_PICT)
-            {
+            } else if (header.getRecordId() == EscherMetafileBlip.RECORD_ID_EMF
+                    || header.getRecordId() == EscherMetafileBlip.RECORD_ID_WMF
+                    || header.getRecordId() == EscherMetafileBlip.RECORD_ID_PICT) {
                 r = new EscherMetafileBlip();
-            }
-            else
-            {
+            } else {
                 r = new EscherBlipRecord();
             }
             r.setRecordId(header.getRecordId());
             r.setOptions(header.getOptions());
             return r;
         }
-
-        Constructor< ? extends EscherRecord> recordConstructor = recordsMap.get(Short
-            .valueOf(header.getRecordId()));
+        Constructor<? extends EscherRecord> recordConstructor = recordsMap.get(Short
+                .valueOf(header.getRecordId()));
         EscherRecord escherRecord = null;
-        if (recordConstructor == null)
-        {
+        if (recordConstructor == null) {
             return new UnknownEscherRecord();
         }
-        try
-        {
+        try {
             escherRecord = recordConstructor.newInstance(new Object[]{});
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             return new UnknownEscherRecord();
         }
         escherRecord.setRecordId(header.getRecordId());
@@ -125,40 +107,27 @@ public class DefaultEscherRecordFactory implements EscherRecordFactory
      * @param recClasses The records to convert
      * @return The map containing the id/constructor pairs.
      */
-    private static Map<Short, Constructor< ? extends EscherRecord>> recordsToMap(
-        Class< ? >[] recClasses)
-    {
-        Map<Short, Constructor< ? extends EscherRecord>> result = new HashMap<Short, Constructor< ? extends EscherRecord>>();
-        final Class< ? >[] EMPTY_CLASS_ARRAY = new Class[0];
-
-        for (int i = 0; i < recClasses.length; i++)
-        {
-            @ SuppressWarnings("unchecked")
-            Class< ? extends EscherRecord> recCls = (Class< ? extends EscherRecord>)recClasses[i];
+    private static Map<Short, Constructor<? extends EscherRecord>> recordsToMap(
+            Class<?>[] recClasses) {
+        Map<Short, Constructor<? extends EscherRecord>> result = new HashMap<Short, Constructor<? extends EscherRecord>>();
+        final Class<?>[] EMPTY_CLASS_ARRAY = new Class[0];
+        for (int i = 0; i < recClasses.length; i++) {
+            @SuppressWarnings("unchecked")
+            Class<? extends EscherRecord> recCls = (Class<? extends EscherRecord>) recClasses[i];
             short sid;
-            try
-            {
+            try {
                 sid = recCls.getField("RECORD_ID").getShort(null);
-            }
-            catch(IllegalArgumentException e)
-            {
+            } catch (IllegalArgumentException e) {
+                throw new RuntimeException(e);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            } catch (NoSuchFieldException e) {
                 throw new RuntimeException(e);
             }
-            catch(IllegalAccessException e)
-            {
-                throw new RuntimeException(e);
-            }
-            catch(NoSuchFieldException e)
-            {
-                throw new RuntimeException(e);
-            }
-            Constructor< ? extends EscherRecord> constructor;
-            try
-            {
+            Constructor<? extends EscherRecord> constructor;
+            try {
                 constructor = recCls.getConstructor(EMPTY_CLASS_ARRAY);
-            }
-            catch(NoSuchMethodException e)
-            {
+            } catch (NoSuchMethodException e) {
                 throw new RuntimeException(e);
             }
             result.put(Short.valueOf(sid), constructor);

@@ -27,14 +27,11 @@ import kotlinx.android.synthetic.main.doc_web_view.view.*
  * -----------------------------------------------------------------
  */
 
-class DocWebView: ConstraintLayout, DownloadListener {
-
+class DocWebView : ConstraintLayout, DownloadListener {
     val TAG = "DocWebView"
     var isLastLoadSuccess = false//是否成功加载完成过web，成功过后的网络异常 不改变web
     var isError = false
-
     var openLinkBySysBrowser = false//是否使用系统浏览器打开http链接
-
     var mOnWebLoadListener: OnWebLoadListener? = null
 
     constructor(context: Context) : this(context, null)
@@ -63,7 +60,7 @@ class DocWebView: ConstraintLayout, DownloadListener {
         mDocView.settings.javaScriptEnabled = true
         mDocView.settings.domStorageEnabled = true
         mDocView.settings.allowFileAccess = true
-        mDocView.settings.allowFileAccessFromFileURLs =true
+        mDocView.settings.allowFileAccessFromFileURLs = true
         mDocView.settings.allowUniversalAccessFromFileURLs = true
         mDocView.settings.cacheMode = WebSettings.LOAD_NO_CACHE
 
@@ -96,16 +93,16 @@ class DocWebView: ConstraintLayout, DownloadListener {
         }
     }
 
-    fun loadData (htmlData: String) {
-        mDocView.loadData(htmlData,"text/html","utf-8")
+    fun loadData(htmlData: String) {
+        mDocView.loadData(htmlData, "text/html", "utf-8")
     }
 
-    fun loadData (htmlData: String,secondLinkBySysBrowser: Boolean) {
+    fun loadData(htmlData: String, secondLinkBySysBrowser: Boolean) {
         openLinkBySysBrowser = secondLinkBySysBrowser
-        mDocView.loadData(htmlData,"text/html","utf-8")
+        mDocView.loadData(htmlData, "text/html", "utf-8")
     }
 
-    fun downloadFile(url: String?,contentDisposition: String?,mimeType: String?) {
+    fun downloadFile(url: String?, contentDisposition: String?, mimeType: String?) {
         val request = DownloadManager.Request(Uri.parse(url))
         // 允许媒体扫描，根据下载的文件类型被加入相册、音乐等媒体库
         request.allowScanningByMediaScanner()
@@ -121,23 +118,25 @@ class DocWebView: ConstraintLayout, DownloadListener {
         request.setVisibleInDownloadsUi(true)
         // 允许漫游时下载
         request.setAllowedOverRoaming(true)
-
         val fileName = URLUtil.guessFileName(url, contentDisposition, mimeType)
         Log.e(TAG, "downloadFile()-fileName = $fileName")
         request.setDestinationInExternalPublicDir(Environment.getExternalStorageDirectory().toString() + "/Download/", fileName)
-
-
         val downloadManager = mDocView.context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         // 添加一个下载任务
         val downloadId = downloadManager.enqueue(request)
     }
 
-    override fun onDownloadStart(url: String?, userAgent: String?, contentDisposition: String?, mimeType: String?, contentLength: Long) {
-        Log.e(TAG,"onDownloadStart()......url = $url")
+    override fun onDownloadStart(
+        url: String?,
+        userAgent: String?,
+        contentDisposition: String?,
+        mimeType: String?,
+        contentLength: Long
+    ) {
+        Log.e(TAG, "onDownloadStart()......url = $url")
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(url)
         context.startActivity(intent)
-
 //        downloadFile(url,contentDisposition,mimeType)
     }
 
@@ -149,12 +148,11 @@ class DocWebView: ConstraintLayout, DownloadListener {
         return canGoBack
     }
 
-    fun onPause () {
+    fun onPause() {
         mDocView.pauseTimers()
-
     }
 
-    fun onResume () {
+    fun onResume() {
         mDocView.resumeTimers()
     }
 
@@ -187,7 +185,6 @@ class DocWebView: ConstraintLayout, DownloadListener {
     }
 
     private inner class DocWebChromeClient : WebChromeClient() {
-
         override fun onProgressChanged(view: WebView, newProgress: Int) {
             super.onProgressChanged(view, newProgress)
             setProgress(newProgress)
@@ -203,7 +200,6 @@ class DocWebView: ConstraintLayout, DownloadListener {
     }
 
     private inner class DocWebViewClient : WebViewClient() {
-
         override fun onPageFinished(view: WebView, url: String) {
             super.onPageFinished(view, url)
             //在访问失败的时候会首先回调onReceivedError，然后再回调onPageFinished。
@@ -222,5 +218,4 @@ class DocWebView: ConstraintLayout, DownloadListener {
             }
         }
     }
-
 }

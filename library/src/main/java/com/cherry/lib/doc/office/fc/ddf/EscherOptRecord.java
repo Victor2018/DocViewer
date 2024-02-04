@@ -21,33 +21,28 @@ package com.cherry.lib.doc.office.fc.ddf;
  * determining the attributes of a shape. Properties can be of two types: simple
  * or complex. Simple types are fixed length. Complex properties are variable
  * length.
- * 
+ *
  * @author Glen Stampoultzis
  */
-public class EscherOptRecord extends AbstractEscherOptRecord
-{
+public class EscherOptRecord extends AbstractEscherOptRecord {
     public static final short RECORD_ID = (short) 0xF00B;
     public static final String RECORD_DESCRIPTION = "msofbtOPT";
 
     /**
      * Automatically recalculate the correct option
      */
-    public short getOptions()
-    {
-        setOptions( (short) ( ( properties.size() << 4 ) | 0x3 ) );
+    public short getOptions() {
+        setOptions((short) ((properties.size() << 4) | 0x3));
         return super.getOptions();
     }
 
-    public String getRecordName()
-    {
+    public String getRecordName() {
         return "Opt";
     }
-    
+
     /**
-     * 
      *
      */
-    public void dispose()
-    { 
+    public void dispose() {
     }
 }
