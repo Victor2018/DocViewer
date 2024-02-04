@@ -2,7 +2,7 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-android-extensions'
-    id 'maven-publish'
+    // id 'maven-publish'
 }
 
 android {
@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         minSdk 21
-        targetSdk 33
+        targetSdk 29
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -53,17 +53,20 @@ dependencies {
     // read file
     implementation 'commons-io:commons-io:2.0.1'
 
+    // AndroidUtilCode工具类：https://github.com/Blankj/AndroidUtilCode
+    implementation('com.blankj:utilcodex:1.31.1')
+
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
-                groupId = 'com.github.Victor2018' //groupId 随便取
-                artifactId = 'cherry'  //artifactId 随便取
-                version = '1.0.0'
-            }
-        }
-    }
-}
+// afterEvaluate {
+//     publishing {
+//         publications {
+//             release(MavenPublication) {
+//                 from components.release
+//                 groupId = 'com.github.Victor2018' //groupId 随便取
+//                 artifactId = 'cherry'  //artifactId 随便取
+//                 version = '1.0.0'
+//             }
+//         }
+//     }
+// }

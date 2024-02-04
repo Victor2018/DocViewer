@@ -1,6 +1,6 @@
 /*
  * 文件名称:          WPConstant.java
- *  
+ *
  * 编译器:            android2.2
  * 时间:              下午3:15:30
  */
@@ -18,12 +18,11 @@ package com.cherry.lib.doc.office.constant.wp;
  * <p>
  * 负责人:          梁金晶
  * <p>
- * 负责小组:         
+ * 负责小组:
  * <p>
  * <p>
  */
-public final class WPViewConstant
-{
+public final class WPViewConstant {
     // 布局断行标记，没有断行
     public static final byte BREAK_NO = 0;
     // 受限断行
@@ -32,12 +31,10 @@ public final class WPViewConstant
     public static final byte BREAK_ENTER = 2;
     // 分节符
     public static final byte BREAK_PAGE = 3;
-    
-    
+
     // 页与页的间距
-    public static final short PAGE_SPACE = 5;
-    
-    
+    public static final short PAGE_SPACE = 2;
+
     /* ============ 布局标记位 ============= */
     // 孤行控制，控制View是否必须有一个子View
     public static final byte LAYOUT_FLAG_KEEPONE = 0;
@@ -47,8 +44,7 @@ public final class WPViewConstant
     public static final byte LAYOUT_PARA_IN_TABLE = LAYOUT_FLAG_DELLELINEVIEW + 1; // 2
     // 是布局水平对式
     public static final byte LAYOUT_NOT_WRAP_LINE = LAYOUT_PARA_IN_TABLE + 1; // 3 
-    
-    
+
     /* ============ 定义视图类型 ============ */
     // page root
     public static final short PAGE_ROOT = 0; // 0
@@ -61,7 +57,7 @@ public final class WPViewConstant
     // page view
     public static final short PAGE_VIEW = SIMPLE_ROOT + 1;// 4
     // paragraph  view
-    public static final short PARAGRAPH_VIEW =  PAGE_VIEW + 1 ;// 5
+    public static final short PARAGRAPH_VIEW = PAGE_VIEW + 1;// 5
     // line view
     public static final short LINE_VIEW = PARAGRAPH_VIEW + 1; // 6
     // leaf view
@@ -82,11 +78,9 @@ public final class WPViewConstant
     public static final short SHAPE_VIEW = TITLE_VIEW + 1; // 14
     // enclose character view
     public static final short ENCLOSE_CHARACTER_VIEW = SHAPE_VIEW + 1; //15
-    
-    
+
     // 视图坐标X方向
     public static final byte X_AXIS = 0;
     // 视图坐标Y方向
     public static final byte Y_AXIS = X_AXIS + 1;
-    
 }

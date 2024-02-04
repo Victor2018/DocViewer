@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Environment
 import android.util.Log
+import com.blankj.utilcode.util.AppUtils
 import com.cherry.lib.doc.bean.DocSourceType
 import com.cherry.lib.doc.bean.FileType
 import com.cherry.lib.doc.office.constant.MainConstant
@@ -26,21 +27,31 @@ object FileUtils {
     const val txtRe = "txt$"
     const val pdfRe = "pdf$"
     const val imageRe = "(?:jpg|gif|png|jpeg|webp)$"
-
     const val docRe = "doc$"
     const val docxRe = "docx$"
-
     const val xlsRe = "xls$"
     const val xlsxRe = "xlsx$"
-
     const val pptRe = "ppt$"
     const val pptxRe = "pptx$"
+    val internalCacheDir: File
+        get() = File(internalCacheDirPath).apply {
+            if (!exists()) {
+                mkdirs()
+            }
+        }
+    val internalFilesDir: File
+        get() = File(internalFilesDirPath).apply {
+            if (!exists()) {
+                mkdirs()
+            }
+        }
+    private val internalCacheDirPath = "/data/data/" + AppUtils.getAppPackageName() + "/cache"
+    private val internalFilesDirPath = "/data/data/" + AppUtils.getAppPackageName() + "/files"
 
     @Throws(IOException::class)
     fun fileFromUri(context: Context, fileUri: String): File {
         var uri = Uri.parse(fileUri)
         val input = context.contentResolver.openInputStream(uri)
-
         val outFile = File(context.cacheDir, "${uri.hashCode()}")
         copy(input, outFile)
         return outFile
@@ -76,9 +87,8 @@ object FileUtils {
     }
 
     @Throws(IOException::class)
-    fun downloadFile(context: Context, assetName: String, filePath: String, fileName: String?){
-
-        val dirPath = "${Environment.getExternalStorageDirectory()}/${filePath}"
+    fun downloadFile(context: Context, assetName: String, filePath: String, fileName: String?) {
+        val dirPath = "${internalCacheDirPath}/${filePath}"
         val outFile = File(dirPath)
         //Create New File if not present
         if (!outFile.exists()) {
@@ -119,5 +129,4 @@ object FileUtils {
             else -> "unknown"
         }
     }
-
 }

@@ -12,8 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cherry.lib.doc.R
 import com.cherry.lib.doc.util.ViewUtils.hide
 import com.cherry.lib.doc.util.ViewUtils.show
-import kotlinx.android.synthetic.main.list_item_pdf_page.view.*
-import kotlinx.android.synthetic.main.pdf_view_page_loading_layout.view.*
+import kotlinx.android.synthetic.main.list_item_pdf_page.view.container_view
+import kotlinx.android.synthetic.main.list_item_pdf_page.view.pageView
+import kotlinx.android.synthetic.main.pdf_view_page_loading_layout.view.pdf_view_page_loading_progress
 
 /*
  * -----------------------------------------------------------------
@@ -32,11 +33,12 @@ internal class PdfViewAdapter(
     private val enableLoadingForPages: Boolean
 ) :
     RecyclerView.Adapter<PdfViewAdapter.PdfPageViewHolder>() {
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PdfPageViewHolder {
         return PdfPageViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.list_item_pdf_page,parent,
-                false)
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.list_item_pdf_page, parent,
+                false
+            )
         )
     }
 
@@ -47,8 +49,7 @@ internal class PdfViewAdapter(
     override fun onBindViewHolder(holder: PdfPageViewHolder, position: Int) {
     }
 
-    inner class PdfPageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),View.OnAttachStateChangeListener {
-
+    inner class PdfPageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnAttachStateChangeListener {
         private fun handleLoadingForPage(position: Int) {
             if (!enableLoadingForPages) {
                 itemView.pdf_view_page_loading_progress.hide()
