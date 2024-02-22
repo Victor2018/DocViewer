@@ -1,10 +1,7 @@
 package com.cherry.lib.doc.pdf
 
 import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.PixelFormat
 import android.graphics.Rect
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,46 +11,38 @@ import android.widget.Toast
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import com.cherry.lib.doc.R
-import com.cherry.lib.doc.interfaces.OnPdfItemClickListener
 import com.cherry.lib.doc.util.ViewUtils.hide
 import com.cherry.lib.doc.util.ViewUtils.show
-import kotlinx.android.synthetic.main.doc_view.view.mIvPdf
-import kotlinx.android.synthetic.main.list_item_pdf.view.*
+import kotlinx.android.synthetic.main.page_item_pdf.view.*
 import kotlinx.android.synthetic.main.pdf_view_page_loading_layout.view.*
 
 /*
  * -----------------------------------------------------------------
  * Copyright (C) 2018-2028, by Victor, All rights reserved.
  * -----------------------------------------------------------------
- * File: PdfViewAdapter
+ * File: PdfPageViewAdapter
  * Author: Victor
  * Date: 2023/09/28 11:17
  * Description: 
  * -----------------------------------------------------------------
  */
 
-internal class PdfViewAdapter(
+internal class PdfPageViewAdapter(
     private val renderer: PdfRendererCore?,
     private val pageSpacing: Rect,
-    private val enableLoadingForPages: Boolean,
-    private val listener: OnPdfItemClickListener?
+    private val enableLoadingForPages: Boolean
 ) :
-    RecyclerView.Adapter<PdfViewAdapter.PdfPageViewHolder>() {
+    RecyclerView.Adapter<PdfPageViewAdapter.PdfPageViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PdfPageViewHolder {
         return PdfPageViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.list_item_pdf,parent,
+            LayoutInflater.from(parent.context).inflate(R.layout.page_item_pdf,parent,
                 false)
         )
     }
 
     override fun getItemCount(): Int {
-        try {
-            return renderer?.getPageCount() ?: 0
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return 0
+        return renderer?.getPageCount() ?: 0
     }
 
     override fun onBindViewHolder(holder: PdfPageViewHolder, position: Int) {
@@ -63,13 +52,6 @@ internal class PdfViewAdapter(
     inner class PdfPageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),View.OnAttachStateChangeListener {
 
         fun bindView() {
-            itemView.container_view.setOnClickListener {
-                renderer?.renderPage(adapterPosition) { bitmap: Bitmap?, pageNo: Int ->
-                    if (pageNo == adapterPosition) {
-                        listener?.OnPdfItemClick(bitmap)
-                    }
-                }
-            }
         }
 
         private fun handleLoadingForPage(position: Int) {
@@ -94,14 +76,14 @@ internal class PdfViewAdapter(
             renderer?.renderPage(adapterPosition) { bitmap: Bitmap?, pageNo: Int ->
                 if (pageNo == adapterPosition) {
                     bitmap?.let {
-                        itemView.container_view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                            height =
-                                (itemView.container_view.width.toFloat() / ((bitmap.width.toFloat() / bitmap.height.toFloat()))).toInt()
-                            this.topMargin = pageSpacing.top
-                            this.leftMargin = pageSpacing.left
-                            this.rightMargin = pageSpacing.right
-                            this.bottomMargin = pageSpacing.bottom
-                        }
+//                        itemView.container_view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+//                            height =
+//                                (itemView.container_view.width.toFloat() / ((bitmap.width.toFloat() / bitmap.height.toFloat()))).toInt()
+//                            this.topMargin = pageSpacing.top
+//                            this.leftMargin = pageSpacing.left
+//                            this.rightMargin = pageSpacing.right
+//                            this.bottomMargin = pageSpacing.bottom
+//                        }
                         itemView.pageView.setImageBitmap(bitmap)
                         itemView.pageView.animation = AlphaAnimation(0F, 1F).apply {
                             interpolator = LinearInterpolator()
@@ -117,19 +99,5 @@ internal class PdfViewAdapter(
             itemView.pageView.setImageBitmap(null)
             itemView.pageView.clearAnimation()
         }
-    }
-
-    fun drawableToBitmap(drawable: Drawable): Bitmap? {
-        val bitmap = Bitmap.createBitmap(
-            drawable.intrinsicWidth,
-            drawable.intrinsicHeight,
-            if (drawable.opacity != PixelFormat.OPAQUE) Bitmap.Config.ARGB_8888 else Bitmap.Config.RGB_565
-        )
-        val canvas = Canvas(bitmap)
-
-        //canvas.setBitmap(bitmap)
-        drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
-        drawable.draw(canvas)
-        return bitmap
     }
 }

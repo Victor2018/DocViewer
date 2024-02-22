@@ -16,6 +16,7 @@ object Constant {
     const val INTENT_SOURCE_KEY = "INTENT_SOURCE_KEY"
     const val INTENT_TYPE_KEY = "INTENT_TYPE_KEY"
     const val INTENT_ENGINE_KEY = "INTENT_ENGINE_KEY"
+    const val INTENT_POSITION_KEY = "INTENT_POSITION_KEY"
 
     /**
      * Office 平台在线预览限制：
