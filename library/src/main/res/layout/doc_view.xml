@@ -11,7 +11,30 @@
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
         android:scrollbars="vertical"
-        tools:listitem="@layout/list_item_pdf_page" />
+        tools:listitem="@layout/list_item_pdf" />
+
+    <FrameLayout
+        android:id="@+id/mLlBigPdfImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone">
+
+        <com.cherry.lib.doc.widget.PinchImageView
+            android:id="@+id/mIvPdf"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="30dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_big_close"/>
+
+    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/mFlDocContainer"
@@ -23,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <ImageView
+    <com.cherry.lib.doc.widget.PinchImageView
         android:id="@+id/mIvImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

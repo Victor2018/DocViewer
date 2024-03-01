@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
@@ -21,6 +22,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.blankj.utilcode.util.AppUtils
@@ -31,9 +33,11 @@ import com.cherry.lib.doc.bean.DocSourceType
 import com.cherry.lib.doc.bean.FileType
 import com.cherry.lib.doc.interfaces.OnDownloadListener
 import com.cherry.lib.doc.interfaces.OnDocPageChangeListener
+import com.cherry.lib.doc.interfaces.OnPdfItemClickListener
 import com.cherry.lib.doc.interfaces.OnWebLoadListener
 import com.cherry.lib.doc.office.IOffice
 import com.cherry.lib.doc.pdf.PdfDownloader
+import com.cherry.lib.doc.pdf.PdfPageViewAdapter
 import com.cherry.lib.doc.pdf.PdfQuality
 import com.cherry.lib.doc.pdf.PdfRendererCore
 import com.cherry.lib.doc.pdf.PdfViewAdapter
@@ -56,12 +60,14 @@ import java.net.URLEncoder
  * -----------------------------------------------------------------
  */
 
-class DocView : FrameLayout, OnDownloadListener, OnWebLoadListener {
+class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClickListener {
+
     private val TAG = "PdfRendererView"
     var mActivity: Activity? = null
     var lifecycleScope: LifecycleCoroutineScope = (context as AppCompatActivity).lifecycleScope
     private var pdfRendererCore: PdfRendererCore? = null
     private var pdfViewAdapter: PdfViewAdapter? = null
+    private var pdfPageViewAdapter: PdfPageViewAdapter? = null
     private var mMovingOrientation = DocMovingOrientation.HORIZONTAL
     private var quality = PdfQuality.NORMAL
     private var engine = DocEngine.INTERNAL
@@ -79,6 +85,7 @@ class DocView : FrameLayout, OnDownloadListener, OnWebLoadListener {
     var totalPageCount = 0
     var mOnDocPageChangeListener: OnDocPageChangeListener? = null
     var sourceFilePath: String? = null
+    var mViewPdfInPage: Boolean = true
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -92,6 +99,11 @@ class DocView : FrameLayout, OnDownloadListener, OnWebLoadListener {
 
     fun initView(attrs: AttributeSet?, defStyle: Int) {
         inflate(context, R.layout.doc_view, this)
+
+        mIvPdf.setOnClickListener {
+            mLlBigPdfImage.hide()
+        }
+
         val typedArray =
             context.obtainStyledAttributes(attrs, R.styleable.DocView, defStyle, 0)
         val orientation =
@@ -143,16 +155,16 @@ class DocView : FrameLayout, OnDownloadListener, OnWebLoadListener {
         engine: DocEngine = this.engine
     ) {
         mActivity = activity
-        openDoc(activity, docUrl, docSourceType, -1, engine)
+        openDoc(activity, docUrl, docSourceType,-1,false,engine)
     }
 
-    fun openDoc(
-        activity: Activity?, docUrl: String?,
-        docSourceType: Int, fileType: Int,
-        engine: DocEngine = this.engine
-    ) {
-        Log.e(TAG, "openDoc()......fileType = $fileType")
+    fun openDoc(activity: Activity?, docUrl: String?,
+                docSourceType: Int, fileType: Int,
+                viewPdfInPage: Boolean = false,
+                engine: DocEngine = this.engine) {
+        Log.e(TAG,"openDoc()......fileType = $fileType")
         mActivity = activity
+        mViewPdfInPage = viewPdfInPage
         if (docSourceType == DocSourceType.PATH) {
             sourceFilePath = docUrl
         } else {
@@ -309,18 +321,26 @@ class DocView : FrameLayout, OnDownloadListener, OnWebLoadListener {
     }
 
     private fun showPdf(file: File, pdfQuality: PdfQuality) {
-        Log.e(javaClass.simpleName, "initView-exists = ${file.exists()}")
+        Log.e(javaClass.simpleName,"initView-exists = ${file.exists()}")
+        Log.e(javaClass.simpleName,"initView-mViewPdfInPage = $mViewPdfInPage")
         pdfRendererCore = PdfRendererCore(context, file, pdfQuality)
         totalPageCount = pdfRendererCore?.getPageCount() ?: 0
         pdfRendererCoreInitialised = true
-        pdfViewAdapter = PdfViewAdapter(pdfRendererCore, pageMargin, enableLoadingForPages)
+        pdfViewAdapter = PdfViewAdapter(pdfRendererCore, pageMargin, enableLoadingForPages,this)
+        pdfPageViewAdapter = PdfPageViewAdapter(pdfRendererCore, pageMargin, enableLoadingForPages)
 
-        mRvPdf.adapter = pdfViewAdapter
-        mRvPdf.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        if (mViewPdfInPage) {
+            mRvPdf.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            mRvPdf.adapter = pdfPageViewAdapter
+            PagerSnapHelper().attachToRecyclerView(mRvPdf)
+        } else {
+            mRvPdf.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            mRvPdf.adapter = pdfViewAdapter
+        }
         mRvPdf.itemAnimator = DefaultItemAnimator()
         mRvPdf.addOnScrollListener(scrollListener)
 
-        if (showDivider) {
+        if (showDivider && !mViewPdfInPage) {
             DividerItemDecoration(context, DividerItemDecoration.VERTICAL).apply {
                 divider?.let { setDrawable(it) }
             }.let { mRvPdf.addItemDecoration(it) }
@@ -413,7 +433,7 @@ class DocView : FrameLayout, OnDownloadListener, OnWebLoadListener {
         Log.e(TAG, "initWithUrl-onDownloadSuccess()......")
         showLoadingProgress(100)
         sourceFilePath = absolutePath
-        openDoc(mActivity, absolutePath, DocSourceType.PATH, -1)
+        openDoc(mActivity, absolutePath, DocSourceType.PATH,-1,mViewPdfInPage)
     }
 
     override fun onError(error: Throwable) {
@@ -457,7 +477,7 @@ class DocView : FrameLayout, OnDownloadListener, OnWebLoadListener {
                     mPdfPageNo.visibility = View.VISIBLE
                 }
 
-                if (foundPosition == 0)
+                if (foundPosition == 0 && !mViewPdfInPage)
                     mPdfPageNo.postDelayed({
                         mPdfPageNo.visibility = GONE
                     }, 3000)
@@ -476,7 +496,7 @@ class DocView : FrameLayout, OnDownloadListener, OnWebLoadListener {
 
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             super.onScrollStateChanged(recyclerView, newState)
-            if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+            if (newState == RecyclerView.SCROLL_STATE_IDLE  && !mViewPdfInPage) {
                 mPdfPageNo.postDelayed(runnable, 3000)
             } else {
                 mPdfPageNo.removeCallbacks(runnable)
@@ -490,8 +510,21 @@ class DocView : FrameLayout, OnDownloadListener, OnWebLoadListener {
     }
 
     fun closePdfRender() {
-        if (pdfRendererCoreInitialised) {
-            pdfRendererCore?.closePdfRender()
+        try {
+            if (pdfRendererCoreInitialised) {
+                pdfRendererCore?.closePdfRender()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
+
     }
+
+    override fun OnPdfItemClick(bitmap: Bitmap?) {
+        mIvPdf.setImageBitmap(bitmap)
+        mIvPdf.reset()
+        mLlBigPdfImage.show()
+        mPdfPageNo.visibility = GONE
+    }
+
 }

@@ -6,7 +6,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.cherry.lib.doc.bean.DocEngine
 import com.cherry.lib.doc.util.Constant
-import kotlinx.android.synthetic.main.activity_doc_viewer.mDocView
+import kotlinx.android.synthetic.main.activity_doc_viewer.*
 
 open class DocViewerActivity : AppCompatActivity() {
     companion object {
@@ -45,11 +45,11 @@ open class DocViewerActivity : AppCompatActivity() {
         fileType = intent?.getIntExtra(Constant.INTENT_TYPE_KEY, -1) ?: -1
         engine = intent?.getIntExtra(Constant.INTENT_ENGINE_KEY, DocEngine.INTERNAL.value) ?: DocEngine.INTERNAL.value
 
-        mDocView.openDoc(this, docUrl, docSourceType, fileType, DocEngine.values().first { it.value == engine })
-
-        Log.e(javaClass.simpleName, "initData-docUrl = $docUrl")
-        Log.e(javaClass.simpleName, "initData-docSourceType = $docSourceType")
-        Log.e(javaClass.simpleName, "initData-fileType = $fileType")
-        Log.e(javaClass.simpleName, "initData-engine = $engine")
+        mDocView.openDoc(this,docUrl,docSourceType,fileType,false, DocEngine.values().first { it.value == engine })
+        Log.e(javaClass.simpleName,"initData-docUrl = $docUrl")
+        Log.e(javaClass.simpleName,"initData-docSourceType = $docSourceType")
+        Log.e(javaClass.simpleName,"initData-fileType = $fileType")
+        Log.e(javaClass.simpleName,"initData-engine = $engine")
     }
+
 }
