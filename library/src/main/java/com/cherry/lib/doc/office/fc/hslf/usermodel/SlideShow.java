@@ -25,6 +25,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import com.blankj.utilcode.util.ScreenUtils;
 import com.cherry.lib.doc.office.constant.MainConstant;
 import com.cherry.lib.doc.office.fc.ShapeKit;
 import com.cherry.lib.doc.office.fc.hslf.HSLFSlideShow;
@@ -579,6 +580,9 @@ public final class SlideShow
     public Dimension getPageSize()
     {
         DocumentAtom docatom = _documentRecord.getDocumentAtom();
+        // float scale = docatom.getSlideSizeX()*1f/ ScreenUtils.getScreenWidth();
+        // int pgx = (int)(docatom.getSlideSizeX() / scale / MainConstant.POINT_TO_PIXEL);
+        // int pgy = (int)(docatom.getSlideSizeY() / scale / MainConstant.POINT_TO_PIXEL);
         int pgx = (int)(docatom.getSlideSizeX() * MainConstant.POINT_DPI / ShapeKit.MASTER_DPI);
         int pgy = (int)(docatom.getSlideSizeY() * MainConstant.POINT_DPI / ShapeKit.MASTER_DPI);
         return new Dimension(pgx, pgy);

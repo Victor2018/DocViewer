@@ -278,7 +278,7 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
             }
 
             override fun getAppName(): String {
-                return "Loading..."
+                return "加载中..."
             }
 
             override fun getTemporaryDirectory(): File {
