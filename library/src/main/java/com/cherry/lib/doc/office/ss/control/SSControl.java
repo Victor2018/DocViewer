@@ -54,7 +54,7 @@ public class SSControl extends AbstractControl
 {
     /**
      * 
-     * @param context
+     * @param
      * @param filepath
      */
     public SSControl(IControl mainControl, Workbook book, String filepath)
