@@ -286,19 +286,19 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
         when (docSourceType) {
             DocSourceType.URL -> {
                 Log.e(TAG,"showPdf()......URL")
-                initWithUrl(url = url ?: "", pdfQuality = PdfQuality.FAST)
+                initWithUrl(url = url ?: "", pdfQuality = quality)
             }
             DocSourceType.URI -> {
                 Log.e(TAG,"showPdf()......URI")
-                initWithUri(fileUri = url ?: "", pdfQuality = PdfQuality.FAST)
+                initWithUri(fileUri = url ?: "", pdfQuality = quality)
             }
             DocSourceType.PATH -> {
                 Log.e(TAG,"showPdf()......PATH")
-                initWithPath(path = url ?: "", pdfQuality = PdfQuality.FAST)
+                initWithPath(path = url ?: "", pdfQuality = quality)
             }
             DocSourceType.ASSETS -> {
                 Log.e(TAG,"showPdf()......ASSETS")
-                initWithAssets(fileName = url ?: "", pdfQuality = PdfQuality.FAST)
+                initWithAssets(fileName = url ?: "", pdfQuality = quality)
             }
         }
     }
