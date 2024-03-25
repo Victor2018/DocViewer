@@ -1,5 +1,6 @@
 package com.cherry.doc
 
+import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -18,18 +19,27 @@ import com.cherry.doc.util.BasicSet
 import com.cherry.doc.util.DocUtil
 import com.cherry.doc.util.WordUtils
 import com.cherry.lib.doc.DocViewerActivity
-import com.cherry.lib.doc.bean.DocEngine
 import com.cherry.lib.doc.bean.DocSourceType
 import com.cherry.lib.doc.bean.FileType
 import com.cherry.lib.doc.util.FileUtils
+import com.cherry.permissions.lib.EasyPermissions
+import com.cherry.permissions.lib.EasyPermissions.hasPermissions
+import com.cherry.permissions.lib.annotations.AfterPermissionGranted
+import com.cherry.permissions.lib.dialogs.DEFAULT_SETTINGS_REQ_CODE
+import com.cherry.permissions.lib.dialogs.SettingsDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity(),OnClickListener,OnItemClickListener {
-    private val REQUEST_CODE_LOAD = 367
+
+class MainActivity : AppCompatActivity(),OnClickListener,OnItemClickListener,
+    EasyPermissions.PermissionCallbacks {
+    companion object {
+        const val REQUEST_CODE_STORAGE_PERMISSION = 124
+        const val REQUEST_CODE_STORAGE_PERMISSION11 = 125
+    }
     var url = "http://cdn07.foxitsoftware.cn/pub/foxit/manual/phantom/en_us/API%20Reference%20for%20Application%20Communication.pdf"
 //    var url = "https://xdts.xdocin.com/demo/resume3.docx"
 //    var url = "http://172.16.28.95:8080/data/test2.ppt"
@@ -43,6 +53,55 @@ class MainActivity : AppCompatActivity(),OnClickListener,OnItemClickListener {
 
         initView()
         initData()
+    }
+
+    private fun hasRwPermission(): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val isExternalStorageManager = Environment.isExternalStorageManager()
+            return isExternalStorageManager
+        }
+        val read = hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+        val write = hasPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+        return read && write
+    }
+
+    @AfterPermissionGranted(REQUEST_CODE_STORAGE_PERMISSION)
+    private fun requestStoragePermission() {
+        if (hasRwPermission()) {
+            // Have permission, do things!
+            CoroutineScope(Dispatchers.IO).launch {
+                var datas = DocUtil.getDocFile(this@MainActivity)
+                CoroutineScope(Dispatchers.Main).launch {
+                    mDocAdapter?.showDatas(datas)
+                }
+            }
+        } else {
+            // Ask for one permission
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                get11Permission()
+                return
+            }
+            EasyPermissions.requestPermissions(
+                this,
+                "This app needs access to your storage to load local doc",
+                REQUEST_CODE_STORAGE_PERMISSION,
+                Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+        }
+    }
+
+    fun get11Permission() {
+        try {
+            val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+            intent.addCategory("android.intent.category.DEFAULT")
+            intent.data = Uri.parse(java.lang.String.format("package:%s", packageName))
+            startActivityForResult(intent, REQUEST_CODE_STORAGE_PERMISSION11)
+        } catch (e: Exception) {
+            val intent = Intent()
+            intent.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
+            startActivityForResult(intent, REQUEST_CODE_STORAGE_PERMISSION11)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -72,69 +131,15 @@ class MainActivity : AppCompatActivity(),OnClickListener,OnItemClickListener {
 
         mDocAdapter = DocAdapter(this,this)
         mRvDoc.adapter = mDocAdapter
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val isExternalStorageManager = Environment.isExternalStorageManager()
-            if (!isExternalStorageManager) {
-                get11Permission()
-            }
-        }
     }
 
     fun initData() {
-        CoroutineScope(Dispatchers.IO).launch {
-            var datas = DocUtil.getDocFile(this@MainActivity)
-            CoroutineScope(Dispatchers.Main).launch {
-                mDocAdapter?.showDatas(datas)
-            }
-        }
+        requestStoragePermission()
     }
 
-    fun get11Permission() {
-        try {
-            val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
-            intent.addCategory("android.intent.category.DEFAULT")
-            intent.data = Uri.parse(java.lang.String.format("package:%s", packageName))
-            startActivityForResult(intent, 100)
-        } catch (e: Exception) {
-            val intent = Intent()
-            intent.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
-            startActivityForResult(intent, 100)
-        }
-    }
-
-
-    fun selectFileAction() {
-
-        val intent = Intent(Intent.ACTION_GET_CONTENT);
-        intent.type = "*/*";
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        startActivityForResult(intent, REQUEST_CODE_LOAD);
-    }
 
     override fun onClick(v: View?) {
         when (v?.id) {
-//            R.id.mBtnOnline -> {
-//                if (checkSupport(url)) {
-//                    openDoc(url,DocSourceType.URL)
-//                }
-//            }
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK) {
-            when (requestCode) {
-                REQUEST_CODE_LOAD -> {
-                    val uri = data?.data
-                    if (uri != null) {
-                        if (checkSupport(uri.toString())) {
-                            openDoc(uri.toString(),DocSourceType.URI)
-                        }
-                    }
-                }
-            }
         }
     }
 
@@ -182,5 +187,58 @@ class MainActivity : AppCompatActivity(),OnClickListener,OnItemClickListener {
             }
         }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_CODE_STORAGE_PERMISSION11) {
+            if (hasRwPermission()) {
+                requestStoragePermission()
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        // EasyPermissions handles the request result.
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    // ============================================================================================
+    //  Implementation Permission Callbacks
+    // ============================================================================================
+
+    override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
+        //会回调 AfterPermissionGranted注解对应方法
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {
+        // (Optional) Check whether the user denied any permissions and checked "NEVER ASK AGAIN."
+        // This will display a dialog directing them to enable the permission in app settings.
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+
+            val settingsDialogBuilder = SettingsDialog.Builder(this)
+
+            when(requestCode) {
+                REQUEST_CODE_STORAGE_PERMISSION -> {
+                    settingsDialogBuilder.title = getString(
+                        com.cherry.permissions.lib.R.string.title_settings_dialog,
+                        "Storage Permission")
+                    settingsDialogBuilder.rationale = getString(
+                        com.cherry.permissions.lib.R.string.rationale_ask_again,
+                        "Storage Permission")
+                }
+            }
+
+            settingsDialogBuilder.build().show()
+        }
+
+    }
+
 
 }
