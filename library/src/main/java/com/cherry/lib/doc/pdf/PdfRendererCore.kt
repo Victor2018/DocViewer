@@ -91,7 +91,7 @@ internal class PdfRendererCore(
 
     fun getPageCount(): Int = pdfRenderer?.pageCount ?: 0
 
-    fun renderPage(pageNo: Int, onBitmapReady: ((bitmap: Bitmap?, pageNo: Int) -> Unit)? = null) {
+    fun renderPage(pageNo: Int,quality: PdfQuality? = pdfQuality, onBitmapReady: ((bitmap: Bitmap?, pageNo: Int) -> Unit)? = null) {
         if (pageNo >= getPageCount())
             return
 
@@ -114,7 +114,7 @@ internal class PdfRendererCore(
         }
     }
 
-    private fun buildBitmap(pageNo: Int, onBitmap: (Bitmap?) -> Unit) {
+    private fun buildBitmap(pageNo: Int,quality: PdfQuality? = pdfQuality, onBitmap: (Bitmap?) -> Unit) {
         var bitmap = getBitmapFromCache(pageNo)
         bitmap?.let {
             onBitmap(it)
@@ -122,10 +122,11 @@ internal class PdfRendererCore(
         }
 
         try {
+            val ratio = quality?.ratio ?: 1
             val pdfPage = pdfRenderer!!.openPage(pageNo)
             bitmap = Bitmap.createBitmap(
-                pdfPage.width * pdfQuality.ratio,
-                pdfPage.height * pdfQuality.ratio,
+                pdfPage.width * ratio,
+                pdfPage.height * ratio,
                 Bitmap.Config.ARGB_8888
             )
             bitmap ?: return

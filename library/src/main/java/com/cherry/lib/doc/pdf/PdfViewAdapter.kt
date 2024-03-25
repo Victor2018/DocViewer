@@ -64,7 +64,7 @@ internal class PdfViewAdapter(
 
         fun bindView() {
             itemView.container_view.setOnClickListener {
-                renderer?.renderPage(adapterPosition) { bitmap: Bitmap?, pageNo: Int ->
+                renderer?.renderPage(adapterPosition,PdfQuality.ENHANCED) { bitmap: Bitmap?, pageNo: Int ->
                     if (pageNo == adapterPosition) {
                         listener?.OnPdfItemClick(bitmap)
                     }
