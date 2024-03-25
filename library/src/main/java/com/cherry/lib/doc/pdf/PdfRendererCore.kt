@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory
 import android.graphics.pdf.PdfRenderer
 import android.os.Build
 import android.os.ParcelFileDescriptor
+import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -92,6 +93,7 @@ internal class PdfRendererCore(
     fun getPageCount(): Int = pdfRenderer?.pageCount ?: 0
 
     fun renderPage(pageNo: Int,quality: PdfQuality? = pdfQuality, onBitmapReady: ((bitmap: Bitmap?, pageNo: Int) -> Unit)? = null) {
+        Log.e(javaClass.simpleName,"renderPage quality= $quality")
         if (pageNo >= getPageCount())
             return
 
@@ -115,7 +117,7 @@ internal class PdfRendererCore(
     }
 
     private fun buildBitmap(pageNo: Int,quality: PdfQuality? = pdfQuality, onBitmap: (Bitmap?) -> Unit) {
-        var bitmap = getBitmapFromCache(pageNo)
+        var bitmap = getBitmapFromCache(pageNo,quality)
         bitmap?.let {
             onBitmap(it)
             return@buildBitmap

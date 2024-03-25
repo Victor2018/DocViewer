@@ -61,7 +61,7 @@ import java.net.URLEncoder
 
 class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClickListener {
 
-    private val TAG = "PdfRendererView"
+    private val TAG = "DocView"
 
     var mActivity: Activity? = null
     var lifecycleScope: LifecycleCoroutineScope = (context as AppCompatActivity).lifecycleScope
@@ -282,7 +282,7 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
     }
 
     fun showPdf(docSourceType: Int, url: String?) {
-        Log.e(TAG,"showPdf()......")
+        Log.e(TAG,"showPdf()......quality = $quality")
         when (docSourceType) {
             DocSourceType.URL -> {
                 Log.e(TAG,"showPdf()......URL")
