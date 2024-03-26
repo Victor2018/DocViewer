@@ -41,16 +41,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <com.cherry.lib.doc.widget.DocWebView
-        android:id="@+id/mDocWeb"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
     <com.cherry.lib.doc.widget.PinchImageView
         android:id="@+id/mIvImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitCenter"/>
+
+    <com.cherry.lib.doc.widget.DocWebView
+        android:id="@+id/mDocWeb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <ProgressBar
         android:id="@+id/mPlLoadProgress"

@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory
 import android.graphics.pdf.PdfRenderer
 import android.os.Build
 import android.os.ParcelFileDescriptor
+import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -52,8 +53,8 @@ internal class PdfRendererCore(
         cache.mkdirs()
     }
 
-    private fun getBitmapFromCache(pageNo: Int): Bitmap? {
-        val loadPath = File(File(context.cacheDir, cachePath), pageNo.toString())
+    private fun getBitmapFromCache(pageNo: Int,quality: PdfQuality? = pdfQuality): Bitmap? {
+        val loadPath = File(File(context.cacheDir, cachePath), "$quality-$pageNo")
         if (!loadPath.exists())
             return null
 
@@ -63,15 +64,15 @@ internal class PdfRendererCore(
             null
         }
     }
-    fun pageExistInCache(pageNo: Int): Boolean {
-        val loadPath = File(File(context.cacheDir, cachePath), pageNo.toString())
+    fun pageExistInCache(pageNo: Int,quality: PdfQuality? = pdfQuality): Boolean {
+        val loadPath = File(File(context.cacheDir, cachePath), "$quality-$pageNo")
 
         return loadPath.exists()
     }
 
     @Throws(IOException::class)
-    private fun writeBitmapToCache(pageNo: Int, bitmap: Bitmap) {
-        val savePath = File(File(context.cacheDir, cachePath), pageNo.toString())
+    private fun writeBitmapToCache(pageNo: Int,quality: PdfQuality? = pdfQuality, bitmap: Bitmap) {
+        val savePath = File(File(context.cacheDir, cachePath), "$quality-$pageNo")
         savePath.createNewFile()
         val fos = FileOutputStream(savePath)
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
@@ -91,47 +92,49 @@ internal class PdfRendererCore(
 
     fun getPageCount(): Int = pdfRenderer?.pageCount ?: 0
 
-    fun renderPage(pageNo: Int, onBitmapReady: ((bitmap: Bitmap?, pageNo: Int) -> Unit)? = null) {
+    fun renderPage(pageNo: Int,quality: PdfQuality? = pdfQuality, onBitmapReady: ((bitmap: Bitmap?, pageNo: Int) -> Unit)? = null) {
+        Log.e(javaClass.simpleName,"renderPage quality= $quality")
         if (pageNo >= getPageCount())
             return
 
         CoroutineScope(Dispatchers.IO).launch {
             synchronized(this@PdfRendererCore) {
-                buildBitmap(pageNo) { bitmap ->
+                buildBitmap(pageNo,quality) { bitmap ->
                     CoroutineScope(Dispatchers.Main).launch { onBitmapReady?.invoke(bitmap, pageNo) }
                 }
                 onBitmapReady?.let {
-                    //prefetchNext(pageNo + 1)
+                    prefetchNext(pageNo + 1,quality)
                 }
             }
         }
     }
 
-    private fun prefetchNext(pageNo: Int) {
+    private fun prefetchNext(pageNo: Int,quality: PdfQuality? = pdfQuality) {
         val countForPrefetch = min(getPageCount(), pageNo + PREFETCH_COUNT)
         for (pageToPrefetch in pageNo until countForPrefetch) {
-            renderPage(pageToPrefetch)
+            renderPage(pageToPrefetch,quality)
         }
     }
 
-    private fun buildBitmap(pageNo: Int, onBitmap: (Bitmap?) -> Unit) {
-        var bitmap = getBitmapFromCache(pageNo)
+    private fun buildBitmap(pageNo: Int,quality: PdfQuality? = pdfQuality, onBitmap: (Bitmap?) -> Unit) {
+        var bitmap = getBitmapFromCache(pageNo,quality)
         bitmap?.let {
             onBitmap(it)
             return@buildBitmap
         }
 
         try {
+            val ratio = quality?.ratio ?: 1
             val pdfPage = pdfRenderer!!.openPage(pageNo)
             bitmap = Bitmap.createBitmap(
-                pdfPage.width * pdfQuality.ratio,
-                pdfPage.height * pdfQuality.ratio,
+                pdfPage.width * ratio,
+                pdfPage.height * ratio,
                 Bitmap.Config.ARGB_8888
             )
             bitmap ?: return
             pdfPage.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
             pdfPage.close()
-            writeBitmapToCache(pageNo, bitmap)
+            writeBitmapToCache(pageNo,quality, bitmap)
 
             onBitmap(bitmap)
         } catch (e: Exception) {
