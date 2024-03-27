@@ -500,6 +500,7 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
     override fun OnPdfItemClick(position: Int) {
         mLlBigPdfImage.show()
         mPbBigLoading.show()
+        mIvPdf.setImageBitmap(null)
         pdfRendererCore?.renderPage(position,PdfQuality.ENHANCED) { bitmap: Bitmap?, pageNo: Int ->
             mPbBigLoading.hide()
             mIvPdf.setImageBitmap(bitmap)
