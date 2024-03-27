@@ -497,11 +497,14 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
 
     }
 
-    override fun OnPdfItemClick(bitmap: Bitmap?) {
-        mIvPdf.setImageBitmap(bitmap)
-        mIvPdf.reset()
+    override fun OnPdfItemClick(position: Int) {
         mLlBigPdfImage.show()
-        mPdfPageNo.visibility = GONE
+        mPbBigLoading.show()
+        pdfRendererCore?.renderPage(position,PdfQuality.ENHANCED) { bitmap: Bitmap?, pageNo: Int ->
+            mPbBigLoading.hide()
+            mIvPdf.setImageBitmap(bitmap)
+            mIvPdf.reset()
+            mPdfPageNo.visibility = GONE
+        }
     }
-
 }

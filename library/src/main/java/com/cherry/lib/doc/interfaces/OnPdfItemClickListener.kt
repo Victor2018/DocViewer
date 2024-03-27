@@ -1,7 +1,5 @@
 package com.cherry.lib.doc.interfaces
 
-import android.graphics.Bitmap
-
 /*
  * -----------------------------------------------------------------
  * Copyright (C) 2018-2028, by Victor, All rights reserved.
@@ -14,5 +12,5 @@ import android.graphics.Bitmap
  */
 
 interface OnPdfItemClickListener {
-    fun OnPdfItemClick(bitmap: Bitmap?)
+    fun OnPdfItemClick(position: Int)
 }
