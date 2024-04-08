@@ -25,10 +25,9 @@ import com.cherry.lib.doc.util.FileUtils
 import com.cherry.permissions.lib.EasyPermissions
 import com.cherry.permissions.lib.EasyPermissions.hasPermissions
 import com.cherry.permissions.lib.annotations.AfterPermissionGranted
-import com.cherry.permissions.lib.dialogs.DEFAULT_SETTINGS_REQ_CODE
 import com.cherry.permissions.lib.dialogs.SettingsDialog
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.activity_main.toolbar
+import kotlinx.android.synthetic.main.content_main.mRvDoc
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,6 +38,8 @@ class MainActivity : AppCompatActivity(),OnClickListener,OnItemClickListener,
     companion object {
         const val REQUEST_CODE_STORAGE_PERMISSION = 124
         const val REQUEST_CODE_STORAGE_PERMISSION11 = 125
+        const val REQUEST_CODE_SELECT_DOCUMENT = 0x100
+        const val TAG = "MainActivity"
     }
     var url = "http://cdn07.foxitsoftware.cn/pub/foxit/manual/phantom/en_us/API%20Reference%20for%20Application%20Communication.pdf"
 //    var url = "https://xdts.xdocin.com/demo/resume3.docx"
@@ -123,6 +124,16 @@ class MainActivity : AppCompatActivity(),OnClickListener,OnItemClickListener,
                 openDoc(url,DocSourceType.URL,null)
                 return true
             }
+            R.id.action_select -> {
+                // 使用Intent打开文件管理器并选择文档
+
+                // 使用Intent打开文件管理器并选择文档
+                val intent = Intent(Intent.ACTION_GET_CONTENT)
+                intent.setType("*/*") // 设置要选择的文件类型，此处为任意文件类型
+
+                startActivityForResult(intent, REQUEST_CODE_SELECT_DOCUMENT) // 启动Activity并设置请求码
+                return true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -195,6 +206,13 @@ class MainActivity : AppCompatActivity(),OnClickListener,OnItemClickListener,
             if (hasRwPermission()) {
                 requestStoragePermission()
             }
+        } else if (requestCode == REQUEST_CODE_SELECT_DOCUMENT && resultCode == RESULT_OK) {
+            val documentUri = data?.data
+            Log.d(TAG, "documentUri = $documentUri")
+            documentUri?.let {
+                openDoc(it.toString(), DocSourceType.URI, null)
+            }
+
         }
     }
 
@@ -214,7 +232,7 @@ class MainActivity : AppCompatActivity(),OnClickListener,OnItemClickListener,
     // ============================================================================================
 
     override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
-        //会回调 AfterPermissionGranted注解对应方法
+        // 会回调 AfterPermissionGranted注解对应方法
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {

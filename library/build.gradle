@@ -55,6 +55,8 @@ dependencies {
 
     // AndroidUtilCode工具类：https://github.com/Blankj/AndroidUtilCode
     implementation('com.blankj:utilcodex:1.31.1')
+    // 文件编码判断：https://mvnrepository.com/artifact/com.googlecode.juniversalchardet/juniversalchardet
+    implementation 'com.googlecode.juniversalchardet:juniversalchardet:1.0.3'
 
 }
 

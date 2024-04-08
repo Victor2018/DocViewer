@@ -40,11 +40,15 @@
 
 package com.cherry.lib.doc.office.thirdpart.mozilla.intl.chardet;
 
+import android.content.ContentResolver;
+
+import com.cherry.lib.doc.office.fc.util.StreamUtils;
+
+import org.mozilla.universalchardet.UniversalDetector;
+
 import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-
-import android.util.Log;
-
+import java.io.IOException;
+import java.io.InputStream;
 public class CharsetDetector
 {
 
@@ -144,14 +148,25 @@ public class CharsetDetector
      * @return
      * @throws Exception
      */
-    public static String detect(String fileName) throws Exception
-    {
-
-        FileInputStream file = new FileInputStream(fileName);
+    public static String detect(ContentResolver resolver, String fileName) throws Exception {
+        InputStream file = StreamUtils.getInputStream(resolver, fileName);
         BufferedInputStream imp = new BufferedInputStream(file);
-        String charset = detect(imp);
+        // String charset = detect(imp);
+        byte[] b = new byte[1024]; // 定义字节数组
+        int len = imp.read(b); // 由于信息的传输是以二进制的形式，所以要以二进制的形式进行数据的读取
+        String charset = detectEncoding(b);
         imp.close();
 
         return charset;
+    }
+
+    // 判断字符串的编码格式
+    public static String detectEncoding(byte[] bytes) throws IOException {
+        UniversalDetector detector = new UniversalDetector(null);
+        detector.handleData(bytes, 0, bytes.length);
+        detector.dataEnd();
+        String encoding = detector.getDetectedCharset();
+        detector.reset(); // 清理资源
+        return encoding;
     }
 }

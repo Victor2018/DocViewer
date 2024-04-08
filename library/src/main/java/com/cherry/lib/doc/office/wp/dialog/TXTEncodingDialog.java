@@ -9,9 +9,11 @@ package com.cherry.lib.doc.office.wp.dialog;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Vector;
 
+import com.cherry.lib.doc.office.fc.util.StreamUtils;
 import com.cherry.lib.doc.office.system.IControl;
 import com.cherry.lib.doc.office.system.IDialogAction;
 import com.cherry.lib.doc.office.system.beans.ADialog;
@@ -182,8 +184,8 @@ public class TXTEncodingDialog extends ADialog
         {
             if (code != null)
             {
-                File file = new File(model.get(0).toString());
-                BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), code));
+                InputStream is = StreamUtils.getInputStream(getContext().getContentResolver(),model.get(0).toString());
+                BufferedReader br = new BufferedReader(new InputStreamReader(is, code));
                 int len = br.read(buffer);
                 if (len > 0)
                 {
