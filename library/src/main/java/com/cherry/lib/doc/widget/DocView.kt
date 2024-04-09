@@ -17,6 +17,7 @@ import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -25,7 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.UriUtils
 import com.cherry.lib.doc.R
 import com.cherry.lib.doc.bean.DocEngine
 import com.cherry.lib.doc.bean.DocMovingOrientation
@@ -156,6 +157,23 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
                 docSourceType: Int, fileType: Int,
                 viewPdfInPage: Boolean = false,
                 engine: DocEngine = this.engine) {
+        var fileType = fileType
+        var docUrl = docUrl
+        var docSourceType = docSourceType
+        if (docUrl != null && docSourceType == DocSourceType.URI && fileType == -1) {
+           //如果是URI类型，且文件类型为-1，则获取一下文件类型，保证正确读取
+            val file = UriUtils.uri2FileNoCacheCopy(docUrl.toUri())
+            if (file != null) {
+                fileType =  FileUtils.getFileTypeForUrl(file.absolutePath)
+                docUrl = file.absolutePath
+                docSourceType = DocSourceType.PATH
+                Log.d(TAG, "openDoc reset url = $docUrl")
+                Log.d(TAG, "openDoc reset docSourceType = $docSourceType")
+                Log.d(TAG, "openDoc reset fileType = $fileType")
+            } else {
+                Log.d(TAG, "file = null")
+            }
+        }
         Log.e(TAG,"openDoc()......fileType = $fileType")
         mActivity = activity
         mViewPdfInPage = viewPdfInPage

@@ -29,6 +29,9 @@ class SysKit(
     // 保存一个control实例，这个control实例就是AppActivity
     var control: IControl?
 ) {
+    init {
+        getErrorKit(this)
+    }
     // 
     val sDPath: File?
         get() {

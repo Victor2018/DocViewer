@@ -17,14 +17,16 @@ object StreamUtils {
     @Throws(Exception::class)
     @JvmStatic
     fun getInputStream(resolver: ContentResolver, filePath: String): InputStream? {
+        Log.d("StreamUtils", "filePath = $filePath")
         val uri = Uri.parse(filePath)
         Log.d("StreamUtils", "uri = $uri")
         val `in`: InputStream?
         val file = UriUtils.uri2FileNoCacheCopy(Uri.parse(filePath))
         `in` = if (file != null) {
-            // Log.d("StreamUtils", "file.getAbsolutePath() = " + file.absolutePath)
+            Log.d("StreamUtils", "file.getAbsolutePath() = " + file.absolutePath)
             FileInputStream(file)
         } else if (uri.scheme != null) {
+            // Log.d("StreamUtils", "uri.scheme = " + uri.scheme)
             resolver.openInputStream(uri)
         } else {
             // Log.d("StreamUtils", "filePath2 = $filePath")

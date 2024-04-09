@@ -28,6 +28,7 @@ import com.cherry.lib.doc.office.system.AbstractReader;
 import com.cherry.lib.doc.office.system.ErrorUtil;
 import com.cherry.lib.doc.office.system.IControl;
 import com.cherry.lib.doc.office.system.MainControl;
+import com.cherry.lib.doc.office.thirdpart.mozilla.intl.chardet.CharsetDetector;
 import com.cherry.lib.doc.office.wp.model.WPDocument;
 
 
@@ -103,10 +104,13 @@ public class TXTReader extends AbstractReader
             return wpdoc;
         }
         wpdoc = new WPDocument();
-        if(encoding != null)
-        {
-            readFile();
-        }        
+        if (encoding == null) {
+            encoding = CharsetDetector.detect(control.getActivity().getContentResolver(), filePath);
+        }
+        // if(encoding != null)
+        // {
+        readFile();
+        // }
         return wpdoc;
     }
 

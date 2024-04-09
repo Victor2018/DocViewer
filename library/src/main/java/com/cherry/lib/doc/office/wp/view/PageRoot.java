@@ -93,11 +93,7 @@ public class PageRoot extends AbstractView implements IRoot
             }
         }
         catch (Exception e) {
-            e.printStackTrace();
-            ErrorUtil errorUtil = word.getControl().getSysKit().getErrorKit();
-            if (errorUtil != null) {
-                errorUtil.writerLog(e);
-            }
+            word.getControl().getSysKit().getErrorKit().writerLog(e);
         }
         return WPViewConstant.BREAK_NO;
     }

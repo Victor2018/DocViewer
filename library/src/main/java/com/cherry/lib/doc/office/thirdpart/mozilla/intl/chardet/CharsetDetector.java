@@ -154,6 +154,10 @@ public class CharsetDetector
         // String charset = detect(imp);
         byte[] b = new byte[1024]; // 定义字节数组
         int len = imp.read(b); // 由于信息的传输是以二进制的形式，所以要以二进制的形式进行数据的读取
+        // 内容为空，则默认UTF-8
+        if (len == -1) {
+            return "UTF_8";
+        }
         String charset = detectEncoding(b);
         imp.close();
 

@@ -6,9 +6,11 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.cherry.lib.doc.bean.DocEngine
 import com.cherry.lib.doc.util.Constant
-import kotlinx.android.synthetic.main.activity_doc_viewer.*
+import kotlinx.android.synthetic.main.activity_doc_viewer.mDocView
 
 open class DocViewerActivity : AppCompatActivity() {
+    private val TAG = "DocViewerActivity"
+
     companion object {
         fun launchDocViewer(
             activity: AppCompatActivity, docSourceType: Int, path: String?,
@@ -26,7 +28,7 @@ open class DocViewerActivity : AppCompatActivity() {
     var docSourceType = 0
     var fileType = -1
     var engine: Int = DocEngine.INTERNAL.value
-    var docUrl: String? = null//文件地址
+    var docUrl: String? = null// 文件地址
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,10 +48,10 @@ open class DocViewerActivity : AppCompatActivity() {
         engine = intent?.getIntExtra(Constant.INTENT_ENGINE_KEY, DocEngine.INTERNAL.value) ?: DocEngine.INTERNAL.value
 
         mDocView.openDoc(this,docUrl,docSourceType,fileType,false, DocEngine.values().first { it.value == engine })
-        Log.e(javaClass.simpleName,"initData-docUrl = $docUrl")
-        Log.e(javaClass.simpleName,"initData-docSourceType = $docSourceType")
-        Log.e(javaClass.simpleName,"initData-fileType = $fileType")
-        Log.e(javaClass.simpleName,"initData-engine = $engine")
+        Log.e(TAG, "initData-docUrl = $docUrl")
+        Log.e(TAG, "initData-docSourceType = $docSourceType")
+        Log.e(TAG, "initData-fileType = $fileType")
+        Log.e(TAG, "initData-engine = $engine")
     }
 
 }

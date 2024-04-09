@@ -79,7 +79,7 @@ public class FileReaderThread extends Thread {
                     || fileType == FileType.DOCX) {
                 reader = new DOCXReader(control, filePath, docSourceType);
             }
-            //
+            // txt
             else if (fileName.endsWith(MainConstant.FILE_TYPE_TXT) || fileType == FileType.TXT) {
                 reader = new TXTReader(control, filePath, docSourceType, encoding);
             }
