@@ -18,9 +18,18 @@ object StreamUtils {
     @JvmStatic
     fun getInputStream(resolver: ContentResolver, filePath: String): InputStream? {
         Log.d("StreamUtils", "filePath = $filePath")
+        val `in`: InputStream?
+        if (filePath.startsWith("/")) {
+            `in` = FileInputStream(filePath)
+            return `in`
+        }
+        // else if (filePath.startsWith("file://")){
+        //     `in` = FileInputStream(filePath.substring(7))
+        //     return `in`
+        // }
         val uri = Uri.parse(filePath)
         Log.d("StreamUtils", "uri = $uri")
-        val `in`: InputStream?
+
         val file = UriUtils.uri2FileNoCacheCopy(Uri.parse(filePath))
         `in` = if (file != null) {
             Log.d("StreamUtils", "file.getAbsolutePath() = " + file.absolutePath)
