@@ -2,7 +2,7 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-android-extensions'
-    // id 'maven-publish'
+    id 'maven-publish'
 }
 
 android {
@@ -60,15 +60,15 @@ dependencies {
 
 }
 
-// afterEvaluate {
-//     publishing {
-//         publications {
-//             release(MavenPublication) {
-//                 from components.release
-//                 groupId = 'com.github.Victor2018' //groupId 随便取
-//                 artifactId = 'cherry'  //artifactId 随便取
-//                 version = '1.0.0'
-//             }
-//         }
-//     }
-// }
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.github.Victor2018' //groupId 随便取
+                artifactId = 'cherry'  //artifactId 随便取
+                version = '1.0.0'
+            }
+        }
+    }
+}
