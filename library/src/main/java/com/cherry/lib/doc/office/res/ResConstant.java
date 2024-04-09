@@ -1,6 +1,6 @@
 /*
  * 文件名称:          ResConstant.java
- *  
+ *
  * 编译器:            android2.2
  * 时间:              上午11:31:49
  */
@@ -26,45 +26,45 @@ package com.cherry.lib.doc.office.res;
 public class ResConstant
 {
     //
-    public static final String BUTTON_OK = "确定";
+    public static final String BUTTON_OK = "OK";
     //
-    public static final String BUTTON_CANCEL = "取消";
-    // 
-    public static final String DIALOG_ENCODING_TITLE = "文字编码中";
+    public static final String BUTTON_CANCEL = "Cancel";
     //
-    public static final String DIALOG_LOADING = "加载中，请稍后...";
+    public static final String DIALOG_ENCODING_TITLE = "Text Encoding";
     //
-    public static final String DIALOG_INSUFFICIENT_MEMORY = "内存不足";
+    public static final String DIALOG_LOADING = "Loading, please wait...";
     //
-    public static final String DIALOG_SYSTEM_CRASH = "系统崩溃, 运行终止";
+    public static final String DIALOG_INSUFFICIENT_MEMORY = "Unable to complete operation due to insufficient memory";
     //
-    public static final String DIALOG_FORMAT_ERROR = "文件已孙华";
+    public static final String DIALOG_SYSTEM_CRASH = "System crash, terminate running";
     //
-    public static final String DIALOG_OLD_DOCUMENT = "文件格式太老";
+    public static final String DIALOG_FORMAT_ERROR = "Bad file";
     //
-    public static final String DIALOG_PARSE_ERROR = "文件解析出错";
+    public static final String DIALOG_OLD_DOCUMENT = "The document is too old - Office 95 or older, which is not supported";
     //
-    public static final String DIALOG_RTF_FILE = "不支持的RTF格式";
+    public static final String DIALOG_PARSE_ERROR = "File parsing error";
     //
-    public static final String DIALOG_PDF_SEARCHING = "搜索中...";
+    public static final String DIALOG_RTF_FILE = "The document is really a RTF file, which is not supported";
     //
-    public static final String DIALOG_FIND_NOT_FOUND = "无内容";
+    public static final String DIALOG_PDF_SEARCHING = "Searching...";
     //
-    public static final String DIALOG_FIND_TO_BEGIN = "向文档顶部搜索";
+    public static final String DIALOG_FIND_NOT_FOUND = "Content not found";
     //
-    public static final String DIALOG_FIND_TO_END = "向文档底部搜索";
+    public static final String DIALOG_FIND_TO_BEGIN = "Search to the document begin";
     //
-    public static final String DIALOG_ENTER_PASSWORD = "输入密码";
+    public static final String DIALOG_FIND_TO_END = "Search to the document end";
     //
-    public static final String DIALOG_CANNOT_ENCRYPTED_FILE = "无法操作加密文件";
+    public static final String DIALOG_ENTER_PASSWORD = "Enter Password";
     //
-    public static final String DIALOG_PASSWORD_INCORRECT = "密码不正确";
+    public static final String DIALOG_CANNOT_ENCRYPTED_FILE = "Cannot process encrypted file";
     //
-    public static final String EXIT_SLIDESHOW = "幻灯片结束, 点击退出.";
+    public static final String DIALOG_PASSWORD_INCORRECT = "Password is incorrect!";
     //
-    public static final String SD_CARD_ERROR = "SD卡错误";
+    public static final String EXIT_SLIDESHOW = "End of slideshow, tap to exit.";
     //
-    public static final String SD_CARD_WRITEDENIED = "无写入SD卡权限";
+    public static final String SD_CARD_ERROR = "SD Card Error";
     //
-    public static final String SD_CARD_NOSPACELEFT = "SD卡已满" ;
+    public static final String SD_CARD_WRITEDENIED = "SD Card write permission denied";
+    //
+    public static final String SD_CARD_NOSPACELEFT = "SD Card has no space left" ;
 }
