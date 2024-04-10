@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.cherry.lib.doc.DocViewerActivity
 import com.cherry.lib.doc.util.Constant
 import com.cherry.lib.doc.widget.PoiViewer
 import kotlinx.android.synthetic.main.activity_word.mFlDocContainer

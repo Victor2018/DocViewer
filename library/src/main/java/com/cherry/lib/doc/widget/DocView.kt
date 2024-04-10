@@ -518,6 +518,7 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
         try {
             if (pdfRendererCoreInitialised) {
                 pdfRendererCore?.closePdfRender()
+                pdfRendererCoreInitialised = false
             }
         } catch (e: Exception) {
             e.printStackTrace()
