@@ -90,7 +90,7 @@ object FileUtils {
     fun downloadFile(context: Context, assetName: String, filePath: String, fileName: String?) {
         val dirPath = "${internalCacheDirPath}/${filePath}"
         val outFile = File(dirPath)
-        //Create New File if not present
+        // Create New File if not present
         if (!outFile.exists()) {
             outFile.mkdirs()
         }
@@ -129,4 +129,74 @@ object FileUtils {
             else -> "unknown"
         }
     }
+
+    val mimeExtMap = mapOf(
+        "video/3gpp" to ".3gp",
+        "application/vnd.android.package-archive" to ".apk",
+        "video/x-ms-asf" to ".asf",
+        "video/x-msvideo" to ".avi",
+        // "application/octet-stream" to ".bin",
+        "image/bmp" to ".bmp",
+        // "application/octet-stream" to ".class",
+        // "text/plain" to ".conf",
+        // "text/plain" to ".cpp",
+        "application/msword" to ".doc",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document" to ".docx",
+        "application/vnd.ms-excel" to ".xls",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" to ".xlsx",
+        "application/octet-stream" to ".exe",
+        "image/gif" to ".gif",
+        "application/x-gtar" to ".gtar",
+        // "text/html" to ".htm",
+        "text/html" to ".html",
+        "application/java-archive" to ".jar",
+        // "text/plain" to ".java",
+        // "image/jpeg" to ".jpeg",
+        "image/jpeg" to ".jpg",
+        "application/x-javascript" to ".js",
+        // "text/plain" to ".log",
+        "audio/x-mpegurl" to ".m3u",
+        "audio/mp4a-latm" to ".m4a",
+        // "audio/mp4a-latm" to ".m4b",
+        // "audio/mp4a-latm" to ".m4p",
+        "video/vnd.mpegurl" to ".m4u",
+        "video/x-m4v" to ".m4v",
+        "video/quicktime" to ".mov",
+        // "audio/x-mpeg" to ".mp2",
+        "audio/x-mpeg" to ".mp3",
+        "video/mp4" to ".mp4",
+        "application/vnd.mpohun.certificate" to ".mpc",
+        // "video/mpeg" to ".mpe",
+        "video/mpeg" to ".mpeg",
+        // "video/mpeg" to ".mpg",
+        // "video/mp4" to ".mpg4",
+        "audio/mpeg" to ".mpga",
+        "application/vnd.ms-outlook" to ".msg",
+        "audio/ogg" to ".ogg",
+        "application/pdf" to ".pdf",
+        "image/png" to ".png",
+        // "application/vnd.ms-powerpoint" to ".pps",
+        "application/vnd.ms-powerpoint" to ".ppt",
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation" to ".pptx",
+        // "text/plain" to ".prop",
+        // "text/plain" to ".rc",
+        "audio/x-pn-realaudio" to ".rmvb",
+        "application/rtf" to ".rtf",
+        // "text/plain" to ".sh",
+        "application/x-tar" to ".tar",
+        "application/x-compressed" to ".tgz",
+        "text/plain" to ".txt",
+        "audio/x-wav" to ".wav",
+        "audio/x-ms-wma" to ".wma",
+        "audio/x-ms-wmv" to ".wmv",
+        "application/vnd.ms-works" to ".wps",
+        // "text/plain" to ".xml",
+        "application/x-compress" to ".z",
+        "application/x-zip-compressed" to ".zip",
+        // "text/plain" to ".c",
+        "application/x-gzip" to ".gz",
+        // "text/plain" to ".h",
+        "*/*" to "",
+    )
+
 }
