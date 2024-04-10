@@ -102,6 +102,8 @@ public class ErrorUtil
     public void writerLog(Throwable ex)
     {
         writerLog(ex, false);
+        // 增加报错打印，方便debug
+        ex.printStackTrace();
     }
     
     /**

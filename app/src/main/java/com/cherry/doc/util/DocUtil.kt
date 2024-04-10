@@ -28,6 +28,7 @@ import java.util.Date
  */
 
 object DocUtil {
+    private val TAG = "DocUtil"
     fun getDocFile(context: Context): ArrayList<DocGroupInfo> {
         val pdf = MimeTypeMap.getSingleton().getMimeTypeFromExtension("pdf")
         val doc = MimeTypeMap.getSingleton().getMimeTypeFromExtension("doc")
@@ -94,11 +95,11 @@ object DocUtil {
             val album = fileCursor.getString(albumKey)
             val lastModified = fileCursor.getLong(lastModifiedKey)
             val fileSize = fileCursor.getLong(sizeKey)
-            Log.e(javaClass.simpleName,"fileName = $fileName")
-            Log.e(javaClass.simpleName,"path = $path")
-            Log.e(javaClass.simpleName,"mimeType = $mimeType")
-            Log.e(javaClass.simpleName,"fileSize = ${getFormatSize(fileSize.toDouble())}")
-            Log.e(javaClass.simpleName,"lastModified = ${stampToDate(lastModified * 1000)}")
+            Log.v(TAG,"fileName = $fileName")
+            Log.v(TAG,"path = $path")
+            Log.v(TAG,"mimeType = $mimeType")
+            Log.v(TAG,"fileSize = ${getFormatSize(fileSize.toDouble())}")
+            Log.v(TAG,"lastModified = ${stampToDate(lastModified * 1000)}")
 
             var item = DocInfo()
             item.album = album

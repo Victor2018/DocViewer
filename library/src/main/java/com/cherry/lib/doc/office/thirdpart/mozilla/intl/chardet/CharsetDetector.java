@@ -40,29 +40,30 @@
 
 package com.cherry.lib.doc.office.thirdpart.mozilla.intl.chardet;
 
+import android.content.ContentResolver;
+
+import com.cherry.lib.doc.office.fc.util.StreamUtils;
+
+import org.mozilla.universalchardet.UniversalDetector;
+
 import java.io.BufferedInputStream;
-import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
-import android.util.Log;
-
-public class CharsetDetector
-{
+public class CharsetDetector {
 
     public static boolean found = false;
     public static String charsetStr;
 
-    private CharsetDetector()
-    {
+    private CharsetDetector() {
     }
 
     /**
-     * 
      * @param imp
      * @return
      * @throws Exception
      */
-    public static String detect(BufferedInputStream imp) throws Exception
-    {
+    public static String detect(BufferedInputStream imp) throws Exception {
         found = false;
         charsetStr = "ASCII";
 
@@ -71,10 +72,8 @@ public class CharsetDetector
         // Set an observer...
         // The Notify() will be called when a matching charset is found.
 
-        det.Init(new nsICharsetDetectionObserver()
-        {
-            public void Notify(String charset)
-            {
+        det.Init(new nsICharsetDetectionObserver() {
+            public void Notify(String charset) {
                 found = true;
                 charsetStr = charset;
             }
@@ -85,48 +84,40 @@ public class CharsetDetector
         boolean done = false;
         boolean isAscii = true;
         int count = 0;
-        while ((len = imp.read(buf, 0, buf.length)) != -1 && count <= 50)
-        {
+        while ((len = imp.read(buf, 0, buf.length)) != -1 && count <= 50) {
             //
-            if (count == 0)
-            {
+            if (count == 0) {
                 // unicode
                 if ((buf[0] == -1 && buf[1] == -2)
-                    || (buf[1] == -2 && buf[0] == -1))
-                {
-                    charsetStr ="Unicode";
+                        || (buf[1] == -2 && buf[0] == -1)) {
+                    charsetStr = "Unicode";
                     return charsetStr;
                 }
                 // utf-8
-                //else if (buf[0] == 0xEF && buf[1] ==0xBB && buf[2] == 0xBF)
-                else if (buf[0] == -17 && buf[1] ==-69 && buf[2] == -65)
-                {
-                    charsetStr ="UTF-8";
+                // else if (buf[0] == 0xEF && buf[1] ==0xBB && buf[2] == 0xBF)
+                else if (buf[0] == -17 && buf[1] == -69 && buf[2] == -65) {
+                    charsetStr = "UTF-8";
                     return charsetStr;
                 }
             }
             // Check if the stream is only ascii.
 
-            if (isAscii)
-            {
+            if (isAscii) {
                 isAscii = det.isAscii(buf, len);
             }
             // DoIt if non-ascii and not done yet.
-            if (!isAscii && !done)
-            {
+            if (!isAscii && !done) {
                 done = det.DoIt(buf, len, false);
             }
             count++;
         }
         det.DataEnd();
 
-        if (isAscii)
-        {
+        if (isAscii) {
             return "ASCII";
         }
 
-        if (!found)
-        {
+        if (!found) {
             /*String prob[] = det.getProbableCharsets() ;
             if(prob != null && prob.length > 0)
             {
@@ -139,19 +130,38 @@ public class CharsetDetector
     }
 
     /**
-     * 
      * @param fileName
      * @return
      * @throws Exception
      */
-    public static String detect(String fileName) throws Exception
-    {
-
-        FileInputStream file = new FileInputStream(fileName);
+    public static String detect(ContentResolver resolver, String fileName) throws Exception {
+        InputStream file = StreamUtils.getInputStream(resolver, fileName);
         BufferedInputStream imp = new BufferedInputStream(file);
-        String charset = detect(imp);
+        // String charset = detect(imp);
+        byte[] b = new byte[1024]; // 定义字节数组
+        int len = imp.read(b); // 由于信息的传输是以二进制的形式，所以要以二进制的形式进行数据的读取
+        // 内容为空，则默认UTF-8
+        if (len == -1) {
+            return "UTF_8";
+        }
+        String charset = detectEncoding(b);
         imp.close();
 
         return charset;
+    }
+
+    // 判断字符串的编码格式
+    public static String detectEncoding(byte[] bytes) {
+        String encoding = "UTF_8";
+        try {
+            UniversalDetector detector = new UniversalDetector(null);
+            detector.handleData(bytes, 0, bytes.length);
+            detector.dataEnd();
+            encoding = detector.getDetectedCharset();
+            detector.reset(); // 清理资源
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return encoding;
     }
 }

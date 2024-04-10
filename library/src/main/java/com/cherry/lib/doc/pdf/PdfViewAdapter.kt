@@ -39,7 +39,6 @@ internal class PdfViewAdapter(
     private val listener: OnPdfItemClickListener?
 ) :
     RecyclerView.Adapter<PdfViewAdapter.PdfPageViewHolder>() {
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PdfPageViewHolder {
         return PdfPageViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.list_item_pdf,parent,

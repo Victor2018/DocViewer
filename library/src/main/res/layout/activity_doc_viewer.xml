@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:dv_page_pb_height="2dp"
+        app:dv_moving_orientation="vertical"
         app:dv_page_pb_color="@color/yellow"
         app:dv_engine="internal"
         app:dv_quality="normal"/>

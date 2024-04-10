@@ -20,6 +20,7 @@ import com.cherry.lib.doc.office.simpletext.view.AbstractView;
 import com.cherry.lib.doc.office.simpletext.view.IRoot;
 import com.cherry.lib.doc.office.simpletext.view.IView;
 import com.cherry.lib.doc.office.simpletext.view.ViewContainer;
+import com.cherry.lib.doc.office.system.ErrorUtil;
 import com.cherry.lib.doc.office.system.IControl;
 import com.cherry.lib.doc.office.wp.control.Word;
 
@@ -91,8 +92,7 @@ public class PageRoot extends AbstractView implements IRoot
                 word.getControl().actionEvent(EventConstant.SYS_AUTO_TEST_FINISH_ID, true);
             }
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             word.getControl().getSysKit().getErrorKit().writerLog(e);
         }
         return WPViewConstant.BREAK_NO;

@@ -1,6 +1,6 @@
 /*
  * 文件名称:          ResConstant.java
- *  
+ *
  * 编译器:            android2.2
  * 时间:              上午11:31:49
  */
@@ -29,7 +29,7 @@ public class ResConstant
     public static final String BUTTON_OK = "OK";
     //
     public static final String BUTTON_CANCEL = "Cancel";
-    // 
+    //
     public static final String DIALOG_ENCODING_TITLE = "Text Encoding";
     //
     public static final String DIALOG_LOADING = "Loading, please wait...";

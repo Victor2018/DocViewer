@@ -7,12 +7,14 @@
 package com.cherry.lib.doc.office.fc.doc;
 
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Vector;
 
 import com.cherry.lib.doc.office.common.ICustomDialog;
 import com.cherry.lib.doc.office.constant.DialogConstant;
 import com.cherry.lib.doc.office.fc.fs.storage.HeaderBlock;
 import com.cherry.lib.doc.office.fc.fs.storage.LittleEndian;
+import com.cherry.lib.doc.office.fc.util.StreamUtils;
 import com.cherry.lib.doc.office.system.ErrorUtil;
 import com.cherry.lib.doc.office.system.FileReaderThread;
 import com.cherry.lib.doc.office.system.IControl;
@@ -21,6 +23,7 @@ import com.cherry.lib.doc.office.system.MainControl;
 import com.cherry.lib.doc.office.thirdpart.mozilla.intl.chardet.CharsetDetector;
 import com.cherry.lib.doc.office.wp.dialog.TXTEncodingDialog;
 
+import android.content.ContentResolver;
 import android.os.Handler;
 
 /**
@@ -59,7 +62,8 @@ public class TXTKit
     {              
         try
         {
-            FileInputStream in = new FileInputStream(filePath);
+            ContentResolver resolver = control.getActivity().getContentResolver();
+            InputStream in = StreamUtils.getInputStream(resolver, filePath);
             byte[] b = new byte[16];
             in.read(b);            
             long signature = LittleEndian.getLong(b, 0);
@@ -79,7 +83,7 @@ public class TXTKit
             }
             in.close();
             
-            String code = control.isAutoTest() ? "GBK" : CharsetDetector.detect(filePath);
+            String code = control.isAutoTest() ? "UTF-8" : CharsetDetector.detect(resolver,filePath);
             if (code != null)
             {
                 new FileReaderThread(control, handler, filePath,docSourceType,-1, code).start();

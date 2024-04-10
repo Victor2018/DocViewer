@@ -8,15 +8,18 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Build
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.MimeTypeMap
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -25,6 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.blankj.utilcode.util.UriUtils
 import com.cherry.lib.doc.R
 import com.cherry.lib.doc.bean.DocEngine
 import com.cherry.lib.doc.bean.DocMovingOrientation
@@ -155,6 +159,30 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
                 docSourceType: Int, fileType: Int,
                 viewPdfInPage: Boolean = false,
                 engine: DocEngine = this.engine) {
+        var fileType = fileType
+        var docUrl = docUrl
+        var docSourceType = docSourceType
+        if (docUrl != null && docSourceType == DocSourceType.URI && fileType == -1) {
+            // 如果是URI类型，且文件类型为-1，则获取一下文件类型，保证正确读取
+            val uri = docUrl.toUri()
+            Log.d(TAG, "openDoc reset uri = $uri")
+            val file = UriUtils.uri2File(uri)
+            if (file != null) {
+                var mimeType = ""
+                fileType = FileUtils.getFileTypeForUrl(file.absolutePath)
+                if (fileType == FileType.NOT_SUPPORT) {
+                    mimeType = getFileMimeType(context, uri) ?: "*/*"
+                    fileType = FileUtils.getFileTypeForUrl(FileUtils.mimeExtMap[mimeType] ?: "")
+                }
+                docUrl = file.absolutePath
+                docSourceType = DocSourceType.PATH
+                Log.d(TAG, "openDoc reset url = $docUrl")
+                Log.d(TAG, "openDoc reset docSourceType = $docSourceType")
+                Log.d(TAG, "openDoc reset fileType = $fileType, mimeType = $mimeType")
+            } else {
+                Log.d(TAG, "file = null")
+            }
+        }
         Log.e(TAG,"openDoc()......fileType = $fileType")
         mActivity = activity
         mViewPdfInPage = viewPdfInPage
@@ -507,5 +535,17 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
             mIvPdf.reset()
             mPdfPageNo.visibility = GONE
         }
+    }
+
+    fun getFileMimeType(context: Context, contentUri: Uri): String? {
+        val contentResolver = context.contentResolver
+        var mimeType = contentResolver.getType(contentUri)
+
+        // 如果系统未能直接返回MIME类型，尝试通过文件扩展名推测
+        if (mimeType == null) {
+            val extension = MimeTypeMap.getFileExtensionFromUrl(contentUri.toString())
+            mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
+        }
+        return mimeType
     }
 }

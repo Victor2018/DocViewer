@@ -3,23 +3,20 @@ package com.cherry.lib.doc.office;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.Environment;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.blankj.utilcode.util.AppUtils;
 import com.cherry.lib.doc.office.common.IOfficeToPicture;
 import com.cherry.lib.doc.office.constant.EventConstant;
 import com.cherry.lib.doc.office.constant.wp.WPViewConstant;
 import com.cherry.lib.doc.office.res.ResKit;
 import com.cherry.lib.doc.office.system.IMainFrame;
 import com.cherry.lib.doc.office.system.MainControl;
-import com.cherry.lib.doc.office.system.beans.pagelist.IPageListViewListener;
-import com.cherry.lib.doc.office.wp.control.Word;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -64,7 +61,6 @@ public abstract class IOffice implements IMainFrame {
 
             @Override
             public void setModeType(byte modeType) {
-
             }
 
             @Override
@@ -79,7 +75,6 @@ public abstract class IOffice implements IMainFrame {
 
             @Override
             public void dispose() {
-
             }
         });
     }
@@ -89,17 +84,18 @@ public abstract class IOffice implements IMainFrame {
             return;
         }
         if (tempFilePath == null) {
-            String state = Environment.getExternalStorageState();
-            if (Environment.MEDIA_MOUNTED.equals(state)) {
-                tempFilePath = Environment.getExternalStorageDirectory().getAbsolutePath();
-            }
+            // 存在外部目录相册中会显示
+            // String state = Environment.getExternalStorageState();
+            // if (Environment.MEDIA_MOUNTED.equals(state)) {
+            //     tempFilePath = Environment.getExternalStorageDirectory().getAbsolutePath();
+            // }
+            tempFilePath = "/data/data/" + AppUtils.getAppPackageName() + "/cache";
             File file = new File(tempFilePath + File.separatorChar + "tempPic");
             if (!file.exists()) {
                 file.mkdir();
             }
             tempFilePath = file.getAbsolutePath();
         }
-
         File file = new File(tempFilePath + File.separatorChar + "export_image.jpg");
         try {
             if (file.exists()) {
@@ -119,8 +115,8 @@ public abstract class IOffice implements IMainFrame {
         return control.getView();
     }
 
-    public void openFile(String filepath,int docSourceType,String fileType) {
-        getControl().openFile(filepath,docSourceType,fileType);
+    public void openFile(String filepath, int docSourceType, String fileType) {
+        getControl().openFile(filepath, docSourceType, fileType);
     }
 
     /**
@@ -178,12 +174,10 @@ public abstract class IOffice implements IMainFrame {
 
     @Override
     public void updateToolsbarStatus() {
-
     }
 
     @Override
     public void setFindBackForwardState(boolean state) {
-
     }
 
     /**
@@ -205,7 +199,6 @@ public abstract class IOffice implements IMainFrame {
         return false;
     }
 
-
     public void changePage() {
     }
 
@@ -217,6 +210,7 @@ public abstract class IOffice implements IMainFrame {
      *
      */
     public abstract String getAppName();
+
     public abstract int getMovingOrientation();
 
     /**
@@ -239,7 +233,7 @@ public abstract class IOffice implements IMainFrame {
      * @return WPViewConstant.PAGE_ROOT or WPViewConstant.NORMAL_ROOT
      */
     public byte getWordDefaultView() {
-        return WPViewConstant.PRINT_ROOT;
+        return WPViewConstant.PAGE_ROOT;
     }
 
     /**
@@ -267,12 +261,10 @@ public abstract class IOffice implements IMainFrame {
 
     @Override
     public void showProgressBar(boolean visible) {
-
     }
 
     @Override
     public void updateViewImages(List<Integer> viewList) {
-
     }
 
     /**
@@ -311,11 +303,11 @@ public abstract class IOffice implements IMainFrame {
     }
 
     /**
+     *
      */
     public String getTXTDefaultEncode() {
         return "GBK";
     }
-
 
     @Override
     public void completeLayout() {
@@ -343,7 +335,6 @@ public abstract class IOffice implements IMainFrame {
 
     @Override
     public void setThumbnail(boolean isThumbnail) {
-
     }
 
     @Override
@@ -366,7 +357,6 @@ public abstract class IOffice implements IMainFrame {
      * @param ignoreOriginalSize
      */
     public void setIgnoreOriginalSize(boolean ignoreOriginalSize) {
-
     }
 
     /**
