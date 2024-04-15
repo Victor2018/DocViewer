@@ -1,6 +1,6 @@
 /*
  * 文件名称:          ResKit.java
- *  
+ *
  * 编译器:            android2.2
  * 时间:              下午9:03:08
  */
@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 
  * <p>
  * <p>
  * Read版本:        Read V1.0
@@ -27,21 +26,19 @@ import java.util.Map;
  * <p>
  * 负责人:          ljj8494
  * <p>
- * 负责小组:         
+ * 负责小组:
  * <p>
  * <p>
  */
-public class ResKit
-{
+public class ResKit {
     //
     private static ResKit kit = new ResKit();
 
     /**
-     * 
+     *
      */
-    public ResKit()
-    {
-      Resources resources = Utils.getApp().getResources();
+    public ResKit() {
+        Resources resources = Utils.getApp().getResources();
         res = new HashMap<>();
         res.put("BUTTON_OK", resources.getString(R.string.sys_button_ok));
         res.put("BUTTON_CANCEL", resources.getString(R.string.sys_button_cancel));
@@ -65,30 +62,26 @@ public class ResKit
         res.put("SD_CARD_WRITEDENIED", resources.getString(R.string.sd_card_writedenied));
         res.put("SD_CARD_NOSPACELEFT", resources.getString(R.string.sd_card_nospaceleft));
     }
-    
+
     /**
-     * 
+     *
      */
-    public static ResKit instance()
-    {
+    public static ResKit instance() {
         return kit;
     }
-    
+
     /**
-     * 
+     *
      */
-    public boolean hasResName(String resName)
-    {
+    public boolean hasResName(String resName) {
         return res.containsKey(resName);
     }
-    
+
     /**
-     * 
      * @param resName
      * @return
      */
-    public String getLocalString(String resName)
-    {
+    public String getLocalString(String resName) {
         return res.get(resName);
     }
 
