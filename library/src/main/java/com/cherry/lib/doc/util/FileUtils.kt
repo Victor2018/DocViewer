@@ -2,14 +2,10 @@ package com.cherry.lib.doc.util
 
 import android.content.Context
 import android.net.Uri
-import android.os.Environment
-import android.util.Log
+import android.webkit.MimeTypeMap
 import com.blankj.utilcode.util.AppUtils
-import com.cherry.lib.doc.bean.DocSourceType
 import com.cherry.lib.doc.bean.FileType
-import com.cherry.lib.doc.office.constant.MainConstant
 import java.io.*
-import java.net.URL
 import java.util.Locale
 
 /*
@@ -199,4 +195,15 @@ object FileUtils {
         "*/*" to "",
     )
 
+    fun getFileMimeType(context: Context, contentUri: Uri): String? {
+        val contentResolver = context.contentResolver
+        var mimeType = contentResolver.getType(contentUri)
+
+        // 如果系统未能直接返回MIME类型，尝试通过文件扩展名推测
+        if (mimeType == null) {
+            val extension = MimeTypeMap.getFileExtensionFromUrl(contentUri.toString())
+            mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
+        }
+        return mimeType
+    }
 }
