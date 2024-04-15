@@ -285,12 +285,12 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
                     mPoiViewer?.loadFile(mFlDocContainer, sourceFilePath)
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    Toast.makeText(context, "打开失败", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.open_failed, Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun getAppName(): String {
-                return "Loading..."
+                return context.resources.getString(R.string.loading)
             }
 
             override fun getTemporaryDirectory(): File {

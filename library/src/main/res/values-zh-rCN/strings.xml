@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pdfView_appName">Pdf View</string>
+    <string name="content_des">PDF 界面</string>
+    <string name="pdfView_page_no">%1$d/%2$d</string>
+
+    <string name="sys_name">""</string>
+    <string name="sys_button_ok">确定</string>
+    <string name="sys_button_cancel">取消</string>
+    <string name="sys_button_memory_card">内存卡</string>
+    <string name="sys_button_search">搜索</string>
+    <string name="sys_button_recently_files">最近的文件</string>
+    <string name="sys_button_mark_files">标记的文件</string>
+    <string name="sys_button_local_storage">本地存储</string>
+    <string name="sys_menu_settings">设置</string>
+    <string name="sys_menu_account">账号</string>
+    <string name="sys_menu_register">注册</string>
+    <string name="sys_menu_update">升级</string>
+    <string name="sys_menu_help">帮助</string>
+    <string name="sys_menu_about">关于</string>
+    <string name="sys_url_wxiwei">https://my.oschina.net/wxiwei</string>
+    <string name="sys_url_internet_search">http://www.baidu.com</string>
+    <string name="sys_search_hint">搜索文件</string>
+    <string name="sys_no_match">没有匹配项</string>
+    <string name="sys_share_title">发送邮件…</string>
+    <string name="sys_progress_message_loading">加载中，请稍候…</string>
+
+    <!--      file list         -->
+    <string name="file_toolsbar_create_folder">创建文件夹</string>
+    <string name="file_toolsbar_rename">重命名</string>
+    <string name="file_toolsbar_copy">复制</string>
+    <string name="file_toolsbar_cut">剪切</string>
+    <string name="file_toolsbar_paste">粘贴</string>
+    <string name="file_toolsbar_delete">删除</string>
+    <string name="file_toolsbar_share">分享</string>
+    <string name="file_toolsbar_sort">排序</string>
+    <string name="file_toolsbar_print">打印机</string>
+    <string name="file_toolsbar_mark_star">标记</string>
+    <string name="file_toolsbar_unmark_star">取消标记</string>
+    <string name="file_message_empty_directory">空文件夹</string>
+
+    <!--      application         -->
+    <string name="app_toolsbar_hyperlink">跳转</string>
+    <string name="app_toolsbar_find">查找</string>
+    <string name="app_toolsbar_share">分享</string>
+    <string name="app_toolsbar_internet_search">网络搜索</string>
+    <string name="app_toolsbar_read">阅读</string>
+    <string name="app_toolsbar_approve">批准</string>
+    <string name="app_toolsbar_generated_picture">生成的图片</string>
+    <string name="app_toolsbar_draw">绘制模式</string>
+    <string name="app_toolsbar_back">返回</string>
+    <string name="app_toolsbar_pen">撤销</string>
+    <string name="app_toolsbar_pen_check">绘制</string>
+    <string name="app_toolsbar_eraser">撤销擦除</string>
+    <string name="app_toolsbar_eraser_check">擦除</string>
+    <string name="app_toolsbar_color">画笔设置</string>
+    <string name="app_searchbar_backward">向后查找</string>
+    <string name="app_searchbar_forward">向前查找</string>
+    <string name="app_searchbar_find">查找</string>
+    <string name="app_searchbar_failed">无法找到您查询的内容</string>
+    <string name="app_searchbar_reachedBegin">已经到达文档顶部</string>
+    <string name="app_searchbar_reachedEnd">已经到达文档末尾</string>
+
+    <!--      word         -->
+    <string name="wp_toolsbar_switch_view">切换视图</string>
+    <string name="wp_toolsbar_print_mode">打印模式</string>
+    <string name="wp_toolsbar_select_text">选择文字</string>
+
+    <!--      excel         -->
+    <string name="ss_toolsbar_sheet_switch">表格切换</string>
+
+    <!--      ppt         -->
+    <string name="pg_toolsbar_note">笔记</string>
+    <string name="pg_slideshow">幻灯片</string>
+    <string name="pg_slideshow_pageup">向上翻页</string>
+    <string name="pg_slideshow_pagedown">向下翻页</string>
+
+
+    <string name="loading">加载中…</string>
+    <string name="text_encoding">文字编码中</string>
+    <string name="dialog_insufficient_memory">内存不足</string>
+    <string name="dialog_system_crash">系统崩溃, 运行终止</string>
+    <string name="bad_file">文件已损坏</string>
+    <string name="dialog_old_document">文件格式太老</string>
+    <string name="dialog_parse_error">文件解析出错</string>
+    <string name="dialog_rtf_file">不支持的RTF格式</string>
+    <string name="searching">搜索中…</string>
+    <string name="dialog_find_not_found">无内容</string>
+    <string name="dialog_find_to_begin">向文档顶部搜索</string>
+    <string name="dialog_find_to_end">向文档底部搜索</string>
+    <string name="dialog_enter_password">输入密码</string>
+    <string name="dialog_cannot_encrypted_file">无法操作加密文件</string>
+    <string name="dialog_password_incorrect">密码不正确！</string>
+    <string name="exit_slideshow">幻灯片结束, 点击退出</string>
+    <string name="sd_card_error">SD卡错误</string>
+    <string name="sd_card_writedenied">写入SD卡权限被拒绝</string>
+    <string name="sd_card_nospaceleft">SD卡已满</string>
+    <string name="open_failed">打开失败</string>
+
+</resources>
