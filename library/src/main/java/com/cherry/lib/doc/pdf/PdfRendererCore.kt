@@ -66,18 +66,20 @@ internal class PdfRendererCore(
     }
     fun pageExistInCache(pageNo: Int,quality: PdfQuality? = pdfQuality): Boolean {
         val loadPath = File(File(context.cacheDir, cachePath), "$quality-$pageNo")
-
         return loadPath.exists()
     }
 
-    @Throws(IOException::class)
     private fun writeBitmapToCache(pageNo: Int,quality: PdfQuality? = pdfQuality, bitmap: Bitmap) {
-        val savePath = File(File(context.cacheDir, cachePath), "$quality-$pageNo")
-        savePath.createNewFile()
-        val fos = FileOutputStream(savePath)
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
-        fos.flush()
-        fos.close()
+        try {
+            val savePath = File(File(context.cacheDir, cachePath), "$quality-$pageNo")
+            savePath.createNewFile()
+            val fos = FileOutputStream(savePath)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
+            fos.flush()
+            fos.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun openPdfFile(pdfFile: File) {
@@ -90,22 +92,34 @@ internal class PdfRendererCore(
         }
     }
 
-    fun getPageCount(): Int = pdfRenderer?.pageCount ?: 0
+    fun getPageCount(): Int {
+        var pageCount = 0
+        try {
+            pageCount = pdfRenderer?.pageCount ?: 0
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return pageCount
+    }
 
     fun renderPage(pageNo: Int,quality: PdfQuality? = pdfQuality, onBitmapReady: ((bitmap: Bitmap?, pageNo: Int) -> Unit)? = null) {
         Log.e(javaClass.simpleName,"renderPage quality= $quality")
         if (pageNo >= getPageCount())
             return
 
-        CoroutineScope(Dispatchers.IO).launch {
-            synchronized(this@PdfRendererCore) {
-                buildBitmap(pageNo,quality) { bitmap ->
-                    CoroutineScope(Dispatchers.Main).launch { onBitmapReady?.invoke(bitmap, pageNo) }
-                }
-                onBitmapReady?.let {
-                    prefetchNext(pageNo + 1,quality)
+        try {
+            CoroutineScope(Dispatchers.IO).launch {
+                synchronized(this@PdfRendererCore) {
+                    buildBitmap(pageNo,quality) { bitmap ->
+                        CoroutineScope(Dispatchers.Main).launch { onBitmapReady?.invoke(bitmap, pageNo) }
+                    }
+                    onBitmapReady?.let {
+                        prefetchNext(pageNo + 1,quality)
+                    }
                 }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

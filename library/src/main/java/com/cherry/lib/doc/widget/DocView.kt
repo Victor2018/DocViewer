@@ -290,7 +290,7 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
             }
 
             override fun getAppName(): String {
-                return "加载中..."
+                return "Loading..."
             }
 
             override fun getTemporaryDirectory(): File {
@@ -518,6 +518,7 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
         try {
             if (pdfRendererCoreInitialised) {
                 pdfRendererCore?.closePdfRender()
+                pdfRendererCoreInitialised = false
             }
         } catch (e: Exception) {
             e.printStackTrace()

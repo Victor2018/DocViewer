@@ -1566,8 +1566,8 @@ class PinchImageView: AppCompatImageView {
          * @param scaleType 图片在ImageView中的ScaleType
          * @param result 图片应该在ImageView中展示的矩形
          */
-        fun calculateScaledRectInContainer(container: RectF?, srcWidth: Float, srcHeight: Float, scaleType: ScaleType?, result: RectF?) {
-            var scaleType = scaleType
+        fun calculateScaledRectInContainer(container: RectF?, srcWidth: Float, srcHeight: Float, scale: ScaleType?, result: RectF?) {
+            var scaleType = scale
             if (container == null || result == null) {
                 return
             }
