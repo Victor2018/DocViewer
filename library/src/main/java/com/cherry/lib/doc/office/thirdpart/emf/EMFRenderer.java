@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import com.cherry.lib.doc.office.java.awt.Color;
 import com.cherry.lib.doc.office.java.awt.Dimension;
 import com.cherry.lib.doc.office.java.awt.Image;
+import com.cherry.lib.doc.office.java.awt.Rectangle;
 import com.cherry.lib.doc.office.java.awt.Shape;
 import com.cherry.lib.doc.office.java.awt.Stroke;
 import com.cherry.lib.doc.office.java.awt.geom.AffineTransform;
@@ -33,6 +34,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.Region;
 import android.graphics.Typeface;
+import android.os.Build;
 
 
 /**
@@ -1020,10 +1022,22 @@ public class EMFRenderer
         //mCanvas.clipPath(getPath(shape), Region.Op.REPLACE);
     }
 
-    public void clip(Shape shape)
-    {
-//        g2.clip(shape);
-    	mCanvas.clipPath(getPath(shape), Region.Op.REPLACE);
+    public void clip(Shape shape) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            Rectangle bounds = shape.getBounds();
+            Path mPathXOR = new Path();
+            mPathXOR.moveTo(0, 0);
+            mPathXOR.lineTo(bounds.width, 0);
+            mPathXOR.lineTo(bounds.width, bounds.height);
+            mPathXOR.lineTo(0, bounds.height);
+            mPathXOR.close();
+            // 以上根据实际的Canvas或View的大小，画出相同大小的Path即可
+            mPathXOR.op(getPath(shape), Path.Op.XOR);
+            mCanvas.clipPath(mPathXOR);
+        } else {
+            mCanvas.clipPath(getPath(shape), Region.Op.XOR);// REPLACE、UNION 等
+        }
+        // g2.clip(shape);
     }
 
     public Shape getClip()
