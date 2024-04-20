@@ -74,4 +74,25 @@
     <string name="pg_slideshow">SlideShow</string>
     <string name="pg_slideshow_pageup">Page Up</string>
     <string name="pg_slideshow_pagedown">Page Down</string>
+
+    <string name="loading">loading…</string>
+    <string name="text_encoding">Text Encoding</string>
+    <string name="dialog_insufficient_memory">Unable to complete operation due to insufficient memory</string>
+    <string name="dialog_system_crash">System crash, terminate running</string>
+    <string name="bad_file">Bad file</string>
+    <string name="dialog_old_document">The document is too old - Office 95 or older, which is not supported</string>
+    <string name="dialog_parse_error">File parsing error</string>
+    <string name="dialog_rtf_file">The document is really a RTF file, which is not supported</string>
+    <string name="searching">Searching…</string>
+    <string name="dialog_find_not_found">Content not found</string>
+    <string name="dialog_find_to_begin">Search to the document begin</string>
+    <string name="dialog_find_to_end">Search to the document end</string>
+    <string name="dialog_enter_password">Enter Password</string>
+    <string name="dialog_cannot_encrypted_file">Cannot process encrypted file</string>
+    <string name="dialog_password_incorrect">Password is incorrect!</string>
+    <string name="exit_slideshow">End of slideshow, tap to exit.</string>
+    <string name="sd_card_error">SD Card Error</string>
+    <string name="sd_card_writedenied">SD Card write permission denied</string>
+    <string name="sd_card_nospaceleft">SD Card has no space left</string>
+    <string name="open_failed">open failed</string>
 </resources>

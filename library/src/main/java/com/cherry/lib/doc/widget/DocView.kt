@@ -171,7 +171,7 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
                 var mimeType = ""
                 fileType = FileUtils.getFileTypeForUrl(file.absolutePath)
                 if (fileType == FileType.NOT_SUPPORT) {
-                    mimeType = getFileMimeType(context, uri) ?: "*/*"
+                    mimeType = FileUtils.getFileMimeType(context, uri) ?: "*/*"
                     fileType = FileUtils.getFileTypeForUrl(FileUtils.mimeExtMap[mimeType] ?: "")
                 }
                 docUrl = file.absolutePath
@@ -285,12 +285,12 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
                     mPoiViewer?.loadFile(mFlDocContainer, sourceFilePath)
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    Toast.makeText(context, "打开失败", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.open_failed, Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun getAppName(): String {
-                return "Loading..."
+                return context.resources.getString(R.string.loading)
             }
 
             override fun getTemporaryDirectory(): File {
@@ -536,17 +536,5 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
             mIvPdf.reset()
             mPdfPageNo.visibility = GONE
         }
-    }
-
-    fun getFileMimeType(context: Context, contentUri: Uri): String? {
-        val contentResolver = context.contentResolver
-        var mimeType = contentResolver.getType(contentUri)
-
-        // 如果系统未能直接返回MIME类型，尝试通过文件扩展名推测
-        if (mimeType == null) {
-            val extension = MimeTypeMap.getFileExtensionFromUrl(contentUri.toString())
-            mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
-        }
-        return mimeType
     }
 }
