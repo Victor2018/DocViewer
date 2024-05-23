@@ -31,5 +31,10 @@
         <attr name="dv_page_pb_height" format="reference|dimension"  />
         <attr name="dv_page_pb_color" format="color"  />
     </declare-styleable>
-
+    <declare-styleable name="ZoomRecyclerView">
+        <attr name="min_scale" format="float" />
+        <attr name="max_scale" format="float" />
+        <attr name="default_scale" format="float" />
+        <attr name="zoom_duration" format="integer" />
+    </declare-styleable>
 </resources>

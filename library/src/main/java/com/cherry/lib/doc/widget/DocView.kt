@@ -339,7 +339,7 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
         pdfRendererCoreInitialised = true
         pdfViewAdapter = PdfViewAdapter(pdfRendererCore, pageMargin, enableLoadingForPages,this)
         pdfPageViewAdapter = PdfPageViewAdapter(pdfRendererCore, pageMargin, enableLoadingForPages)
-
+        mRvPdf.setEnableScale(true)
         if (mViewPdfInPage) {
             mRvPdf.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             mRvPdf.adapter = pdfPageViewAdapter
