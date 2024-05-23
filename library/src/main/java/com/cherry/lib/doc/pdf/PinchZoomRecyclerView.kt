@@ -30,7 +30,7 @@ class PinchZoomRecyclerView : RecyclerView {
         // constant
         private const val DEFAULT_SCALE_DURATION = 300
         private const val DEFAULT_SCALE_FACTOR = 1f
-        private const val DEFAULT_MAX_SCALE_FACTOR = 2.0f
+        private const val DEFAULT_MAX_SCALE_FACTOR = 3.0f
         private const val DEFAULT_MIN_SCALE_FACTOR = 0.5f
         private const val PROPERTY_SCALE = "scale"
         private const val PROPERTY_TRANX = "tranX"
