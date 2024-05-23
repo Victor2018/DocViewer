@@ -216,46 +216,37 @@ public abstract class AEventManage implements OnTouchListener,
                 break;
             
             case MotionEvent.ACTION_MOVE:
-            
                 float tx1 = event.getX(0);
-                float ty1= event.getY(0);                
+                float ty1 = event.getY(0);
                 float tx2 = event.getX(1);
-                float ty2= event.getY(1);
-                dist = (float)(Math.sqrt((tx1 - tx2) * (tx1 - tx2) + (ty1 - ty2) * (ty1 - ty2)) / 2);
-                if(Math.abs(distance - dist) > 8)
-                {
-                    boolean increased = dist > distance;                    
-                    if(Math.abs(zoom - fitZoom) < 0.01 && !increased && isMinZoom)
-                    {
-                      //current zoom rate is ZOOM_MIN_RATE, can not decrease it
+                float ty2 = event.getY(1);
+                dist = (float) (Math.sqrt((tx1 - tx2) * (tx1 - tx2) + (ty1 - ty2) * (ty1 - ty2)) / 2);
+                if (Math.abs(distance - dist) > 8) {
+                    boolean increased = dist > distance;
+                    if (Math.abs(zoom - fitZoom) < 0.01 && !increased && isMinZoom) {
+                        // current zoom rate is ZOOM_MIN_RATE, can not decrease it
                         zoomRateChanged = false;
-                    }
-                    else if(Math.abs(zoom - 3.0f) < 0.001 && increased)
-                    {
-                      //current zoom rate is ZOOM_MAX_RATE, can not increase it
+                    } else if (Math.abs(zoom - 3.0f) < 0.001 && increased) {
+                        // current zoom rate is ZOOM_MAX_RATE, can not increase it
                         zoomRateChanged = false;
-                    }
-                    else 
-                    {
+                    } else {
                         zoom = increased ? zoom + 0.1f : zoom - 0.1f;
-                        //zoomRate ranges from ZOOM_MIN_RATE to ZOOM_MAX_RATE
-                        if(zoom > 3.0f)
-                        {
+                        // zoomRate ranges from ZOOM_MIN_RATE to ZOOM_MAX_RATE
+                        zoomRateChanged = true;
+                        if (zoom > 3.0f) {
                             zoom = 3.0f;
-                        }
-                        else if(zoom < fitZoom)//MainConstant.ZOOM_MIN_RATE)
-                        {
-                            zoom = fitZoom;//MainConstant.ZOOM_MIN_RATE;
+                        } else if (zoom < fitZoom) {// MainConstant.ZOOM_MIN_RATE)
+                            zoom = fitZoom;// MainConstant.ZOOM_MIN_RATE;
+                            zoomRateChanged = false;
                         }
                         // 当前zoom为最少zoom，为了zoom必须是50%、60%、70%、80%、90%、100%、110%、120%、130%、140%等
                         // 故需要做一下修正
-                        if (increased && isMinZoom)
-                        {
-                            zoom = ((int)(zoom* 10)) / 10.f;
+                        if (increased && isMinZoom) {
+                            zoom = ((int) (zoom * 10)) / 10.f;
                         }
-                        zoomRateChanged = true;
+
                     }
-                    distance = zoomRateChanged ? dist : distance;   
+                    distance = zoomRateChanged ? dist : distance;
                 }
                 break;
             default:
