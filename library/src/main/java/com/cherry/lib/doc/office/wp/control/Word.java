@@ -917,7 +917,7 @@ public class Word extends LinearLayout implements IWord {
             }
             z = (float) (viewWidth - WPViewConstant.PAGE_SPACE) / pageWidth;
         }
-        return Math.min(z, 1.0f);
+        return Math.max(z, 1.0f);
     }
 
     /**

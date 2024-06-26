@@ -69,6 +69,7 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
 
     var mActivity: Activity? = null
     var lifecycleScope: LifecycleCoroutineScope = (context as AppCompatActivity).lifecycleScope
+    private var mPoiViewer:PoiViewer? = null
     private var pdfRendererCore: PdfRendererCore? = null
     private var pdfViewAdapter: PdfViewAdapter? = null
     private var pdfPageViewAdapter: PdfPageViewAdapter? = null
@@ -281,7 +282,9 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
 
             override fun openFileFailed() {
                 try {
-                    var mPoiViewer = PoiViewer(context)
+                    if (mPoiViewer == null) {
+                        mPoiViewer = PoiViewer(context)
+                    }
                     mPoiViewer?.loadFile(mFlDocContainer, sourceFilePath)
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -339,7 +342,7 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
         pdfRendererCoreInitialised = true
         pdfViewAdapter = PdfViewAdapter(pdfRendererCore, pageMargin, enableLoadingForPages,this)
         pdfPageViewAdapter = PdfPageViewAdapter(pdfRendererCore, pageMargin, enableLoadingForPages)
-
+        mRvPdf.setEnableScale(true)
         if (mViewPdfInPage) {
             mRvPdf.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             mRvPdf.adapter = pdfPageViewAdapter
@@ -511,7 +514,7 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        closePdfRender()
+        onDestroy()
     }
 
     fun closePdfRender() {
@@ -536,5 +539,11 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
             mIvPdf.reset()
             mPdfPageNo.visibility = GONE
         }
+    }
+
+    fun onDestroy() {
+        mPoiViewer?.recycle()
+        closePdfRender()
+        mOnDocPageChangeListener = null
     }
 }
