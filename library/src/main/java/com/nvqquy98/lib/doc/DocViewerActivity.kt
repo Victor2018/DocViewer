@@ -8,6 +8,7 @@ import com.nvqquy98.lib.doc.R
 import com.nvqquy98.lib.doc.bean.DocEngine
 import com.nvqquy98.lib.doc.util.Constant
 import kotlinx.android.synthetic.main.activity_doc_viewer.mDocView
+import timber.log.Timber
 
 open class DocViewerActivity : AppCompatActivity() {
     private val TAG = "DocViewerActivity"
@@ -49,10 +50,10 @@ open class DocViewerActivity : AppCompatActivity() {
         engine = intent?.getIntExtra(Constant.INTENT_ENGINE_KEY, DocEngine.INTERNAL.value) ?: DocEngine.INTERNAL.value
 
         mDocView.openDoc(this, docUrl, docSourceType, fileType, false, DocEngine.values().first { it.value == engine })
-        Log.e(TAG, "initData-docUrl = $docUrl")
-        Log.e(TAG, "initData-docSourceType = $docSourceType")
-        Log.e(TAG, "initData-fileType = $fileType")
-        Log.e(TAG, "initData-engine = $engine")
+        Timber.e(TAG, "initData-docUrl = $docUrl")
+        Timber.e(TAG, "initData-docSourceType = $docSourceType")
+        Timber.e(TAG, "initData-fileType = $fileType")
+        Timber.e(TAG, "initData-engine = $engine")
     }
 
 }

@@ -25,6 +25,8 @@ import android.view.ViewParent;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 
+import timber.log.Timber;
+
 public class APageListView extends AdapterView<Adapter>
 {
 
@@ -369,7 +371,7 @@ public class APageListView extends AdapterView<Adapter>
                     postUnRepaint(currentView);
                     post(eventManage);
                     currentIndex++;
-                    Log.e("current ++", String.valueOf(currentIndex));
+                    Timber.e("current ++ %s", String.valueOf(currentIndex));
                 }
                 // previous page
                 else if (currentView.getTop() - cvOffset.y - GAP / 2 + eventManage.getScrollY() >= getHeight() / 2
@@ -379,7 +381,7 @@ public class APageListView extends AdapterView<Adapter>
                     postUnRepaint(currentView);
                     post(eventManage);
                     currentIndex--;
-                    Log.e("current --", String.valueOf(currentIndex));
+                    Timber.e("current -- %s", String.valueOf(currentIndex));
                 }
             }
             

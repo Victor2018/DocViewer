@@ -259,14 +259,14 @@ public class ReaderThumbnail
             PPTReader reader  =  new PPTReader(null, filePath, DocSourceType.PATH,true);
             PGModel model = (PGModel)reader.getModel();
             //long t1 = System.currentTimeMillis();
-            //Log.e("read time ", String.valueOf(t1 - t));
+            //Timber.e("read time ", String.valueOf(t1 - t));
             if (model != null)
             {
                 Dimension d = model.getPageSize();
                 float zoom = (float)(Math.min(width / d.getWidth(), height / d.getHeight()));
                 PGEditor editor = new PGEditor(null);
                 Bitmap bitmap = SlideDrawKit.instance().getThumbnail(model, editor, model.getSlide(0), zoom);
-                //Log.e("read time ", String.valueOf(System.currentTimeMillis() - t1));
+                //Timber.e("read time ", String.valueOf(System.currentTimeMillis() - t1));
                 return bitmap;
                 
             }

@@ -1,10 +1,23 @@
 # DocViewer
+
 android DocViewer support view word excel ppt pdf txt image in sdcard & uri & assets & url
 
-### Rendering
+fork from owner: [Victor2018/DocViewer](https://github.com/Victor2018/DocViewer)
+
+## Change
+
+- [x] Update using Timber for log in code
+
+- [x] Change package name `cherry` to `nvqquy98` (Sorry for the problem but I need to modify a few things to make it suitable for me)
+
+- [x] Remove Toast in code
+
+## Rendering
+
 <img src="https://github.com/Victor2018/DocViewer/blob/main/SrceenShot/rendering.gif" width = "275" height = "569"  /><br>
 
 # Screenshot
+
 <img src="https://github.com/Victor2018/DocViewer/blob/main/SrceenShot/st_1.png" width = "275" height = "569"  /><br>
 <img src="https://github.com/Victor2018/DocViewer/blob/main/SrceenShot/st_2.png" width = "275" height = "569"  /><br>
 <img src="https://github.com/Victor2018/DocViewer/blob/main/SrceenShot/st_3.png" width = "275" height = "569"  /><br>
@@ -15,6 +28,7 @@ android DocViewer support view word excel ppt pdf txt image in sdcard & uri & as
 <img src="https://github.com/Victor2018/DocViewer/blob/main/SrceenShot/st_8.png" width = "275" height = "569"  /><br>
 
 ### Usage
+
 - Step 1. Add the JitPack repository to your build or setting file
 
 ```
@@ -34,6 +48,7 @@ dependencyResolutionManagement {
     }
 }
 ```
+
 - Step 2. Add the dependency
 
 ```
@@ -42,18 +57,21 @@ dependencies {
 }
 ```
 
-- Step 3.  set layoutManager for recyclerView by kotlin
+- Step 3. set layoutManager for recyclerView by kotlin
+
 ```kotlin
-DocViewerActivity.launchDocViewer(this,docSourceType,path)
+DocViewerActivity.launchDocViewer(this, docSourceType, path)
 
 ```
 
 # 关注开发者：
+
 - 邮箱： victor423099@gmail.com
 - 新浪微博
 - ![image](https://github.com/Victor2018/AppUpdateLib/raw/master/SrceenShot/sina_weibo.jpg)
 
 ### 感谢
+
 https://github.com/vantinh689/AllDocumentViewerNew
 
 ## License

@@ -47,6 +47,7 @@ import com.nvqquy98.lib.doc.util.FileUtils
 import com.nvqquy98.lib.doc.util.ViewUtils.hide
 import com.nvqquy98.lib.doc.util.ViewUtils.show
 import kotlinx.android.synthetic.main.doc_view.view.*
+import timber.log.Timber
 import java.io.File
 import java.net.URLEncoder
 
@@ -164,7 +165,7 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
         if (docUrl != null && docSourceType == DocSourceType.URI && fileType == -1) {
             // 如果是URI类型，且文件类型为-1，则获取一下文件类型，保证正确读取
             val uri = docUrl.toUri()
-            Log.d(TAG, "openDoc reset uri = $uri")
+            Timber.d(TAG, "openDoc reset uri = $uri")
             val file = UriUtils.uri2File(uri)
             if (file != null) {
                 var mimeType = ""
@@ -175,14 +176,14 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
                 }
                 docUrl = file.absolutePath
                 docSourceType = DocSourceType.PATH
-                Log.d(TAG, "openDoc reset url = $docUrl")
-                Log.d(TAG, "openDoc reset docSourceType = $docSourceType")
-                Log.d(TAG, "openDoc reset fileType = $fileType, mimeType = $mimeType")
+                Timber.d(TAG, "openDoc reset url = $docUrl")
+                Timber.d(TAG, "openDoc reset docSourceType = $docSourceType")
+                Timber.d(TAG, "openDoc reset fileType = $fileType, mimeType = $mimeType")
             } else {
-                Log.d(TAG, "file = null")
+                Timber.d(TAG, "file = null")
             }
         }
-        Log.e(TAG,"openDoc()......fileType = $fileType")
+        Timber.e(TAG,"openDoc()......fileType = $fileType")
         mActivity = activity
         mViewPdfInPage = viewPdfInPage
         if (docSourceType == DocSourceType.PATH) {
@@ -208,7 +209,7 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
         }
         when (type) {
             FileType.PDF -> {
-                Log.e(TAG,"openDoc()......PDF")
+                Timber.e(TAG,"openDoc()......PDF")
                 mDocWeb.hide()
                 mFlDocContainer.hide()
                 mRvPdf.show()
@@ -220,16 +221,16 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
                 if (showPageNum) {
                     showPageNum = false
                 }
-                Log.e(TAG,"openDoc()......")
+                Timber.e(TAG,"openDoc()......")
                 mDocWeb.hide()
                 mFlDocContainer.hide()
                 mRvPdf.hide()
                 mIvImage.show()
                 if (docSourceType == DocSourceType.PATH) {
-                    Log.e(TAG,"openDoc()......PATH")
+                    Timber.e(TAG,"openDoc()......PATH")
                     mIvImage.load(File(docUrl))
                 } else {
-                    Log.e(TAG,"openDoc()......URL")
+                    Timber.e(TAG,"openDoc()......URL")
                     mIvImage.load(docUrl)
                 }
             }
@@ -237,7 +238,7 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
                 if (showPageNum) {
                     showPageNum = false
                 }
-                Log.e(TAG,"openDoc()......NOT_SUPPORT")
+                Timber.e(TAG,"openDoc()......NOT_SUPPORT")
                 mDocWeb.show()
                 mFlDocContainer.hide()
                 mRvPdf.hide()
@@ -245,7 +246,7 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
                 showByWeb(docUrl ?: "",this.engine)
             }
             else -> {
-                Log.e(TAG,"openDoc()......ELSE")
+                Timber.e(TAG,"openDoc()......ELSE")
                 if (showPageNum) {
                     showPageNum = false
                 }
@@ -259,7 +260,7 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
     }
 
     fun showDoc(activity: Activity, mDocContainer: ViewGroup?, url: String?, docSourceType: Int, fileType: Int) {
-        Log.e(TAG,"showDoc()......")
+        Timber.e(TAG,"showDoc()......")
         var iOffice: IOffice = object: IOffice() {
             override fun getActivity(): Activity {
                 return activity
@@ -311,30 +312,30 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
     }
 
     fun showPdf(docSourceType: Int, url: String?) {
-        Log.e(TAG,"showPdf()......quality = $quality")
+        Timber.e(TAG,"showPdf()......quality = $quality")
         when (docSourceType) {
             DocSourceType.URL -> {
-                Log.e(TAG,"showPdf()......URL")
+                Timber.e(TAG,"showPdf()......URL")
                 initWithUrl(url = url ?: "", pdfQuality = quality)
             }
             DocSourceType.URI -> {
-                Log.e(TAG,"showPdf()......URI")
+                Timber.e(TAG,"showPdf()......URI")
                 initWithUri(fileUri = url ?: "", pdfQuality = quality)
             }
             DocSourceType.PATH -> {
-                Log.e(TAG,"showPdf()......PATH")
+                Timber.e(TAG,"showPdf()......PATH")
                 initWithPath(path = url ?: "", pdfQuality = quality)
             }
             DocSourceType.ASSETS -> {
-                Log.e(TAG,"showPdf()......ASSETS")
+                Timber.e(TAG,"showPdf()......ASSETS")
                 initWithAssets(fileName = url ?: "", pdfQuality = quality)
             }
         }
     }
 
     private fun showPdf(file: File, pdfQuality: PdfQuality) {
-        Log.e(javaClass.simpleName,"initView-exists = ${file.exists()}")
-        Log.e(javaClass.simpleName,"initView-mViewPdfInPage = $mViewPdfInPage")
+        Timber.e(javaClass.simpleName,"initView-exists = ${file.exists()}")
+        Timber.e(javaClass.simpleName,"initView-mViewPdfInPage = $mViewPdfInPage")
         pdfRendererCore = PdfRendererCore(context, file, pdfQuality)
         totalPageCount = pdfRendererCore?.getPageCount() ?: 0
         pdfRendererCoreInitialised = true
@@ -427,7 +428,7 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
     override fun getDownloadContext() = context
 
     override fun onDownloadStart() {
-        Log.e(TAG,"initWithUrl-onDownloadStart()......")
+        Timber.e(TAG,"initWithUrl-onDownloadStart()......")
     }
 
     override fun onDownloadProgress(currentBytes: Long, totalBytes: Long) {
@@ -435,12 +436,12 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
         if (progress >= 100) {
             progress = 100
         }
-        Log.e(TAG,"initWithUrl-onDownloadProgress()......progress = $progress")
+        Timber.e(TAG,"initWithUrl-onDownloadProgress()......progress = $progress")
         showLoadingProgress(progress)
     }
 
     override fun onDownloadSuccess(absolutePath: String) {
-        Log.e(TAG,"initWithUrl-onDownloadSuccess()......")
+        Timber.e(TAG,"initWithUrl-onDownloadSuccess()......")
         showLoadingProgress(100)
         sourceFilePath = absolutePath
         openDoc(mActivity, absolutePath, DocSourceType.PATH,-1,mViewPdfInPage)
@@ -448,7 +449,7 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
 
     override fun onError(error: Throwable) {
         error.printStackTrace()
-        Log.e(TAG,"initWithUrl-onError()......${error.localizedMessage}")
+        Timber.e(TAG,"initWithUrl-onError()......${error.localizedMessage}")
         showLoadingProgress(100)
     }
 

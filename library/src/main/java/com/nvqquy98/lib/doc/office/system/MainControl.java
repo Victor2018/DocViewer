@@ -42,6 +42,8 @@ import com.nvqquy98.lib.doc.office.wp.control.WPControl;
 import java.lang.reflect.Method;
 import java.util.Objects;
 
+import timber.log.Timber;
+
 public class MainControl extends AbstractControl {
     public MainControl(IMainFrame frame) {
         this.frame = frame;
@@ -243,7 +245,7 @@ public class MainControl extends AbstractControl {
      *
      */
     public boolean openFile(String filePath, int docSourceType, String fileType) {
-        Log.e("openFile", "openFile-fileType = " + fileType);
+        Timber.e("openFile  openFile-fileType =%s", fileType);
         this.filePath = filePath;
         if (!TextUtils.isEmpty(fileType) && !TextUtils.equals("-1", fileType)) {
             applicationType = getDocFileType(Integer.parseInt(fileType));

@@ -4,6 +4,7 @@ import android.content.ContentResolver
 import android.net.Uri
 import android.util.Log
 import com.blankj.utilcode.util.UriUtils
+import timber.log.Timber
 import java.io.FileInputStream
 import java.io.InputStream
 
@@ -17,7 +18,7 @@ object StreamUtils {
     @Throws(Exception::class)
     @JvmStatic
     fun getInputStream(resolver: ContentResolver, filePath: String): InputStream? {
-        Log.d("StreamUtils", "filePath = $filePath")
+        Timber.d("StreamUtils", "filePath = $filePath")
         val `in`: InputStream?
         if (filePath.startsWith("/")) {
             `in` = FileInputStream(filePath)
@@ -28,17 +29,17 @@ object StreamUtils {
         //     return `in`
         // }
         val uri = Uri.parse(filePath)
-        Log.d("StreamUtils", "uri = $uri")
+        Timber.d("StreamUtils", "uri = $uri")
 
         val file = UriUtils.uri2FileNoCacheCopy(Uri.parse(filePath))
         `in` = if (file != null) {
-            Log.d("StreamUtils", "file.getAbsolutePath() = " + file.absolutePath)
+            Timber.d("StreamUtils", "file.getAbsolutePath() = " + file.absolutePath)
             FileInputStream(file)
         } else if (uri.scheme != null) {
-            // Log.d("StreamUtils", "uri.scheme = " + uri.scheme)
+            // Timber.d("StreamUtils", "uri.scheme = " + uri.scheme)
             resolver.openInputStream(uri)
         } else {
-            // Log.d("StreamUtils", "filePath2 = $filePath")
+            // Timber.d("StreamUtils", "filePath2 = $filePath")
             FileInputStream(filePath)
         }
         return `in`

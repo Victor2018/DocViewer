@@ -36,6 +36,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
+import timber.log.Timber;
+
 public class WordConverter {
     public String nameStr;
     public Range range = null;
@@ -266,7 +268,6 @@ public class WordConverter {
                                 pictIS.close();
                                 pOut.close();
                                 bt = pOut.toByteArray();
-                                Log.i("byteArray", "" + bt);
                                 if (pictIS != null) pictIS.close();
                                 if (pOut != null) pOut.close();
                                 writeDOCXPicture(bt);
@@ -359,13 +360,13 @@ public class WordConverter {
             this.output.write(end.getBytes());
         } catch (ZipException e) {
             e.printStackTrace();
-            Log.e(getClass().getSimpleName(),"errr-----------1");
+            Timber.e(getClass().getSimpleName(), "errr-----------1");
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e(getClass().getSimpleName(),"errr-----------2");
+            Timber.e(getClass().getSimpleName(), "errr-----------2");
         } catch (XmlPullParserException e) {
             e.printStackTrace();
-            Log.e(getClass().getSimpleName(),"errr-----------3");
+            Timber.e(getClass().getSimpleName(), "errr-----------3");
         }
         if (river == null) {
             river = "???????????????";

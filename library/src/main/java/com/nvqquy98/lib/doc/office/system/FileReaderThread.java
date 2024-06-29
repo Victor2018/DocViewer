@@ -21,6 +21,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import timber.log.Timber;
+
 /**
  * 读取文档线程
  * <p>
@@ -119,7 +121,7 @@ public class FileReaderThread extends Thread {
             else {
                 reader = new TXTReader(control, filePath, docSourceType, encoding);
             }
-            Log.e(getName(), "reader = " + reader.getClass().getSimpleName());
+            Timber.e(getName(), "reader = " + reader.getClass().getSimpleName());
             // 把IReader实例传出
             Message mesReader = new Message();
             mesReader.obj = reader;

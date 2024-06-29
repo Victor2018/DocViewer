@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.nvqquy98.lib.doc.R
 import com.nvqquy98.lib.doc.interfaces.OnWebLoadListener
 import kotlinx.android.synthetic.main.doc_web_view.view.*
+import timber.log.Timber
 
 /*
  * -----------------------------------------------------------------
@@ -119,7 +120,7 @@ class DocWebView : ConstraintLayout, DownloadListener {
         // 允许漫游时下载
         request.setAllowedOverRoaming(true)
         val fileName = URLUtil.guessFileName(url, contentDisposition, mimeType)
-        Log.e(TAG, "downloadFile()-fileName = $fileName")
+        Timber.e("downloadFile()-fileName = $fileName")
         request.setDestinationInExternalPublicDir(Environment.getExternalStorageDirectory().toString() + "/Download/", fileName)
         val downloadManager = mDocView.context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         // 添加一个下载任务
@@ -133,7 +134,7 @@ class DocWebView : ConstraintLayout, DownloadListener {
         mimeType: String?,
         contentLength: Long
     ) {
-        Log.e(TAG, "onDownloadStart()......url = $url")
+        Timber.e("onDownloadStart()......url = $url")
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(url)
         context.startActivity(intent)

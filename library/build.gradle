@@ -53,12 +53,9 @@ dependencies {
     // read file
     implementation 'commons-io:commons-io:2.0.1'
 
-    // AndroidUtilCode工具类：https://github.com/Blankj/AndroidUtilCode
     implementation('com.blankj:utilcodex:1.31.1')
-    // 文件编码判断：https://mvnrepository.com/artifact/com.googlecode.juniversalchardet/juniversalchardet
     implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
-    // implementation 'com.googlecode.juniversalchardet:juniversalchardet:1.0.3' //这种方式打成aar包会丢失该引用
-
+    implementation 'com.jakewharton.timber:timber:5.0.1'
 }
 
 afterEvaluate {
@@ -66,8 +63,8 @@ afterEvaluate {
         publications {
             release(MavenPublication) {
                 from components.release
-                groupId = 'com.github.nvqquy98' //groupId 随便取
-                artifactId = 'nvqquy98'  //artifactId 随便取
+                groupId = 'com.github.nvqquy98'
+                artifactId = 'nvqquy98'
                 version = '1.0.0'
             }
         }
