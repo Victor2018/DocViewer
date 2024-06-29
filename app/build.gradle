@@ -55,5 +55,4 @@ dependencies {
     implementation("io.coil-kt:coil:1.4.0")
 
     implementation 'com.github.Victor2018:easypermissions:v1.1.0'
-
 }

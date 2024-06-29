@@ -4,16 +4,16 @@ import android.util.Log;
 import android.util.Xml;
 import android.widget.Toast;
 
-import com.cherry.lib.doc.office.fc.hwpf.HWPFDocument;
-import com.cherry.lib.doc.office.fc.hwpf.usermodel.CharacterRun;
-import com.cherry.lib.doc.office.fc.hwpf.usermodel.Paragraph;
-import com.cherry.lib.doc.office.fc.hwpf.usermodel.Picture;
-import com.cherry.lib.doc.office.fc.hwpf.usermodel.Range;
-import com.cherry.lib.doc.office.fc.hwpf.usermodel.Table;
-import com.cherry.lib.doc.office.fc.hwpf.usermodel.TableCell;
-import com.cherry.lib.doc.office.fc.hwpf.usermodel.TableIterator;
-import com.cherry.lib.doc.office.fc.hwpf.usermodel.TableRow;
-import com.cherry.lib.doc.office.fc.poifs.filesystem.POIFSFileSystem;
+import com.nvqquy98.lib.doc.office.fc.hwpf.HWPFDocument;
+import com.nvqquy98.lib.doc.office.fc.hwpf.usermodel.CharacterRun;
+import com.nvqquy98.lib.doc.office.fc.hwpf.usermodel.Paragraph;
+import com.nvqquy98.lib.doc.office.fc.hwpf.usermodel.Picture;
+import com.nvqquy98.lib.doc.office.fc.hwpf.usermodel.Range;
+import com.nvqquy98.lib.doc.office.fc.hwpf.usermodel.Table;
+import com.nvqquy98.lib.doc.office.fc.hwpf.usermodel.TableCell;
+import com.nvqquy98.lib.doc.office.fc.hwpf.usermodel.TableIterator;
+import com.nvqquy98.lib.doc.office.fc.hwpf.usermodel.TableRow;
+import com.nvqquy98.lib.doc.office.fc.poifs.filesystem.POIFSFileSystem;
 
 import org.xmlpull.v1.XmlPullParser;
 

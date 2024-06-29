@@ -33,7 +33,7 @@
             android:name=".WordActivity"
             android:exported="false" />
         <activity
-            android:name="com.cherry.lib.doc.DocViewerActivity"
+            android:name="com.nvqquy98.lib.doc.DocViewerActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

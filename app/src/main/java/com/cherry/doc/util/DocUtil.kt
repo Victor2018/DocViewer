@@ -6,8 +6,8 @@ import android.util.Log
 import android.webkit.MimeTypeMap
 import com.cherry.doc.data.DocGroupInfo
 import com.cherry.doc.data.DocInfo
-import com.cherry.lib.doc.bean.FileType
-import com.cherry.lib.doc.util.FileUtils
+import com.nvqquy98.lib.doc.bean.FileType
+import com.nvqquy98.lib.doc.util.FileUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package com.cherry.lib.doc
+package com.nvqquy98.lib.doc
 
 import org.junit.Test
 

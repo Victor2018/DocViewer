@@ -5,8 +5,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.WindowManager;
 
-import com.cherry.lib.doc.office.fc.hwpf.usermodel.Picture;
-import com.cherry.lib.doc.office.fc.hwpf.usermodel.TableIterator;
+import com.nvqquy98.lib.doc.office.fc.hwpf.usermodel.Picture;
+import com.nvqquy98.lib.doc.office.fc.hwpf.usermodel.TableIterator;
 
 import java.io.FileOutputStream;
 import java.util.List;

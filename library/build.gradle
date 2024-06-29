@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace 'com.cherry.lib.doc'
+    namespace 'com.nvqquy98.lib.doc'
     compileSdk 33
 
     defaultConfig {
@@ -66,8 +66,8 @@ afterEvaluate {
         publications {
             release(MavenPublication) {
                 from components.release
-                groupId = 'com.github.Victor2018' //groupId 随便取
-                artifactId = 'cherry'  //artifactId 随便取
+                groupId = 'com.github.nvqquy98' //groupId 随便取
+                artifactId = 'nvqquy98'  //artifactId 随便取
                 version = '1.0.0'
             }
         }

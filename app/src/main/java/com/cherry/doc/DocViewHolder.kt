@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.cherry.doc.data.DocGroupInfo
 import com.cherry.doc.data.DocInfo
-import com.cherry.lib.doc.bean.FileType
-import com.cherry.lib.doc.util.FileUtils
+import com.nvqquy98.lib.doc.bean.FileType
+import com.nvqquy98.lib.doc.util.FileUtils
 import kotlinx.android.synthetic.main.rv_doc_cell.view.*
 import java.io.File
 
