@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <com.cherry.lib.doc.pdf.PinchZoomRecyclerView
+    <com.nvqquy98.lib.doc.pdf.PinchZoomRecyclerView
         android:id="@+id/mRvPdf"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,7 +20,7 @@
         android:background="@color/white"
         android:visibility="gone">
 
-        <com.cherry.lib.doc.widget.PinchImageView
+        <com.nvqquy98.lib.doc.widget.PinchImageView
             android:id="@+id/mIvPdf"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
@@ -49,13 +49,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <com.cherry.lib.doc.widget.PinchImageView
+    <com.nvqquy98.lib.doc.widget.PinchImageView
         android:id="@+id/mIvImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitCenter"/>
 
-    <com.cherry.lib.doc.widget.DocWebView
+    <com.nvqquy98.lib.doc.widget.DocWebView
         android:id="@+id/mDocWeb"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

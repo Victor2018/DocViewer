@@ -4,8 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.cherry.lib.doc.util.Constant
-import com.cherry.lib.doc.widget.PoiViewer
+import com.cherry.doc.R
+import com.nvqquy98.lib.doc.util.Constant
+import com.nvqquy98.lib.doc.widget.PoiViewer
 import kotlinx.android.synthetic.main.activity_word.mFlDocContainer
 
 class WordActivity : AppCompatActivity() {

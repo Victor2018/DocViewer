@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:layout_height="match_parent">
 
-    <com.cherry.lib.doc.widget.DocView
+    <com.nvqquy98.lib.doc.widget.DocView
         android:id="@+id/mDocView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,5 +16,4 @@
         app:dv_page_pb_color="@color/yellow"
         app:dv_engine="internal"
         app:dv_quality="normal"/>
-
 </FrameLayout>

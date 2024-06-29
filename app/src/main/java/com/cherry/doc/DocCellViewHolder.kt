@@ -7,8 +7,9 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.cherry.doc.data.DocInfo
-import com.cherry.lib.doc.bean.FileType
-import com.cherry.lib.doc.util.FileUtils
+import com.cherry.doc.R
+import com.nvqquy98.lib.doc.bean.FileType
+import com.nvqquy98.lib.doc.util.FileUtils
 import kotlinx.android.synthetic.main.rv_doc_item_cell.view.*
 import java.io.File
 
@@ -38,7 +39,7 @@ class DocCellViewHolder : RecyclerView.ViewHolder,OnClickListener {
             if (file.exists()) {
                 itemView.mIvType.load(File(data?.path))
             } else {
-                itemView.mIvType.load(com.cherry.lib.doc.R.drawable.all_doc_ic)
+                itemView.mIvType.load(com.nvqquy98.lib.doc.R.drawable.all_doc_ic)
             }
         } else {
             itemView.mIvType.load(typeIcon)
