@@ -19,6 +19,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 
 /**
@@ -34,6 +36,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 public final class DimensionsRecord
     extends StandardRecord
 {
+    @Keep
     public final static short sid = 0x200;
     private int               field_1_first_row;
     private int               field_2_last_row;   // plus 1

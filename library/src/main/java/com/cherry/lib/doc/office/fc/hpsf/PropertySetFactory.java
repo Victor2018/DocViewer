@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hpsf;
 
+import androidx.annotation.Keep;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -50,6 +52,7 @@ public class PropertySetFactory
      * @exception UnsupportedEncodingException if the specified codepage is not
      * supported.
      */
+    @Keep
     public static PropertySet create(final InputStream stream)
         throws NoPropertySetStreamException, MarkUnsupportedException,
                UnsupportedEncodingException, IOException

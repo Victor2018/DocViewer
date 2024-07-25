@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +32,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  *
  */
 public final class PaletteRecord extends StandardRecord {
+    @Keep
     public final static short sid = 0x0092;
     /** The standard size of an XLS palette */
     public final static byte STANDARD_PALETTE_SIZE = (byte) 56;

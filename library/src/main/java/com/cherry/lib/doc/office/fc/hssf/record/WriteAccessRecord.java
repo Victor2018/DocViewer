@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import java.util.Arrays;
 
 import com.cherry.lib.doc.office.fc.util.LittleEndian;
@@ -36,6 +38,7 @@ import com.cherry.lib.doc.office.fc.util.StringUtil;
  * @author Andrew C. Oliver (acoliver at apache dot org)
  */
 public final class WriteAccessRecord extends StandardRecord {
+	@Keep
 	public final static short sid = 0x005C;
 
 	private static final byte PAD_CHAR = (byte) ' ';

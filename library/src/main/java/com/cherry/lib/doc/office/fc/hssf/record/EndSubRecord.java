@@ -17,6 +17,8 @@
         
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.LittleEndianInput;
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 
@@ -28,6 +30,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  * @author Glen Stampoultzis (glens at apache.org)
  */
 public final class EndSubRecord extends SubRecord {
+    @Keep
     public final static short sid = 0x0000; // Note - zero sid is somewhat unusual (compared to plain Records)
     private static final int ENCODED_SIZE = 0;
 

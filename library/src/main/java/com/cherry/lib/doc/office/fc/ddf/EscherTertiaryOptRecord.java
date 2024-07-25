@@ -16,6 +16,8 @@
 ==================================================================== */
 package com.cherry.lib.doc.office.fc.ddf;
 
+import androidx.annotation.Keep;
+
 /**
  * "The OfficeArtTertiaryFOPT record specifies a table of OfficeArtRGFOPTE properties, as defined in section 2.3.1."
  * -- [MS-ODRAW] -- v20110608; Office Drawing Binary File Format
@@ -24,6 +26,7 @@ package com.cherry.lib.doc.office.fc.ddf;
  */
 public class EscherTertiaryOptRecord extends AbstractEscherOptRecord
 {
+    @Keep
     public static final short RECORD_ID = (short) 0xF122;
 
     public String getRecordName()

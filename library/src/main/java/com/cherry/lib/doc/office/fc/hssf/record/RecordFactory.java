@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -118,6 +120,7 @@ public final class RecordFactory
             _c = c;
         }
 
+        @Keep
         public Record create(RecordInputStream in)
         {
             Object[] args = {in,};
@@ -164,6 +167,7 @@ public final class RecordFactory
             _m = m;
         }
 
+        @Keep
         public Record create(RecordInputStream in)
         {
             Object[] args = {in,};

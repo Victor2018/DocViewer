@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.usermodel;
 
+import androidx.annotation.Keep;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -100,6 +102,7 @@ public class FontDetails
      *                          particular font.
      * @return  a new FontDetails instance.
      */
+    @Keep
     public static FontDetails create( String fontName, Properties fontMetricsProps )
     {
         String heightStr = fontMetricsProps.getProperty( buildFontHeightProperty(fontName) );

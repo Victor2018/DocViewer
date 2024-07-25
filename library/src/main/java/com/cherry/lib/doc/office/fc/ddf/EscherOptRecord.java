@@ -16,6 +16,8 @@
 ==================================================================== */
 package com.cherry.lib.doc.office.fc.ddf;
 
+import androidx.annotation.Keep;
+
 /**
  * The opt record is used to store property values for a shape. It is the key to
  * determining the attributes of a shape. Properties can be of two types: simple
@@ -25,6 +27,7 @@ package com.cherry.lib.doc.office.fc.ddf;
  * @author Glen Stampoultzis
  */
 public class EscherOptRecord extends AbstractEscherOptRecord {
+    @Keep
     public static final short RECORD_ID = (short) 0xF00B;
     public static final String RECORD_DESCRIPTION = "msofbtOPT";
 

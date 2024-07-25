@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hslf.record;
 
+import androidx.annotation.Keep;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Iterator;
@@ -273,6 +275,7 @@ public final class PPDrawing extends RecordAtom
     /**
      * Create the Escher records associated with a new PPDrawing
      */
+    @Keep
     private void create()
     {
         EscherContainerRecord dgContainer = new EscherContainerRecord();

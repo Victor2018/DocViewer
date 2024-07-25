@@ -203,28 +203,21 @@ public class PGPageListItem extends APageListItem
      * @see com.cherry.lib.doc.office.system.beans.pagelist.APageListItem#onLayout(boolean, int, int, int, int)
      *
      */
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom)
-    {
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         int w = right - left;
         int h = bottom - top;
-        if (mBusyIndicator != null)
-        {
+        if (mBusyIndicator != null) {
             int x, y;
-            if (w > listView.getWidth())
-            {
+            if (w > listView.getWidth()) {
                 x = (listView.getWidth() - BUSY_SIZE) / 2 - left;
-            }
-            else
-            {
+            } else {
                 x = (w - BUSY_SIZE) / 2;
             }
             if (h > listView.getHeight())
             {
                 y = (listView.getHeight() - BUSY_SIZE) / 2 - top;
-            }
-            else
-            {
+            } else {
                 y = (h - BUSY_SIZE) / 2;
             }
             mBusyIndicator.layout(x, y, x + BUSY_SIZE, y + BUSY_SIZE);

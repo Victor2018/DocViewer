@@ -18,6 +18,8 @@
 package com.cherry.lib.doc.office.fc.hssf.record;
 
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.ss.usermodel.ErrorConstants;
 import com.cherry.lib.doc.office.fc.util.HexDump;
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
@@ -30,6 +32,8 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  * @author Jason Height (jheight at chariot dot net dot au)
  */
 public final class BoolErrRecord extends CellRecord {
+
+	@Keep
 	public final static short sid = 0x0205;
 	private int _value;
 	/**

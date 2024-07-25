@@ -19,6 +19,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 
 /**
@@ -31,6 +33,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 public final class AutoFilterInfoRecord
     extends StandardRecord
 {
+    @Keep
     public final static short sid = 0x9D;
     /**
      * Number of AutoFilter drop-down arrows on the sheet

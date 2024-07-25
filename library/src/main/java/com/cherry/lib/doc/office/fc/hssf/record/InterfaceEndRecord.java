@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 
 /**
@@ -28,6 +30,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  */
 public final class InterfaceEndRecord extends StandardRecord {
 
+    @Keep
     public static final short sid = 0x00E2;
     public static final InterfaceEndRecord instance = new InterfaceEndRecord();
 
@@ -35,6 +38,7 @@ public final class InterfaceEndRecord extends StandardRecord {
         // enforce singleton
     }
 
+    @Keep
     public static Record create(RecordInputStream in) {
         switch (in.remaining()) {
             case 0:

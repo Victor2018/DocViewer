@@ -18,6 +18,8 @@
 package com.cherry.lib.doc.office.fc.ddf;
 
 
+import androidx.annotation.Keep;
+
 import java.util.*;
 
 import com.cherry.lib.doc.office.fc.util.HexDump;
@@ -28,6 +30,7 @@ import com.cherry.lib.doc.office.fc.util.RecordFormatException;
  * This record defines the drawing groups used for a particular sheet.
  */
 public final class EscherDggRecord extends EscherRecord {
+    @Keep
     public static final short RECORD_ID = (short) 0xF006;
     public static final String RECORD_DESCRIPTION = "MsofbtDgg";
 

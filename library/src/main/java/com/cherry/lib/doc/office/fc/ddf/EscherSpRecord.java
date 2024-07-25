@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.ddf;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.HexDump;
 import com.cherry.lib.doc.office.fc.util.LittleEndian;
 
@@ -29,6 +31,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndian;
 public class EscherSpRecord
     extends EscherRecord
 {
+    @Keep
     public static final short RECORD_ID = (short) 0xF00A;
     public static final String RECORD_DESCRIPTION = "MsofbtSp";
 

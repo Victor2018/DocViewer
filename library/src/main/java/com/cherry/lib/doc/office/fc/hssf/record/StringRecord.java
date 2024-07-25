@@ -18,6 +18,8 @@
 package com.cherry.lib.doc.office.fc.hssf.record;
 
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.hssf.record.cont.ContinuableRecord;
 import com.cherry.lib.doc.office.fc.hssf.record.cont.ContinuableRecordOutput;
 import com.cherry.lib.doc.office.fc.util.StringUtil;
@@ -32,7 +34,8 @@ import com.cherry.lib.doc.office.fc.util.StringUtil;
  */
 public final class StringRecord extends ContinuableRecord {
 
-	public final static short sid = 0x0207;
+    @Keep
+    public final static short sid = 0x0207;
 
 	private boolean _is16bitUnicode;
 	private String _text;

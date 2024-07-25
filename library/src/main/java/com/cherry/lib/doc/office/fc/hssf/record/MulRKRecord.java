@@ -18,6 +18,8 @@
 package com.cherry.lib.doc.office.fc.hssf.record;
 
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.hssf.util.RKUtil;
 import com.cherry.lib.doc.office.fc.util.HexDump;
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
@@ -33,6 +35,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  * @version 2.0-pre
  */
 public final class MulRKRecord extends StandardRecord {
+	@Keep
 	public final static short sid = 0x00BD;
 
 	private int	 field_1_row;

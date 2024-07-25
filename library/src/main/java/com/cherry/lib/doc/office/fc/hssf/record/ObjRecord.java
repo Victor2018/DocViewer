@@ -17,6 +17,8 @@
         
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianInputStream;
  * @author Glen Stampoultzis (glens at apache.org)
  */
 public final class ObjRecord extends Record {
+	@Keep
 	public final static short sid = 0x005D;
 
 	private static final int NORMAL_PAD_ALIGNMENT = 2;

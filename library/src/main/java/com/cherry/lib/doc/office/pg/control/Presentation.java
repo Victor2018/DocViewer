@@ -106,22 +106,19 @@ public class Presentation extends FrameLayout implements IFind, IExportListener 
      *
      */
     public void initSlidebar() {
-        /*if (layoutParams == null)
-        {
-            return;
-        }
-        // 非指定高度才需要重高度
-        if (layoutParams.height == LayoutParams.MATCH_PARENT
-            || layoutParams.height == LayoutParams.FILL_PARENT)
-        {
-            mHeight = ((View)getParent()).getHeight() - getTop();
-            int bHeight = control.getMainFrame().getBottomBarHeight();
-            if (bHeight > 0 || isSlideShow())
-            {
-                mHeight -= bHeight;
-                setLayoutParams(new LinearLayout.LayoutParams(layoutParams.width, mHeight));
-            }
-        }*/
+        // FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) getLayoutParams();
+        // if (layoutParams == null) {
+        //     return;
+        // }
+        // // 非指定高度才需要重高度
+        // if (layoutParams.height == LayoutParams.MATCH_PARENT) {
+        //     mHeight = ((View) getParent()).getHeight() - getTop();
+        //     int bHeight = control.getMainFrame().getBottomBarHeight();
+        //     if (bHeight > 0 || isSlideShow()) {
+        //         mHeight -= bHeight;
+        //         setLayoutParams(new FrameLayout.LayoutParams(layoutParams.width, mHeight));
+        //     }
+        // }
     }
 
     /**
@@ -334,12 +331,10 @@ public class Presentation extends FrameLayout implements IFind, IExportListener 
      * @return bitmap raw data
      */
     public Bitmap slideAreaToImage(int slideNumber, int srcLeft, int srcTop, int srcWidth, int srcHeight, int desWidth, int desHeight) {
-        if (slideNumber <= 0 || slideNumber > getRealSlideCount()
-                || !SysKit.isValidateRect((int) (getPageSize().getWidth()), (int) (getPageSize().getHeight()), srcLeft, srcTop, srcWidth, srcHeight)) {
+        if (slideNumber <= 0 || slideNumber > getRealSlideCount() || !SysKit.isValidateRect((int) (getPageSize().getWidth()), (int) (getPageSize().getHeight()), srcLeft, srcTop, srcWidth, srcHeight)) {
             return null;
         }
-        return SlideDrawKit.instance().slideAreaToImage(pgModel, editor, pgModel.getSlide(slideNumber - 1),
-                srcLeft, srcTop, srcWidth, srcHeight, desWidth, desHeight);
+        return SlideDrawKit.instance().slideAreaToImage(pgModel, editor, pgModel.getSlide(slideNumber - 1), srcLeft, srcTop, srcWidth, srcHeight, desWidth, desHeight);
     }
 
     /**
@@ -450,8 +445,7 @@ public class Presentation extends FrameLayout implements IFind, IExportListener 
     public float getFitZoom() {
         if (slideshow) {
             Dimension pageSize = getPageSize();
-            return Math.min((float) (mWidth) / pageSize.width,
-                    (float) (mHeight) / pageSize.height);
+            return Math.min((float) (mWidth) / pageSize.width, (float) (mHeight) / pageSize.height);
         }
         return pgPrintMode.getFitZoom();
     }
@@ -787,9 +781,8 @@ public class Presentation extends FrameLayout implements IFind, IExportListener 
      */
     public boolean hasPreviousAction_Slideshow() {
         synchronized (this) {
-            if (slideshow &&
-                    (slideIndex_SlideShow >= 1            //has previous slide
-                            || !slideView.gotopreviousSlide()))  //has previous action
+            if (slideshow && (slideIndex_SlideShow >= 1            //has previous slide
+                    || !slideView.gotopreviousSlide()))  //has previous action
             {
                 return true;
             }
@@ -802,8 +795,7 @@ public class Presentation extends FrameLayout implements IFind, IExportListener 
      */
     public void slideShow(byte type) {
         synchronized (this) {
-            if (!slideshow || !slideView.animationStoped()
-                    || control.getSysKit().getCalloutManager().getDrawingMode() != MainConstant.DRAWMODE_NORMAL) {
+            if (!slideshow || !slideView.animationStoped() || control.getSysKit().getCalloutManager().getDrawingMode() != MainConstant.DRAWMODE_NORMAL) {
                 return;
             }
             if (type == ISlideShow.SlideShow_PreviousSlide && hasPreviousSlide_Slideshow()) {

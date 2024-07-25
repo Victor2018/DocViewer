@@ -140,7 +140,9 @@ public class MainControl extends AbstractControl {
      */
     public void dismissProgressDialog() {
         if (progressDialog != null) {
-            progressDialog.dismiss();
+            if(progressDialog.getWindow() != null){
+                progressDialog.dismiss();
+            }
             progressDialog = null;
         }
         if (handler != null) {

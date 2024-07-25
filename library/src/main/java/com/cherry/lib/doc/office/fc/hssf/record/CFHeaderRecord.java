@@ -18,6 +18,8 @@
 package com.cherry.lib.doc.office.fc.hssf.record;
 
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.hssf.record.cf.CellRangeUtil;
 import com.cherry.lib.doc.office.fc.ss.util.CellRangeAddressList;
 import com.cherry.lib.doc.office.fc.ss.util.HSSFCellRangeAddress;
@@ -30,6 +32,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  * @author Dmitriy Kumshayev
  */
 public final class CFHeaderRecord extends StandardRecord {
+	@Keep
 	public static final short sid = 0x01B0;
 
 	private int field_1_numcf;

@@ -900,7 +900,7 @@ public class PPTXReader extends AbstractReader
     
     /**
      * set slide page size
-     * @param model
+     * @param slideSize
      */
     public void setPageSize(Element slideSize)
     {

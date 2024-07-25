@@ -19,6 +19,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 
 /**
@@ -33,6 +35,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 public final class MMSRecord
     extends StandardRecord
 {
+    @Keep
     public final static short sid = 0xC1;
     private byte              field_1_addMenuCount;   // = 0;
     private byte              field_2_delMenuCount;   // = 0;

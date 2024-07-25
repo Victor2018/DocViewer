@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -42,6 +44,7 @@ import com.cherry.lib.doc.office.fc.util.StringUtil;
  * @author      Yegor Kozlov (yegor at apache dot org)
  */
 public final class HyperlinkRecord extends StandardRecord {
+    @Keep
     public final static short sid = 0x01B8;
     private POILogger logger = POILogFactory.getLogger(getClass());
 

@@ -6,6 +6,8 @@
  */
 package com.cherry.lib.doc.office.fc.hslf.record;
 
+import androidx.annotation.Keep;
+
 import java.util.Hashtable;
 
 import com.cherry.lib.doc.office.fc.hslf.record.PositionDependentRecordAtom;
@@ -47,6 +49,7 @@ public class VisualShapeAtom extends PositionDependentRecordAtom
     
     
     private byte[] _header;
+    @Keep
     public static long RECORD_ID = 0x2AFB;
     
     //the target element type in the shape to which the animation is applied. 

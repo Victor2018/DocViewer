@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.HexDump;
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 import com.cherry.lib.doc.office.fc.util.StringUtil;
@@ -27,6 +29,7 @@ import com.cherry.lib.doc.office.fc.util.StringUtil;
  * @author Patrick Cheng
  */
 public final class TableStylesRecord extends StandardRecord {
+	@Keep
 	public static final short sid = 0x088E;
 	
 	private int rt;

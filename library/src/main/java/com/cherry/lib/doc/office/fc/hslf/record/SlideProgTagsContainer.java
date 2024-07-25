@@ -6,6 +6,8 @@
  */
 package com.cherry.lib.doc.office.fc.hslf.record;
 
+import androidx.annotation.Keep;
+
 /**
  * TODO: A container record that specifies programmable tags with additional slide data.
  * <p>
@@ -25,6 +27,7 @@ package com.cherry.lib.doc.office.fc.hslf.record;
 public class SlideProgTagsContainer extends PositionDependentRecordContainer
 {
     private byte[] _header;
+    @Keep
     public static long RECORD_ID = 0x1388;
     
     /**

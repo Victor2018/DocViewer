@@ -317,19 +317,15 @@ public class PGPrintMode extends FrameLayout implements IPageListViewListener
         Rect rect = getPageSize(position);
         return new PGPageListItem(listView, control, editor, rect.width(), rect.height());
     }
-    
+
     /**
-     * 
+     *
      */
-    public Rect getPageSize(int pageIndex)
-    {
+    public Rect getPageSize(int pageIndex) {
         Dimension d = pgModel.getPageSize();
-        if (d == null)
-        {
+        if (d == null) {
             pageSize.set(0, 0, getWidth(), getHeight());
-        }
-        else
-        {   
+        } else {
             pageSize.set(0, 0, d.width, d.height);
         }
         return pageSize;

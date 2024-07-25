@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 import com.cherry.lib.doc.office.fc.util.StringUtil;
 
@@ -26,6 +28,7 @@ import com.cherry.lib.doc.office.fc.util.StringUtil;
  * @author Yegor Kozlov
  */
 public final class NoteRecord extends StandardRecord {
+	@Keep
 	public final static short sid = 0x001C;
 
 	public static final NoteRecord[] EMPTY_ARRAY = { };

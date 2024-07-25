@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record.aggregates;
 
+import androidx.annotation.Keep;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -145,6 +147,7 @@ public final class SharedValueManager {
 
 	/**
 	 */
+	@Keep
 	public static SharedValueManager create(SharedFormulaRecord[] sharedFormulaRecords,
 			CellReference[] firstCells, ArrayRecord[] arrayRecords, TableRecord[] tableRecords) {
 		if (sharedFormulaRecords.length + firstCells.length + arrayRecords.length + tableRecords.length < 1) {

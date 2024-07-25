@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hslf.usermodel;
 
+import androidx.annotation.Keep;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.security.MessageDigest;
@@ -168,6 +170,7 @@ public abstract class PictureData
      * Must be one of the static constants defined in the <code>Picture<code> class.
      * @return concrete instance of <code>PictureData</code>
      */
+    @Keep
     public static PictureData create(int type)
     {
         PictureData pict;

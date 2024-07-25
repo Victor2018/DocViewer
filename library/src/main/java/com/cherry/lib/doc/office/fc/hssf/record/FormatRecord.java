@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.HexDump;
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 import com.cherry.lib.doc.office.fc.util.StringUtil;
@@ -30,6 +32,7 @@ import com.cherry.lib.doc.office.fc.util.StringUtil;
  * @author Shawn M. Laubach (slaubach at apache dot org)
  */
 public final class FormatRecord extends StandardRecord {
+    @Keep
     public final static short sid = 0x041E;
 
     private final int field_1_index_code;

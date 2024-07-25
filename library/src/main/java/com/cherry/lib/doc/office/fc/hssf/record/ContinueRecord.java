@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.HexDump;
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 
@@ -29,6 +31,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  * @author Csaba Nagy (ncsaba at yahoo dot com)
  */
 public final class ContinueRecord extends StandardRecord {
+    @Keep
     public final static short sid = 0x003C;
     private byte[] _data;
 

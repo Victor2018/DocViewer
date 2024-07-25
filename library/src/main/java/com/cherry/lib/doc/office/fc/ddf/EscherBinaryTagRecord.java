@@ -6,6 +6,8 @@
  */
 package com.cherry.lib.doc.office.fc.ddf;
 
+import androidx.annotation.Keep;
+
 /**
  * holds data of extended pagraph style(bullets and number ruler)
  * <p>
@@ -24,7 +26,7 @@ package com.cherry.lib.doc.office.fc.ddf;
  */
 public class EscherBinaryTagRecord extends EscherTextboxRecord
 {
-    //
+    @Keep
     public static final short RECORD_ID = (short)0x138B;
     
     //

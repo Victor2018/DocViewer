@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 
 /**
@@ -29,6 +31,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  * @version 2.0-pre
  */
 public final class DefaultColWidthRecord extends StandardRecord {
+    @Keep
     public final static short sid = 0x0055;
     private int             field_1_col_width;
 

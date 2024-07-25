@@ -19,6 +19,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 
 /**
@@ -34,6 +36,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 public final class DefaultRowHeightRecord
     extends StandardRecord
 {
+    @Keep
     public final static short sid = 0x225;
     private short             field_1_option_flags;
     private short             field_2_row_height;

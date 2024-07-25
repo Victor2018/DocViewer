@@ -18,6 +18,8 @@
 package com.cherry.lib.doc.office.fc.hssf.record;
 
 
+import androidx.annotation.Keep;
+
 /**
  * Title:        Header Record<P>
  * Description:  Specifies a header for a sheet<P>
@@ -27,6 +29,7 @@ package com.cherry.lib.doc.office.fc.hssf.record;
  * @author Jason Height (jheight at chariot dot net dot au)
  */
 public final class HeaderRecord extends HeaderFooterBase {
+	@Keep
 	public final static short sid = 0x0014;
 
 	public HeaderRecord(String text) {

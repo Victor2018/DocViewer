@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.HexDump;
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 
@@ -27,6 +29,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  * @author Andrew C. Oliver (acoliver at apache dot org)
  */
 public final class PasswordRev4Record extends StandardRecord {
+    @Keep
     public final static short sid = 0x01BC;
     private int field_1_password;
 

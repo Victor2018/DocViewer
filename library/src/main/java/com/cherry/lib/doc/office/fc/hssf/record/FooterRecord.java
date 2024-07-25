@@ -18,6 +18,8 @@
 package com.cherry.lib.doc.office.fc.hssf.record;
 
 
+import androidx.annotation.Keep;
+
 /**
  * Title:        Footer Record (0x0015) <p/>
  * Description:  Specifies the footer for a sheet<P>
@@ -28,6 +30,7 @@ package com.cherry.lib.doc.office.fc.hssf.record;
  *
  */
 public final class FooterRecord extends HeaderFooterBase {
+	@Keep
 	public final static short sid = 0x0015;
 
 	public FooterRecord(String text) {

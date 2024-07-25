@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.IntList;
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 
@@ -30,6 +32,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  * @author Jason Height (jheight at chariot dot net dot au)
  */
 public class IndexRecord extends StandardRecord {
+    @Keep
     public final static short sid = 0x020B;
     private int                field_2_first_row;       // first row on the sheet
     private int                field_3_last_row_add1;   // last row

@@ -7,6 +7,8 @@
 
 package com.cherry.lib.doc.office.fc.dom4j.xpath;
 
+import androidx.annotation.Keep;
+
 import java.io.Serializable;
 import java.util.Iterator;
 
@@ -35,7 +37,7 @@ public class DefaultNamespaceContext implements NamespaceContext, Serializable
     {
         this.element = element;
     }
-
+    @Keep
     public static DefaultNamespaceContext create(Object node)
     {
         Element element = null;

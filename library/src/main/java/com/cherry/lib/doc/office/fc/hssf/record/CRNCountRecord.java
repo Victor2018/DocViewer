@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 /**
  * XCT - CRN Count <P>
@@ -26,6 +28,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  * @author Josh Micich
  */
 public final class CRNCountRecord extends StandardRecord {
+	@Keep
 	public final static short sid = 0x59;
 
 	private static final short DATA_SIZE = 4;

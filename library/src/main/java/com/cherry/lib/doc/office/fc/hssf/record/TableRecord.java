@@ -18,6 +18,8 @@
 package com.cherry.lib.doc.office.fc.hssf.record;
 
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.hssf.formula.ptg.TblPtg;
 import com.cherry.lib.doc.office.fc.hssf.util.CellRangeAddress8Bit;
 import com.cherry.lib.doc.office.fc.hssf.util.CellReference;
@@ -37,6 +39,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  * See p536 of the June 08 binary docs
  */
 public final class TableRecord extends SharedValueRecordBase {
+	@Keep
 	public static final short sid = 0x0236;
 
 	private static final BitField alwaysCalc      = BitFieldFactory.getInstance(0x0001);

@@ -18,6 +18,8 @@
 package com.cherry.lib.doc.office.fc.hssf.formula.ptg;
 
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.hssf.formula.function.FunctionMetadata;
 import com.cherry.lib.doc.office.fc.hssf.formula.function.FunctionMetadataRegistry;
 import com.cherry.lib.doc.office.fc.util.LittleEndianInput;
@@ -34,6 +36,7 @@ public final class FuncPtg extends AbstractFunctionPtg {
     public final static byte sid  = 0x21;
     public final static int  SIZE = 3;
 
+    @Keep
     public static FuncPtg create(LittleEndianInput in) {
         return create(in.readUShort());
     }
@@ -42,6 +45,7 @@ public final class FuncPtg extends AbstractFunctionPtg {
         super(funcIndex, fm.getReturnClassCode(), fm.getParameterClassCodes(), fm.getMinParams());  // minParams same as max since these are not var-arg funcs
     }
 
+    @Keep
     public static FuncPtg create(int functionIndex) {
         FunctionMetadata fm = FunctionMetadataRegistry.getFunctionByIndex(functionIndex);
         if(fm == null) {

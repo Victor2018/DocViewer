@@ -87,15 +87,12 @@ public class APageListAdapter extends BaseAdapter
      * @param parent The parent that this view will eventually be attached to
      * @return A View corresponding to the data at the specified position.
      */
-    public View getView(int position, View convertView, ViewGroup parent)
-    {
-        APageListItem pageItem = (APageListItem)convertView;
+    public View getView(int position, View convertView, ViewGroup parent) {
+        APageListItem pageItem = (APageListItem) convertView;
         Rect pageSize = listView.getPageListViewListener().getPageSize(position);
-        if (convertView == null)
-        {
+        if (convertView == null) {
             pageItem = listView.getPageListItem(position, convertView, parent);
-            if (pageItem == null)
-            {
+            if (pageItem == null) {
                 pageSize.right = 794;
                 pageSize.bottom = 1124;
                 pageItem = new APageListItem(listView, pageSize.width(), pageSize.height());

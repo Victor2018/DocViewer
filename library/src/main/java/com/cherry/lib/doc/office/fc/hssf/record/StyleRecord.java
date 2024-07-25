@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.BitField;
 import com.cherry.lib.doc.office.fc.util.BitFieldFactory;
 import com.cherry.lib.doc.office.fc.util.HexDump;
@@ -31,6 +33,7 @@ import com.cherry.lib.doc.office.fc.util.StringUtil;
  * @author aviks : string fixes for UserDefined Style
  */
 public final class StyleRecord extends StandardRecord {
+	@Keep
 	public final static short sid = 0x0293;
 
 	private static final BitField styleIndexMask = BitFieldFactory.getInstance(0x0FFF);

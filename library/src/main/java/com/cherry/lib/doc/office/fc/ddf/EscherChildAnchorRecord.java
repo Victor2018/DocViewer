@@ -18,6 +18,8 @@
 
 package com.cherry.lib.doc.office.fc.ddf;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.HexDump;
 import com.cherry.lib.doc.office.fc.util.LittleEndian;
 
@@ -31,6 +33,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndian;
 public class EscherChildAnchorRecord
         extends EscherRecord
 {
+    @Keep
     public static final short RECORD_ID = (short) 0xF00F;
     public static final String RECORD_DESCRIPTION = "MsofbtChildAnchor";
 

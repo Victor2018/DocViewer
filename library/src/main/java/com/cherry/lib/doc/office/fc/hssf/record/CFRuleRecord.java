@@ -18,6 +18,8 @@
 package com.cherry.lib.doc.office.fc.hssf.record;
 
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.hssf.formula.Formula;
 import com.cherry.lib.doc.office.fc.hssf.formula.FormulaType;
 import com.cherry.lib.doc.office.fc.hssf.formula.ptg.Ptg;
@@ -39,7 +41,7 @@ import com.cherry.lib.doc.office.ss.model.XLSModel.AWorkbook;
  * @author Dmitriy Kumshayev
  */
 public final class CFRuleRecord extends StandardRecord {
-
+	@Keep
 	public static final short sid = 0x01B1;
 
 	public static final class ComparisonOperator {
@@ -137,7 +139,8 @@ public final class CFRuleRecord extends StandardRecord {
 	/**
 	 * Creates a new comparison operation rule
 	 */
-    public static CFRuleRecord create(ASheet sheet, String formulaText) {
+	@Keep
+	public static CFRuleRecord create(ASheet sheet, String formulaText) {
         Ptg[] formula1 = parseFormula(formulaText, sheet);
         return new CFRuleRecord(CONDITION_TYPE_FORMULA, ComparisonOperator.NO_COMPARISON,
                 formula1, null);
@@ -145,6 +148,7 @@ public final class CFRuleRecord extends StandardRecord {
 	/**
 	 * Creates a new comparison operation rule
 	 */
+	@Keep
 	public static CFRuleRecord create(ASheet sheet, byte comparisonOperation,
 			String formulaText1, String formulaText2) {
 		Ptg[] formula1 = parseFormula(formulaText1, sheet);

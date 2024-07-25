@@ -18,6 +18,8 @@
 package com.cherry.lib.doc.office.fc.hssf.record;
 
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.hssf.formula.Formula;
 import com.cherry.lib.doc.office.fc.hssf.formula.eval.ErrorEval;
 import com.cherry.lib.doc.office.fc.hssf.formula.ptg.Ptg;
@@ -38,6 +40,7 @@ import com.cherry.lib.doc.office.ss.model.baseModel.Cell;
  */
 public final class FormulaRecord extends CellRecord {
 
+	@Keep
 	public static final short sid = 0x0006;   // docs say 406...because of a bug Microsoft support site article #Q184647)
 	private static int FIXED_SIZE = 14; // double + short + int
 
@@ -74,6 +77,7 @@ public final class FormulaRecord extends CellRecord {
 		 * @return <code>null</code> if the double value encoded by <tt>valueLongBits</tt> 
 		 * is a normal (non NaN) double value.
 		 */
+		@Keep
 		public static SpecialCachedValue create(long valueLongBits) {
 			if ((BIT_MARKER & valueLongBits) != BIT_MARKER) {
 				return null;
@@ -128,6 +132,7 @@ public final class FormulaRecord extends CellRecord {
 		public static SpecialCachedValue createCachedErrorCode(int errorCode) {
 			return create(ERROR_CODE, errorCode);
 		}
+		@Keep
 		private static SpecialCachedValue create(int code, int data) {
 			byte[] vd = {
 					(byte) code,

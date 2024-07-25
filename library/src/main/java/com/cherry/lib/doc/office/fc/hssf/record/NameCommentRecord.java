@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.HexDump;
 import com.cherry.lib.doc.office.fc.util.LittleEndianInput;
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
@@ -33,6 +35,7 @@ import com.cherry.lib.doc.office.fc.util.StringUtil;
  * @author Andrew Shirley (aks at corefiling.co.uk)
  */
 public final class NameCommentRecord extends StandardRecord {
+  @Keep
   public final static short sid = 0x0894;
 
   private final short field_1_record_type;

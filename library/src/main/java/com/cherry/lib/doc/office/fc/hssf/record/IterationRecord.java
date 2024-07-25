@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.BitField;
 import com.cherry.lib.doc.office.fc.util.BitFieldFactory;
 import com.cherry.lib.doc.office.fc.util.HexDump;
@@ -33,6 +35,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  * @author Jason Height (jheight at chariot dot net dot au)
  */
 public final class IterationRecord extends StandardRecord {
+    @Keep
     public final static short sid = 0x0011;
 
     private static final BitField iterationOn = BitFieldFactory.getInstance(0x0001);

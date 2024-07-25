@@ -18,6 +18,8 @@
 package com.cherry.lib.doc.office.fc.hssf.formula.eval;
 
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.hssf.formula.CollaboratingWorkbooksEnvironment;
 import com.cherry.lib.doc.office.fc.hssf.formula.EvaluationCell;
 import com.cherry.lib.doc.office.fc.hssf.formula.EvaluationWorkbook;
@@ -63,12 +65,14 @@ public final class ForkedEvaluator {
 	/**
 	 * @deprecated (Sep 2009) (reduce overloading) use {@link #create(Workbook, IStabilityClassifier, UDFFinder)}
 	 */
+	@Keep
 	public static ForkedEvaluator create(Workbook wb, IStabilityClassifier stabilityClassifier) {
 		return create(wb, stabilityClassifier, null);
 	}
 	/**
 	 * @param udfFinder pass <code>null</code> for default (AnalysisToolPak only)
 	 */
+	@Keep
 	public static ForkedEvaluator create(Workbook wb, IStabilityClassifier stabilityClassifier, UDFFinder udfFinder) {
 		return new ForkedEvaluator(createEvaluationWorkbook(wb), stabilityClassifier, udfFinder);
 	}

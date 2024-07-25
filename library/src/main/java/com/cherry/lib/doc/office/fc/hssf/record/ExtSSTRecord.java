@@ -19,6 +19,8 @@ package com.cherry.lib.doc.office.fc.hssf.record;
 
 
 
+import androidx.annotation.Keep;
+
 import java.util.ArrayList;
 
 import com.cherry.lib.doc.office.fc.hssf.record.cont.ContinuableRecord;
@@ -36,6 +38,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  * @author Jason Height (jheight at apache dot org)
  */
 public final class ExtSSTRecord extends ContinuableRecord {
+    @Keep
     public final static short sid = 0x00FF;
     public static final int DEFAULT_BUCKET_SIZE = 8;
     //Can't seem to find this documented but from the biffviewer it is clear that
