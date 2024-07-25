@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import java.io.ByteArrayInputStream;
 
 
@@ -25,6 +27,7 @@ import java.io.ByteArrayInputStream;
  * to be seeing this.
  */
 public final class DrawingRecordForBiffViewer extends AbstractEscherHolderRecord {
+    @Keep
     public static final short sid = 0xEC;
 
     public DrawingRecordForBiffViewer()

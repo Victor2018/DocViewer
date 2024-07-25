@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 import com.cherry.lib.doc.office.fc.util.StringUtil;
 
@@ -29,6 +31,7 @@ import com.cherry.lib.doc.office.fc.util.StringUtil;
  */
 public final class FileSharingRecord extends StandardRecord {
 
+    @Keep
     public final static short sid = 0x005B;
     private short             field_1_readonly;
     private short             field_2_password;

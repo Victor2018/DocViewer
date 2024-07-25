@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.formula.ptg;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.hssf.formula.function.FunctionMetadata;
 import com.cherry.lib.doc.office.fc.hssf.formula.function.FunctionMetadataRegistry;
 import com.cherry.lib.doc.office.fc.util.LittleEndianInput;
@@ -43,6 +45,7 @@ public final class FuncVarPtg extends AbstractFunctionPtg{
     /**Creates new function pointer from a byte array
      * usually called while reading an excel file.
      */
+    @Keep
     public static FuncVarPtg create(LittleEndianInput in)  {
         return create(in.readByte(), in.readShort());
     }
@@ -50,10 +53,12 @@ public final class FuncVarPtg extends AbstractFunctionPtg{
     /**
      * Create a function ptg from a string tokenised by the parser
      */
+    @Keep
     public static FuncVarPtg create(String pName, int numArgs) {
         return create(numArgs, lookupIndex(pName));
     }
 
+    @Keep
     private static FuncVarPtg create(int numArgs, int functionIndex) {
         FunctionMetadata fm = FunctionMetadataRegistry.getFunctionByIndex(functionIndex);
         if(fm == null) {

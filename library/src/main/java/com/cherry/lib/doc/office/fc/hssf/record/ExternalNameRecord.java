@@ -18,6 +18,8 @@
 package com.cherry.lib.doc.office.fc.hssf.record;
 
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.constant.fc.ConstantValueParser;
 import com.cherry.lib.doc.office.fc.hssf.formula.Formula;
 import com.cherry.lib.doc.office.fc.hssf.formula.ptg.Ptg;
@@ -32,6 +34,7 @@ import com.cherry.lib.doc.office.fc.util.StringUtil;
  */
 public final class ExternalNameRecord extends StandardRecord {
 
+	@Keep
 	public final static short sid = 0x0023; // as per BIFF8. (some old versions used 0x223)
 
 	private static final int OPT_BUILTIN_NAME          = 0x0001;

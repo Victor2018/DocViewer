@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.formula;
 
+import androidx.annotation.Keep;
+
 import java.util.Arrays;
 
 import com.cherry.lib.doc.office.fc.hssf.formula.ptg.ExpPtg;
@@ -134,6 +136,7 @@ public class Formula {
 	 * @param ptgs may be <code>null</code>
 	 * @return Never <code>null</code> (Possibly empty if the supplied <tt>ptgs</tt> is <code>null</code>)
 	 */
+	@Keep
 	public static Formula create(Ptg[] ptgs) {
 		if (ptgs == null || ptgs.length < 1) {
 			return EMPTY;

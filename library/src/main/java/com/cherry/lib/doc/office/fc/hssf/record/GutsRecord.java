@@ -19,6 +19,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 
 /**
@@ -33,6 +35,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 public final class GutsRecord
     extends StandardRecord
 {
+    @Keep
     public final static short sid = 0x80;
     private short             field_1_left_row_gutter;   // size of the row gutter to the left of the rows
     private short             field_2_top_col_gutter;    // size of the column gutter above the columns

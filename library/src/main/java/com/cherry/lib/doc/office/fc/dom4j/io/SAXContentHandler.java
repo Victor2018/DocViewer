@@ -7,6 +7,8 @@
 
 package com.cherry.lib.doc.office.fc.dom4j.io;
 
+import androidx.annotation.Keep;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -939,6 +941,7 @@ public class SAXContentHandler extends DefaultHandler implements LexicalHandler,
         return doc;
     }
 
+    @Keep
     private String getEncoding()
     {
         if (locator == null)

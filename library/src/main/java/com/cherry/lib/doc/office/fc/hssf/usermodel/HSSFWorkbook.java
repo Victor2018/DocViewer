@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.usermodel;
 
+import androidx.annotation.Keep;
+
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -170,6 +172,7 @@ public final class HSSFWorkbook extends POIDocument implements com.cherry.lib.do
     // SS中配色方案
     private HSSFPalette palette;
 
+    @Keep
     public static HSSFWorkbook create(InternalWorkbook book)
     {
         return new HSSFWorkbook(book);

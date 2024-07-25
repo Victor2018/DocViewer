@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.BitField;
 import com.cherry.lib.doc.office.fc.util.BitFieldFactory;
 import com.cherry.lib.doc.office.fc.util.HexDump;
@@ -29,6 +31,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  * @author Andrew C. Oliver (acoliver at apache dot org)
  */
 public final class ColumnInfoRecord extends StandardRecord {
+    @Keep
     public static final short sid = 0x007D;
 
     private int _firstCol;

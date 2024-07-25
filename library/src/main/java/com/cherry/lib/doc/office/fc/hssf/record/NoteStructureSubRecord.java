@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.HexDump;
 import com.cherry.lib.doc.office.fc.util.LittleEndianInput;
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
@@ -32,6 +34,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  * @author Yegor Kozlov
  */
 public final class NoteStructureSubRecord extends SubRecord {
+    @Keep
     public final static short sid = 0x0D;
     private static final int ENCODED_SIZE = 22;
 

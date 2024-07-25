@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.HexDump;
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 
@@ -33,6 +35,7 @@ public final class BOFRecord extends StandardRecord {
     /**
      * for BIFF8 files the BOF is 0x809.  For earlier versions it was 0x09 or 0x(biffversion)09
      */
+    @Keep
     public final static short sid = 0x809;
 
     /** suggested default (0x0600 - BIFF8) */

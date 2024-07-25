@@ -18,6 +18,8 @@
 package com.cherry.lib.doc.office.fc.hssf.record;
 
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.hssf.record.common.FeatFormulaErr2;
 import com.cherry.lib.doc.office.fc.hssf.record.common.FeatProtection;
 import com.cherry.lib.doc.office.fc.hssf.record.common.FeatSmartTag;
@@ -34,6 +36,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  *  up with a {@link FeatHdrRecord}.
  */
 public final class FeatRecord extends StandardRecord  {
+	@Keep
 	public final static short sid = 0x0868;
 	
 	private FtrHeader futureHeader;

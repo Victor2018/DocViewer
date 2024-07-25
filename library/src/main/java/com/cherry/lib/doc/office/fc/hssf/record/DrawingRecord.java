@@ -17,12 +17,15 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 /**
  * DrawingRecord (0x00EC)<p/>
  *
  */
 public final class DrawingRecord extends StandardRecord {
+    @Keep
     public static final short sid = 0x00EC;
 
 	private static final byte[] EMPTY_BYTE_ARRAY = { };

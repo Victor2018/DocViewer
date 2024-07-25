@@ -6,6 +6,8 @@
  */
 package com.cherry.lib.doc.office.fc.hslf.record;
 
+import androidx.annotation.Keep;
+
 /**
  * TODO: 文件注释
  * <p>
@@ -25,6 +27,7 @@ package com.cherry.lib.doc.office.fc.hslf.record;
 public class SlideProgBinaryTagContainer extends PositionDependentRecordContainer
 {
     private byte[] _header;
+    @Keep
     public static long RECORD_ID = 0x138A;
     
     /**

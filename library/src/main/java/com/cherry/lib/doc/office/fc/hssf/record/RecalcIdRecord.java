@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.HexDump;
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 
@@ -33,6 +35,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  * @author Luc Girardin (luc dot girardin at macrofocus dot com)
  */
 public final class RecalcIdRecord extends StandardRecord {
+    @Keep
     public final static short sid = 0x01C1;
     private final int _reserved0;
 

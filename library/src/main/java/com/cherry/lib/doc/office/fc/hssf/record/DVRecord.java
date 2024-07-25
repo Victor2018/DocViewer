@@ -18,6 +18,8 @@
 package com.cherry.lib.doc.office.fc.hssf.record;
 
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.hssf.formula.Formula;
 import com.cherry.lib.doc.office.fc.hssf.formula.ptg.Ptg;
 import com.cherry.lib.doc.office.fc.hssf.record.common.UnicodeString;
@@ -39,6 +41,7 @@ import com.cherry.lib.doc.office.fc.util.StringUtil;
  * @author Josh Micich
  */
 public final class DVRecord extends StandardRecord {
+	@Keep
 	public final static short sid = 0x01BE;
 	
 	/** the unicode string used for error/prompt title/text when not present */

@@ -6,6 +6,8 @@
  */
 package com.cherry.lib.doc.office.fc.hslf.record;
 
+import androidx.annotation.Keep;
+
 /**
  * TODO: An atom record that contains the value of the name-value pair 
  * in a programmable tag.
@@ -26,6 +28,7 @@ package com.cherry.lib.doc.office.fc.hslf.record;
 public class BinaryTagDataBlob extends PositionDependentRecordContainer
 {
     private byte[] _header;
+    @Keep
     public static long RECORD_ID = 0x138B;
     
     /**

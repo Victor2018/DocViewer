@@ -7,6 +7,8 @@
 
 package com.cherry.lib.doc.office.fc.dom4j;
 
+import androidx.annotation.Keep;
+
 import java.io.StringReader;
 import java.util.List;
 import java.util.Map;
@@ -307,7 +309,7 @@ public final class DocumentHelper
 
         return result;
     }
-
+    @Keep
     private static String getEncoding(String text)
     {
         String result = null;

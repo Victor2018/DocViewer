@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.HexDump;
 import com.cherry.lib.doc.office.fc.util.LittleEndianInput;
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
@@ -28,6 +30,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  * @author Glen Stampoultzis (glens at apache.org)
  */
 public final class GroupMarkerSubRecord extends SubRecord {
+    @Keep
     public final static short sid = 0x0006;
 
     private static final byte[] EMPTY_BYTE_ARRAY = { };

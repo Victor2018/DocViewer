@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -40,6 +42,7 @@ import com.cherry.lib.doc.office.fc.util.StringUtil;
  * @author Sergei Kozello (sergeikozello at mail.ru)
  */
 public final class BoundSheetRecord extends StandardRecord {
+	@Keep
 	public final static short sid = 0x0085;
 
 	private static final BitField hiddenFlag = BitFieldFactory.getInstance(0x01);

@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 
 /**
@@ -26,6 +28,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  * @author Dragos Buleandra (dragos.buleandra@trade2b.ro)
  */
 public final class DVALRecord extends StandardRecord {
+	@Keep
 	public final static short sid = 0x01B2;
 
 	/** Options of the DVAL */

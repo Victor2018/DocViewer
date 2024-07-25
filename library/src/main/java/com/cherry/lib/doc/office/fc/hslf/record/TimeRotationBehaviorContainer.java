@@ -6,6 +6,8 @@
  */
 package com.cherry.lib.doc.office.fc.hslf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.hslf.record.PositionDependentRecordContainer;
 import com.cherry.lib.doc.office.fc.hslf.record.Record;
 
@@ -33,6 +35,7 @@ import com.cherry.lib.doc.office.fc.hslf.record.Record;
 public class TimeRotationBehaviorContainer extends PositionDependentRecordContainer
 {
     private byte[] _header;
+    @Keep
     public static long RECORD_ID = 0xF12F;
     
     /**

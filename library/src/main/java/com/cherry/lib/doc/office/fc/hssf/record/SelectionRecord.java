@@ -18,6 +18,8 @@
 package com.cherry.lib.doc.office.fc.hssf.record;
 
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.hssf.util.CellRangeAddress8Bit;
 import com.cherry.lib.doc.office.fc.util.HexDump;
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
@@ -34,6 +36,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  * @author Glen Stampoultzis (glens at apache.org)
  */
 public final class SelectionRecord extends StandardRecord {
+    @Keep
     public final static short sid = 0x001D;
     private byte        field_1_pane;
     private int         field_2_row_active_cell;

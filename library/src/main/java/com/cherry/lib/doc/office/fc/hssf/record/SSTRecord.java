@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import java.util.Iterator;
 
 import com.cherry.lib.doc.office.fc.hssf.record.common.UnicodeString;
@@ -43,6 +45,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianConsts;
  * @see com.cherry.lib.doc.office.fc.hssf.record.ContinueRecord
  */
 public final class SSTRecord extends ContinuableRecord {
+    @Keep
     public static final short sid = 0x00FC;
 
     private static final UnicodeString EMPTY_STRING = new UnicodeString("");

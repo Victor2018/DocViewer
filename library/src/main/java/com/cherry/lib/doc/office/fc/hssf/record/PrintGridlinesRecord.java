@@ -19,6 +19,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 
 /**
@@ -33,6 +35,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 public final class PrintGridlinesRecord
     extends StandardRecord
 {
+    @Keep
     public final static short sid = 0x2b;
     private short             field_1_print_gridlines;
 

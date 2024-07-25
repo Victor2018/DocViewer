@@ -19,6 +19,8 @@ package com.cherry.lib.doc.office.fc.hssf.record;
 
 
 
+import androidx.annotation.Keep;
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,6 +31,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndian;
 
 
 public final class DrawingGroupRecord extends AbstractEscherHolderRecord {
+    @Keep
     public static final short sid = 0xEB;
 
     static final int MAX_RECORD_SIZE = 8228;

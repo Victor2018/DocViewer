@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 
 /**
@@ -29,6 +31,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  */
 
 public final class VCenterRecord extends StandardRecord {
+    @Keep
     public final static short sid = 0x84;
     private int field_1_vcenter;
 

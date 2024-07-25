@@ -7,6 +7,8 @@
 
 package com.cherry.lib.doc.office.fc.dom4j.io;
 
+import androidx.annotation.Keep;
+
 /**
  * <p>
  * <code>OutputFormat</code> represents the format configuration used by
@@ -168,7 +170,7 @@ public class OutputFormat implements Cloneable {
     public void setNewlines(boolean newlines) {
         this.newlines = newlines;
     }
-
+    @Keep
     public String getEncoding() {
         return encoding;
     }

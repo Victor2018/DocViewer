@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 
 /**
@@ -25,6 +27,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  * @author Shawn Laubach (slaubach at apache dot org)
  */
 public final class TopMarginRecord extends StandardRecord implements Margin {
+    @Keep
     public final static short sid = 0x28;
     private double field_1_margin;
 

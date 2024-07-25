@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 
 /**
@@ -28,6 +30,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  * @author Olivier Leprince
  */
 public final class UncalcedRecord extends StandardRecord  {
+	@Keep
 	public final static short sid = 0x005E;
 
     private short _reserved;

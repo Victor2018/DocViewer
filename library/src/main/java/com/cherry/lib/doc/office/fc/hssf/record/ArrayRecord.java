@@ -18,6 +18,8 @@
 package com.cherry.lib.doc.office.fc.hssf.record;
 
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.hssf.formula.Formula;
 import com.cherry.lib.doc.office.fc.hssf.formula.ptg.Ptg;
 import com.cherry.lib.doc.office.fc.hssf.util.CellRangeAddress8Bit;
@@ -33,7 +35,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  * @author Josh Micich
  */
 public final class ArrayRecord extends SharedValueRecordBase {
-
+	@Keep
 	public final static short sid = 0x0221;
 	private static final int OPT_ALWAYS_RECALCULATE = 0x0001;
 	private static final int OPT_CALCULATE_ON_OPEN  = 0x0002;

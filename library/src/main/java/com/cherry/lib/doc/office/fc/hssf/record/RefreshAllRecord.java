@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.BitField;
 import com.cherry.lib.doc.office.fc.util.BitFieldFactory;
 import com.cherry.lib.doc.office.fc.util.HexDump;
@@ -30,6 +32,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  * @author Andrew C. Oliver (acoliver at apache dot org)
  */
 public final class RefreshAllRecord extends StandardRecord {
+    @Keep
     public final static short sid = 0x01B7;
 
     private static final BitField refreshFlag = BitFieldFactory.getInstance(0x0001);

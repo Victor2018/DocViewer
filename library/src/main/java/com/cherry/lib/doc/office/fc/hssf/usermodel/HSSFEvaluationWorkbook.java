@@ -18,6 +18,8 @@
 package com.cherry.lib.doc.office.fc.hssf.usermodel;
 
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.hssf.formula.EvaluationCell;
 import com.cherry.lib.doc.office.fc.hssf.formula.EvaluationName;
 import com.cherry.lib.doc.office.fc.hssf.formula.EvaluationSheet;
@@ -50,6 +52,7 @@ public final class HSSFEvaluationWorkbook implements FormulaRenderingWorkbook, E
 	private final AWorkbook _uBook;
 	private final InternalWorkbook _iBook;
 
+	@Keep
 	public static HSSFEvaluationWorkbook create(AWorkbook book) {
 		if (book == null) {
 			return null;

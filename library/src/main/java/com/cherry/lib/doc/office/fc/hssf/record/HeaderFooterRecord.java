@@ -19,6 +19,8 @@ package com.cherry.lib.doc.office.fc.hssf.record;
 
 
 
+import androidx.annotation.Keep;
+
 import java.util.Arrays;
 
 import com.cherry.lib.doc.office.fc.hssf.record.aggregates.PageSettingsBlock;
@@ -34,6 +36,7 @@ public final class HeaderFooterRecord extends StandardRecord {
 
     private static final byte[] BLANK_GUID = new byte[16];
 
+    @Keep
     public final static short sid = 0x089C;
 	private byte[] _rawData;
 

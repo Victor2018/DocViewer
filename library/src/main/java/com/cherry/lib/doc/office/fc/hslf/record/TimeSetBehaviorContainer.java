@@ -6,8 +6,7 @@
  */
 package com.cherry.lib.doc.office.fc.hslf.record;
 
-import com.cherry.lib.doc.office.fc.hslf.record.PositionDependentRecordContainer;
-import com.cherry.lib.doc.office.fc.hslf.record.Record;
+import androidx.annotation.Keep;
 
 /**
  * TODO: 文件注释
@@ -28,6 +27,7 @@ import com.cherry.lib.doc.office.fc.hslf.record.Record;
 public class TimeSetBehaviorContainer extends PositionDependentRecordContainer
 {
     private byte[] _header;
+    @Keep
     public static long RECORD_ID = 0xF131;
     
     /**

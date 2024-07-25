@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.ss.util;
 
+import androidx.annotation.Keep;
+
 import java.lang.reflect.Array;
 import java.util.Iterator;
 import java.util.List;
@@ -50,6 +52,7 @@ public final class SSCellRange<K extends ICell> implements CellRange<K> {
 		_flattenedArray = flattenedArray;
 	}
 
+	@Keep
 	public static <B extends ICell> SSCellRange<B> create(int firstRow, int firstColumn, int height, int width, List<B> flattenedList, Class<B> cellClass) {
 		int nItems = flattenedList.size();
 		if (height * width != nItems) {

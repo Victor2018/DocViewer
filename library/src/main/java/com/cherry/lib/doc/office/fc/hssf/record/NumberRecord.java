@@ -18,6 +18,8 @@
 package com.cherry.lib.doc.office.fc.hssf.record;
 
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.ss.util.NumberToTextConverter;
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 
@@ -29,6 +31,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  * @author Jason Height (jheight at chariot dot net dot au)
  */
 public final class NumberRecord extends CellRecord {
+    @Keep
     public static final short sid = 0x0203;
     private double field_4_value;
 

@@ -7,6 +7,8 @@
 
 package com.cherry.lib.doc.office.fc.dom4j.io;
 
+import androidx.annotation.Keep;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -789,6 +791,7 @@ public class SAXReader
      * @return encoding used for InputSource
      * 
      */
+    @Keep
     public String getEncoding()
     {
         return encoding;

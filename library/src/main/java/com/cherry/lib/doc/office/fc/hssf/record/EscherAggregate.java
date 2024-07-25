@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -73,6 +75,7 @@ import com.cherry.lib.doc.office.ss.model.XLSModel.AWorkbook;
  * @author Glen Stampoultzis (glens at apache.org)
  */
 public final class EscherAggregate extends AbstractEscherHolderRecord {
+	@Keep
 	public static final short sid = 9876; // not a real sid - dummy value
 	private static POILogger log = POILogFactory.getLogger(EscherAggregate.class);
 

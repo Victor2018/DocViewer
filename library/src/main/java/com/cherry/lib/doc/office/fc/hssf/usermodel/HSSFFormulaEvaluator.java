@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.usermodel;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.hssf.formula.CollaboratingWorkbooksEnvironment;
 import com.cherry.lib.doc.office.fc.hssf.formula.IStabilityClassifier;
 import com.cherry.lib.doc.office.fc.hssf.formula.WorkbookEvaluator;
@@ -96,6 +98,7 @@ public class HSSFFormulaEvaluator implements FormulaEvaluator
      * evaluation begins.
      * @param udfFinder pass <code>null</code> for default (AnalysisToolPak only)
      */
+    @Keep
     public static HSSFFormulaEvaluator create(AWorkbook workbook,
         IStabilityClassifier stabilityClassifier, UDFFinder udfFinder)
     {

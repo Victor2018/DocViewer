@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 
 /**
@@ -26,6 +28,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  * @version 3.0-pre
  */
 public final class WriteProtectRecord extends StandardRecord {
+    @Keep
     public final static short sid = 0x86;
 
     public WriteProtectRecord()

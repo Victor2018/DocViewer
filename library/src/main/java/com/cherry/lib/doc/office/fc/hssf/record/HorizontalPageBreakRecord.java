@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import java.util.Iterator;
 
 import com.cherry.lib.doc.office.fc.hssf.record.PageBreakRecord.Break;
@@ -29,6 +31,7 @@ import com.cherry.lib.doc.office.fc.hssf.record.PageBreakRecord.Break;
  */
 public final class HorizontalPageBreakRecord extends PageBreakRecord {
 
+	@Keep
 	public static final short sid = 0x001B;
 
 	/**

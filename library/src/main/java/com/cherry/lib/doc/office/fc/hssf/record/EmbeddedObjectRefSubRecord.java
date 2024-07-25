@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import java.io.ByteArrayInputStream;
 
 import com.cherry.lib.doc.office.fc.hssf.formula.ptg.Area3DPtg;
@@ -41,6 +43,7 @@ import com.cherry.lib.doc.office.fc.util.StringUtil;
  * @author Daniel Noll
  */
 public final class EmbeddedObjectRefSubRecord extends SubRecord {
+	@Keep
 	public static final short sid = 0x0009;
 
 	private static final byte[] EMPTY_BYTE_ARRAY = { };

@@ -19,6 +19,8 @@ package com.cherry.lib.doc.office.fc.hssf.record;
 
 
 
+import androidx.annotation.Keep;
+
 import java.util.Arrays;
 
 import com.cherry.lib.doc.office.fc.hssf.record.aggregates.PageSettingsBlock;
@@ -35,6 +37,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  */
 public final class UserSViewBegin extends StandardRecord {
 
+    @Keep
     public final static short sid = 0x01AA;
 	private byte[] _rawData;
 

@@ -18,6 +18,8 @@
 package com.cherry.lib.doc.office.fc.hssf.record;
 
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.ss.util.CellRangeAddressList;
 import com.cherry.lib.doc.office.fc.ss.util.HSSFCellRangeAddress;
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
@@ -30,6 +32,7 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  * @author Andrew C. Oliver (acoliver at apache dot org)
  */
 public final class MergeCellsRecord extends StandardRecord {
+    @Keep
     public final static short sid = 0x00E5;
     /** sometimes the regions array is shared with other MergedCellsRecords */ 
     private HSSFCellRangeAddress[] _regions;

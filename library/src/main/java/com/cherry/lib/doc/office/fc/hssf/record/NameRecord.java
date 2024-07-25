@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.hssf.formula.Formula;
 import com.cherry.lib.doc.office.fc.hssf.formula.ptg.Area3DPtg;
 import com.cherry.lib.doc.office.fc.hssf.formula.ptg.Ptg;
@@ -39,7 +41,8 @@ import com.cherry.lib.doc.office.fc.util.StringUtil;
  * @author Petr Udalau - added method setFunction(boolean)
  */
 public final class NameRecord extends ContinuableRecord {
-    public final static short sid = 0x0018;
+	@Keep
+	public final static short sid = 0x0018;
 	/**Included for completeness sake, not implemented */
 	public final static byte  BUILTIN_CONSOLIDATE_AREA      = 1;
 	/**Included for completeness sake, not implemented */

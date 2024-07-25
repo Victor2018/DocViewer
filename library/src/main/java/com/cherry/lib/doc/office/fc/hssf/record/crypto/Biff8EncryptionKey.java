@@ -16,6 +16,8 @@
 ==================================================================== */
 package com.cherry.lib.doc.office.fc.hssf.record.crypto;
 
+import androidx.annotation.Keep;
+
 import java.io.ByteArrayOutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -38,9 +40,11 @@ public final class Biff8EncryptionKey {
 	 * Create using the default password and a specified docId
 	 * @param docId 16 bytes
 	 */
+	@Keep
 	public static Biff8EncryptionKey create(byte[] docId) {
 		return new Biff8EncryptionKey(createKeyDigest("VelvetSweatshop", docId));
 	}
+	@Keep
 	public static Biff8EncryptionKey create(String password, byte[] docIdData) {
 		return new Biff8EncryptionKey(createKeyDigest(password, docIdData));
 	}

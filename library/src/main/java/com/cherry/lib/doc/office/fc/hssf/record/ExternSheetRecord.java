@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +33,8 @@ import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
  */
 public class ExternSheetRecord extends StandardRecord {
 
-    public final static short sid = 0x0017;
+	@Keep
+	public final static short sid = 0x0017;
 	private List<RefSubRecord> _list;
 	
 	private static final class RefSubRecord {

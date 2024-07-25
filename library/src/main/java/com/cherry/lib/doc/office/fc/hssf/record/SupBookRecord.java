@@ -17,6 +17,8 @@
 
 package com.cherry.lib.doc.office.fc.hssf.record;
 
+import androidx.annotation.Keep;
+
 import com.cherry.lib.doc.office.fc.util.LittleEndianOutput;
 import com.cherry.lib.doc.office.fc.util.StringUtil;
 
@@ -31,6 +33,7 @@ import com.cherry.lib.doc.office.fc.util.StringUtil;
  */
 public final class SupBookRecord extends StandardRecord {
 
+    @Keep
     public final static short sid = 0x01AE;
 
     private static final short SMALL_RECORD_SIZE = 4;
