@@ -85,19 +85,22 @@ public class LayoutKit {
                 screenWidthPixels = Math.min(width, height);
                 screenHeightPixels = Math.max(width, height);
             }
-            Log.d(TAG, "layoutAllPage screenWidthPixels = " + screenWidthPixels + "; isLandscape " + isLandscape);
+
+            IView pv = root.getChildView();
+            int pvWidth = pv.getWidth();
+            float scale = 1;
+            if (screenWidthPixels != 0 && pvWidth != 0) {
+                scale = screenWidthPixels * 1f / pvWidth;
+                if (zoom == 1f) {
+                    word.setZoom(scale, 0, 0);
+                }
+            }
+            Log.d(TAG, "layoutAllPage screenWidthPixels = " + screenWidthPixels + "; isLandscape " + isLandscape + ", pvWidth = " + pvWidth + "; scale = " + scale);
         }
         int dx = WPViewConstant.PAGE_SPACE;
         int dy = WPViewConstant.PAGE_SPACE;
         IView pv = root.getChildView();
         int width = pv.getWidth();
-        float scale = 1;
-        if (screenWidthPixels != 0 && width != 0) {
-            scale = screenWidthPixels * 1f / width;
-            if (zoom == 1f) {
-                word.setZoom(scale, 0, 0);
-            }
-        }
         // int visibleWidth = word.getWidth();
         // visibleWidth = visibleWidth == 0 ? word.getWordWidth() : visibleWidth;
         // if (visibleWidth > width * zoom) {
@@ -127,10 +130,9 @@ public class LayoutKit {
      * @param flag        布局标记
      * @return
      */
-    public int layoutPara(IControl control, IDocument doc, DocAttr docAttr, PageAttr pageAttr, ParaAttr paraAttr,
-                          ParagraphView para, long startOffset, int x, int y, int w, int h, int flag) {
+    public int layoutPara(IControl control, IDocument doc, DocAttr docAttr, PageAttr pageAttr, ParaAttr paraAttr, ParagraphView para, long startOffset, int x, int y, int w, int h, int flag) {
         // get paragraph token
-        //ParaToken token = TokenManage.instance().allocToken(para);
+        // ParaToken token = TokenManage.instance().allocToken(para);
         int breakType = WPViewConstant.BREAK_NO;
         int dx = paraAttr.leftIndent;
         int dy = 0;
@@ -183,9 +185,7 @@ public class LayoutKit {
             }
             int lineIndent = getLineIndent(control, bnViewWidth, paraAttr, firstLine);
             if (bnView != null && lineIndent + paraAttr.leftIndent == paraAttr.tabClearPosition) {
-                if ((AttrManage.instance().hasAttribute(elem.getAttribute(), AttrIDConstant.PARA_SPECIALINDENT_ID)
-                        && AttrManage.instance().getParaSpecialIndent(elem.getAttribute()) < 0)
-                        || AttrManage.instance().hasAttribute(elem.getAttribute(), AttrIDConstant.PARA_INDENT_LEFT_ID)) {
+                if ((AttrManage.instance().hasAttribute(elem.getAttribute(), AttrIDConstant.PARA_SPECIALINDENT_ID) && AttrManage.instance().getParaSpecialIndent(elem.getAttribute()) < 0) || AttrManage.instance().hasAttribute(elem.getAttribute(), AttrIDConstant.PARA_INDENT_LEFT_ID)) {
                     bnView.setX(0);
                     lineIndent = bnViewWidth;
                     dx = 0;
@@ -196,9 +196,7 @@ public class LayoutKit {
             breakType = layoutLine(control, doc, docAttr, pageAttr, paraAttr, line, bnView, dx, dy, spanW - lineIndent, spanH, elemEnd, flag);
             int lineHeight = line.getLayoutSpan(WPViewConstant.Y_AXIS);
             if (!ss && !keepOne
-                    /*&& breakType == WPViewConstant.BREAK_LIMIT*/
-                    && ((spanH - lineHeight < 0 || line.getChildView() == null)
-                    || spanW - lineIndent <= 0)) {
+                    /*&& breakType == WPViewConstant.BREAK_LIMIT*/ && ((spanH - lineHeight < 0 || line.getChildView() == null) || spanW - lineIndent <= 0)) {
                 breakType = WPViewConstant.BREAK_LIMIT;
                 para.deleteView(line, true);
                 break;
@@ -214,14 +212,14 @@ public class LayoutKit {
                 para.appendChlidView(line);
             }
             keepOne = false;
-            //flag = ViewKit.instance().setBitValue(flag, WPViewConstant.LAYOUT_FLAG_KEEPONE, keepOne);
+            // flag = ViewKit.instance().setBitValue(flag, WPViewConstant.LAYOUT_FLAG_KEEPONE, keepOne);
             firstLine = false;
             bnView = null;
         }
         para.setSize(maxWidth, paraHeight);
         para.setEndOffset(lineStart);
         //
-        //token.setFree(true);
+        // token.setFree(true);
         return breakType;
     }
 
@@ -232,8 +230,8 @@ public class LayoutKit {
      */
     public int buildLine(IDocument doc, ParagraphView para) {
         int breakType = WPViewConstant.BREAK_NO;
-        //get paragraph token
-        //ParaToken token = TokenManage.instance().allocToken(para);
+        // get paragraph token
+        // ParaToken token = TokenManage.instance().allocToken(para);
         //
         /*AttrManage.instance().fillPageAttr(pageAttr, doc.getSection(0).getAttribute());
         //
@@ -318,8 +316,7 @@ public class LayoutKit {
      * @param flag     布局标记
      * @return
      */
-    public int layoutLine(IControl control, IDocument doc, DocAttr docAttr, PageAttr pageAttr, ParaAttr paraAttr, LineView line,
-                          BNView bnView, int x, int y, int w, int h, long maxEnd, int flag) {
+    public int layoutLine(IControl control, IDocument doc, DocAttr docAttr, PageAttr pageAttr, ParaAttr paraAttr, LineView line, BNView bnView, int x, int y, int w, int h, long maxEnd, int flag) {
         int breakType = WPViewConstant.BREAK_NO;
         int dx = 0;
         int dy = 0;
@@ -343,8 +340,7 @@ public class LayoutKit {
             leaf.setStartOffset(pos);
             leaf.setLocation(dx, dy);
             breakType = leaf.doLayout(docAttr, pageAttr, paraAttr, dx, dy, spanW, h, maxEnd, flag);
-            if ((leaf.getType() == WPViewConstant.OBJ_VIEW || leaf.getType() == WPViewConstant.SHAPE_VIEW)
-                    && breakType == WPViewConstant.BREAK_LIMIT) {
+            if ((leaf.getType() == WPViewConstant.OBJ_VIEW || leaf.getType() == WPViewConstant.SHAPE_VIEW) && breakType == WPViewConstant.BREAK_LIMIT) {
                 line.deleteView(leaf, true);
                 breakType = WPViewConstant.BREAK_NO;
                 break;
@@ -359,9 +355,7 @@ public class LayoutKit {
                 lineHeigthExceptShape = Math.max(lineHeigthExceptShape, leaf.getLayoutSpan(WPViewConstant.Y_AXIS));
             }
             spanW -= leafWidth;
-            if (breakType == WPViewConstant.BREAK_LIMIT
-                    || breakType == WPViewConstant.BREAK_ENTER
-                    || breakType == WPViewConstant.BREAK_PAGE) {
+            if (breakType == WPViewConstant.BREAK_LIMIT || breakType == WPViewConstant.BREAK_ENTER || breakType == WPViewConstant.BREAK_PAGE) {
                 break;
             }
             flag = ViewKit.instance().setBitValue(flag, WPViewConstant.LAYOUT_FLAG_KEEPONE, false);
@@ -395,10 +389,8 @@ public class LayoutKit {
      * @param flag
      * @return
      */
-    private BNView createBNView(IControl control, IDocument doc, DocAttr docAttr, PageAttr pageAttr, ParaAttr paraAttr,
-                                ParagraphView para, int x, int y, int w, int h, int flag) {
-        if (paraAttr.listID >= 0 && paraAttr.listLevel >= 0
-                || paraAttr.pgBulletID >= 0) {
+    private BNView createBNView(IControl control, IDocument doc, DocAttr docAttr, PageAttr pageAttr, ParaAttr paraAttr, ParagraphView para, int x, int y, int w, int h, int flag) {
+        if (paraAttr.listID >= 0 && paraAttr.listLevel >= 0 || paraAttr.pgBulletID >= 0) {
             BNView bnView = (BNView) ViewFactory.createView(control, null, null, WPViewConstant.BN_VIEW);
             bnView.doLayout(doc, docAttr, pageAttr, paraAttr, para, x, y, w, h, flag);
             para.setBNView(bnView);
@@ -461,9 +453,9 @@ public class LayoutKit {
         return 0;
     }
     //
-    //private DocAttr docAttr = new DocAttr();
+    // private DocAttr docAttr = new DocAttr();
     //
-    //private PageAttr pageAttr = new PageAttr();
+    // private PageAttr pageAttr = new PageAttr();
     //
-    //private ParaAttr paraAttr = new ParaAttr(); 
+    // private ParaAttr paraAttr = new ParaAttr();
 }
