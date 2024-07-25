@@ -6,8 +6,10 @@
  */
 package com.cherry.lib.doc.office.wp.view;
 
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
+import android.util.Log;
 
 import com.cherry.lib.doc.office.constant.MainConstant;
 import com.cherry.lib.doc.office.constant.wp.AttrIDConstant;
@@ -41,6 +43,7 @@ import com.cherry.lib.doc.office.wp.control.Word;
  * <p>
  */
 public class LayoutKit {
+    private static final String TAG = "LayoutKit";
     private int screenWidthPixels = 0;
     private int screenHeightPixels = 0;
     private static LayoutKit kit = new LayoutKit();
@@ -67,13 +70,22 @@ public class LayoutKit {
         }
         Word word = (Word) root.getContainer();
         if (word.getContext() != null && (screenWidthPixels == 0 || screenHeightPixels == 0)) {
-            //获取资源对象
+            // 获取资源对象
             Resources resources = word.getContext().getResources();
-            //获取屏幕数据
+            boolean isLandscape = resources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+            // 获取屏幕数据
             DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-            //获取屏幕宽高，单位是像素
-            screenWidthPixels = displayMetrics.widthPixels;
-            screenHeightPixels = displayMetrics.heightPixels;
+            // 获取屏幕宽高，单位是像素
+            int width = displayMetrics.widthPixels;
+            int height = displayMetrics.heightPixels;
+            if (isLandscape) {
+                screenWidthPixels = Math.max(width, height);
+                screenHeightPixels = Math.min(width, height);
+            } else {
+                screenWidthPixels = Math.min(width, height);
+                screenHeightPixels = Math.max(width, height);
+            }
+            Log.d(TAG, "layoutAllPage screenWidthPixels = " + screenWidthPixels + "; isLandscape " + isLandscape);
         }
         int dx = WPViewConstant.PAGE_SPACE;
         int dy = WPViewConstant.PAGE_SPACE;
