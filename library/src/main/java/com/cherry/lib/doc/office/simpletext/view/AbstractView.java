@@ -380,7 +380,7 @@ public abstract class AbstractView implements IView
     /**
      * 删除一个指定视图
      * 
-     * @param idDeleteChlid = ture，则连子视图也删除。
+     * @param isDeleteChild = ture，则连子视图也删除。
      */
     public void deleteView(IView view, boolean isDeleteChild)
     {
@@ -550,8 +550,8 @@ public abstract class AbstractView implements IView
     /**
      * 
      * @param canvas
-     * @param x
-     * @param y
+     * @param originX
+     * @param originY
      * @param zoom
      */
     public void draw(Canvas canvas, int originX, int originY, float zoom)
@@ -624,7 +624,7 @@ public abstract class AbstractView implements IView
     }
 
     /**
-     * @param leftIndentt The leftIndentt to set.
+     * @param leftIndent The leftIndentt to set.
      */
     public void setLeftIndent(int leftIndent)
     {

@@ -46,6 +46,7 @@ public class LayoutKit {
     private static final String TAG = "LayoutKit";
     private int screenWidthPixels = 0;
     private int screenHeightPixels = 0;
+    private float zoom = 1.0f;
     private static LayoutKit kit = new LayoutKit();
 
     private LayoutKit() {
@@ -92,10 +93,15 @@ public class LayoutKit {
             if (screenWidthPixels != 0 && pvWidth != 0) {
                 scale = screenWidthPixels * 1f / pvWidth;
                 if (zoom == 1f) {
+                    this.zoom = scale;
                     word.setZoom(scale, 0, 0);
                 }
             }
             Log.d(TAG, "layoutAllPage screenWidthPixels = " + screenWidthPixels + "; isLandscape " + isLandscape + ", pvWidth = " + pvWidth + "; scale = " + scale);
+        }
+        if (word.getZoom() == 1 && word.getZoom() != this.zoom) {
+            // Log.d(TAG, "layoutAllPage reset zoom , zoom= " +zoom);
+            word.setZoom(this.zoom, 0, 0);
         }
         int dx = WPViewConstant.PAGE_SPACE;
         int dy = WPViewConstant.PAGE_SPACE;
@@ -116,7 +122,7 @@ public class LayoutKit {
     }
 
     /**
-     * 布局段浇
+     * 布局段落
      *
      * @param docAttr     文档属性
      * @param pageAttr    页面属性
