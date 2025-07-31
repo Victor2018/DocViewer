@@ -8,15 +8,15 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Build
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.MimeTypeMap
 import android.widget.FrameLayout
+import android.widget.ProgressBar
 import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
@@ -44,11 +44,11 @@ import com.cherry.lib.doc.pdf.PdfPageViewAdapter
 import com.cherry.lib.doc.pdf.PdfQuality
 import com.cherry.lib.doc.pdf.PdfRendererCore
 import com.cherry.lib.doc.pdf.PdfViewAdapter
+import com.cherry.lib.doc.pdf.PinchZoomRecyclerView
 import com.cherry.lib.doc.util.Constant
 import com.cherry.lib.doc.util.FileUtils
 import com.cherry.lib.doc.util.ViewUtils.hide
 import com.cherry.lib.doc.util.ViewUtils.show
-import kotlinx.android.synthetic.main.doc_view.view.*
 import java.io.File
 import java.net.URLEncoder
 
@@ -96,6 +96,16 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
     var sourceFilePath: String? = null
     var mViewPdfInPage: Boolean = true
 
+    private lateinit var mRvPdf: PinchZoomRecyclerView
+    private lateinit var mLlBigPdfImage: FrameLayout
+    private lateinit var mIvPdf: PinchImageView
+    private lateinit var mPbBigLoading: ProgressBar
+    private lateinit var mFlDocContainer: FrameLayout
+    private lateinit var mIvImage: PinchImageView
+    private lateinit var mDocWeb: DocWebView
+    private lateinit var mPlLoadProgress: ProgressBar
+    private lateinit var mPdfPageNo: TextView
+
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle) {
@@ -104,6 +114,17 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
 
     fun initView(attrs: AttributeSet?, defStyle: Int) {
         inflate(context, R.layout.doc_view, this)
+
+        mRvPdf = findViewById(R.id.mRvPdf)
+        mLlBigPdfImage = findViewById(R.id.mLlBigPdfImage)
+        mIvPdf = findViewById(R.id.mIvPdf)
+        mPbBigLoading = findViewById(R.id.mPbBigLoading)
+        mFlDocContainer = findViewById(R.id.mFlDocContainer)
+        mIvImage = findViewById(R.id.mIvImage)
+        mDocWeb = findViewById(R.id.mDocWeb)
+        mPlLoadProgress = findViewById(R.id.mPlLoadProgress)
+        mPdfPageNo = findViewById(R.id.mPdfPageNo)
+
 
         mIvPdf.setOnClickListener {
             mLlBigPdfImage.hide()

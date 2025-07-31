@@ -6,7 +6,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.cherry.lib.doc.bean.DocEngine
 import com.cherry.lib.doc.util.Constant
-import kotlinx.android.synthetic.main.activity_doc_viewer.mDocView
+import com.cherry.lib.doc.widget.DocView
 
 open class DocViewerActivity : AppCompatActivity() {
     private val TAG = "DocViewerActivity"
@@ -29,6 +29,7 @@ open class DocViewerActivity : AppCompatActivity() {
     var fileType = -1
     var engine: Int = DocEngine.INTERNAL.value
     var docUrl: String? = null// 文件地址
+    private lateinit var mDocView: DocView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +40,7 @@ open class DocViewerActivity : AppCompatActivity() {
     }
 
     fun initView() {
+        mDocView = findViewById(R.id.mDocView)
     }
 
     fun initData(intent: Intent?) {

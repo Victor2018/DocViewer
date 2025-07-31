@@ -3,16 +3,9 @@ package com.cherry.doc
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.AdapterView.OnItemClickListener
-import androidx.core.content.res.ResourcesCompat
-import androidx.recyclerview.widget.LinearSnapHelper
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.cherry.doc.data.DocGroupInfo
-import com.cherry.doc.data.DocInfo
-import com.cherry.lib.doc.bean.FileType
-import com.cherry.lib.doc.util.FileUtils
-import kotlinx.android.synthetic.main.rv_doc_cell.view.*
-import java.io.File
 
 /*
  * -----------------------------------------------------------------
@@ -32,7 +25,7 @@ class DocViewHolder : RecyclerView.ViewHolder,OnClickListener {
     }
 
     fun bindData(data: DocGroupInfo?) {
-        itemView.mTvTypeName.text = data?.typeName
+        itemView.findViewById<TextView>(R.id.mTvTypeName).text = data?.typeName
 
 //        itemView.mRvDocCell.onFlingListener = null
 //        LinearSnapHelper().attachToRecyclerView(itemView.mRvDocCell)
@@ -41,7 +34,7 @@ class DocViewHolder : RecyclerView.ViewHolder,OnClickListener {
             adapterPosition)
         cellAdapter.showDatas(data?.docList)
 
-        itemView.mRvDocCell.adapter = cellAdapter
+        itemView.findViewById<RecyclerView>(R.id.mRvDocCell).adapter = cellAdapter
     }
 
     override fun onClick(v: View?) {

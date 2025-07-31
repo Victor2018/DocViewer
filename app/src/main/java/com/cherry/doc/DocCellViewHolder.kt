@@ -3,13 +3,15 @@ package com.cherry.doc
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.AdapterView.OnItemClickListener
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.cherry.doc.data.DocInfo
 import com.cherry.lib.doc.bean.FileType
 import com.cherry.lib.doc.util.FileUtils
-import kotlinx.android.synthetic.main.rv_doc_item_cell.view.*
 import java.io.File
 
 /*
@@ -36,60 +38,60 @@ class DocCellViewHolder : RecyclerView.ViewHolder,OnClickListener {
         if (typeIcon == -1) {
             var file = File(data?.path)
             if (file.exists()) {
-                itemView.mIvType.load(File(data?.path))
+                itemView.findViewById<ImageView>(R.id.mIvType).load(File(data?.path))
             } else {
-                itemView.mIvType.load(com.cherry.lib.doc.R.drawable.all_doc_ic)
+                itemView.findViewById<ImageView>(R.id.mIvType).load(com.cherry.lib.doc.R.drawable.all_doc_ic)
             }
         } else {
-            itemView.mIvType.load(typeIcon)
+            itemView.findViewById<ImageView>(R.id.mIvType).load(typeIcon)
         }
-        itemView.mTvFileName.text = data?.fileName
-        itemView.mTvFileDes.text = "${data?.getFileType()} | ${data?.fileSize}\n${data?.lastModified}"
+        itemView.findViewById<TextView>(R.id.mTvFileName).text = data?.fileName
+        itemView.findViewById<TextView>(R.id.mTvFileDes).text = "${data?.getFileType()} | ${data?.fileSize}\n${data?.lastModified}"
 
         val type = FileUtils.getFileTypeForUrl(data?.path)
         when (type) {
             FileType.PDF -> {
-                itemView.mCvDocCell.setCardBackgroundColor(
+                itemView.findViewById<CardView>(R.id.mCvDocCell).setCardBackgroundColor(
                     ResourcesCompat.getColor(
-                        itemView.mCvDocCell.resources,
+                        itemView.findViewById<CardView>(R.id.mCvDocCell).resources,
                         R.color.listItemColorPdf,
-                        itemView.mCvDocCell.context.theme
+                        itemView.findViewById<CardView>(R.id.mCvDocCell).context.theme
                     )
                 )
             }
             FileType.DOC,FileType.DOCX -> {
-                itemView.mCvDocCell.setCardBackgroundColor(
+                itemView.findViewById<CardView>(R.id.mCvDocCell).setCardBackgroundColor(
                     ResourcesCompat.getColor(
-                        itemView.mCvDocCell.resources,
+                        itemView.findViewById<CardView>(R.id.mCvDocCell).resources,
                         R.color.listItemColorDoc,
-                        itemView.mCvDocCell.context.theme
+                        itemView.findViewById<CardView>(R.id.mCvDocCell).context.theme
                     )
                 )
             }
             FileType.XLS,FileType.XLSX -> {
-                itemView.mCvDocCell.setCardBackgroundColor(
+                itemView.findViewById<CardView>(R.id.mCvDocCell).setCardBackgroundColor(
                     ResourcesCompat.getColor(
-                        itemView.mCvDocCell.resources,
+                        itemView.findViewById<CardView>(R.id.mCvDocCell).resources,
                         R.color.listItemColorExcel,
-                        itemView.mCvDocCell.context.theme
+                        itemView.findViewById<CardView>(R.id.mCvDocCell).context.theme
                     )
                 )
             }
             FileType.PPT,FileType.PPTX -> {
-                itemView.mCvDocCell.setCardBackgroundColor(
+                itemView.findViewById<CardView>(R.id.mCvDocCell).setCardBackgroundColor(
                     ResourcesCompat.getColor(
-                        itemView.mCvDocCell.resources,
+                        itemView.findViewById<CardView>(R.id.mCvDocCell).resources,
                         R.color.listItemColorPPT,
-                        itemView.mCvDocCell.context.theme
+                        itemView.findViewById<CardView>(R.id.mCvDocCell).context.theme
                     )
                 )
             }
             FileType.IMAGE -> {
-                itemView.mCvDocCell.setCardBackgroundColor(
+                itemView.findViewById<CardView>(R.id.mCvDocCell).setCardBackgroundColor(
                     ResourcesCompat.getColor(
-                        itemView.mCvDocCell.resources,
+                        itemView.findViewById<CardView>(R.id.mCvDocCell).resources,
                         R.color.listItemColorImage,
-                        itemView.mCvDocCell.context.theme
+                        itemView.findViewById<CardView>(R.id.mCvDocCell).context.theme
                     )
                 )
             }

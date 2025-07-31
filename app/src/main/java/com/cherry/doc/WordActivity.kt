@@ -3,10 +3,10 @@ package com.cherry.doc
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.FrameLayout
 import android.widget.Toast
 import com.cherry.lib.doc.util.Constant
 import com.cherry.lib.doc.widget.PoiViewer
-import kotlinx.android.synthetic.main.activity_word.mFlDocContainer
 
 class WordActivity : AppCompatActivity() {
     companion object {
@@ -17,9 +17,13 @@ class WordActivity : AppCompatActivity() {
         }
     }
 
+    private lateinit var mFlDocContainer: FrameLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_word)
+
+        mFlDocContainer = findViewById(R.id.mFlDocContainer)
 
         var path = intent?.getStringExtra(Constant.INTENT_DATA_KEY)
         word2Html(path ?: "")

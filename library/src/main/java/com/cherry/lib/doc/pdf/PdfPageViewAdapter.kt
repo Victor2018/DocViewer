@@ -7,14 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.LinearInterpolator
-import android.widget.Toast
-import androidx.core.view.updateLayoutParams
+import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.recyclerview.widget.RecyclerView
 import com.cherry.lib.doc.R
 import com.cherry.lib.doc.util.ViewUtils.hide
 import com.cherry.lib.doc.util.ViewUtils.show
-import kotlinx.android.synthetic.main.page_item_pdf.view.*
-import kotlinx.android.synthetic.main.pdf_view_page_loading_layout.view.*
 
 /*
  * -----------------------------------------------------------------
@@ -50,24 +48,29 @@ internal class PdfPageViewAdapter(
     }
 
     inner class PdfPageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),View.OnAttachStateChangeListener {
+        private lateinit var pdf_view_page_loading_progress: ProgressBar
+        private lateinit var pageView: ImageView
 
         fun bindView() {
         }
 
         private fun handleLoadingForPage(position: Int) {
             if (!enableLoadingForPages) {
-                itemView.pdf_view_page_loading_progress.hide()
+                pdf_view_page_loading_progress.hide()
                 return
             }
 
             if (renderer?.pageExistInCache(position) == true) {
-                itemView.pdf_view_page_loading_progress.hide()
+                pdf_view_page_loading_progress.hide()
             } else {
-                itemView.pdf_view_page_loading_progress.show()
+                pdf_view_page_loading_progress.show()
             }
         }
 
         init {
+            pdf_view_page_loading_progress = itemView.findViewById(R.id.pdf_view_page_loading_progress)
+            pageView = itemView.findViewById(R.id.pageView)
+
             itemView.addOnAttachStateChangeListener(this)
         }
 
@@ -84,20 +87,20 @@ internal class PdfPageViewAdapter(
 //                            this.rightMargin = pageSpacing.right
 //                            this.bottomMargin = pageSpacing.bottom
 //                        }
-                        itemView.pageView.setImageBitmap(bitmap)
-                        itemView.pageView.animation = AlphaAnimation(0F, 1F).apply {
+                        pageView.setImageBitmap(bitmap)
+                        pageView.animation = AlphaAnimation(0F, 1F).apply {
                             interpolator = LinearInterpolator()
                             duration = 200
                         }
-                        itemView.pdf_view_page_loading_progress.hide()
+                        pdf_view_page_loading_progress.hide()
                     }
                 }
             }
         }
 
         override fun onViewDetachedFromWindow(p0: View) {
-            itemView.pageView.setImageBitmap(null)
-            itemView.pageView.clearAnimation()
+            pageView.setImageBitmap(null)
+            pageView.clearAnimation()
         }
     }
 }

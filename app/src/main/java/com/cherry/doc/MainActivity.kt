@@ -15,6 +15,7 @@ import android.view.View.OnClickListener
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.cherry.doc.util.BasicSet
 import com.cherry.doc.util.DocUtil
 import com.cherry.doc.util.WordUtils
@@ -26,8 +27,7 @@ import com.cherry.permissions.lib.EasyPermissions
 import com.cherry.permissions.lib.EasyPermissions.hasPermissions
 import com.cherry.permissions.lib.annotations.AfterPermissionGranted
 import com.cherry.permissions.lib.dialogs.SettingsDialog
-import kotlinx.android.synthetic.main.activity_main.toolbar
-import kotlinx.android.synthetic.main.content_main.mRvDoc
+import com.google.android.material.appbar.MaterialToolbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -47,6 +47,8 @@ class MainActivity : AppCompatActivity(),OnClickListener,OnItemClickListener,
 //    var url = "http://172.16.28.95:8080/data/testdocx.ll"
 
     var mDocAdapter: DocAdapter? = null
+    private lateinit var toolbar: MaterialToolbar
+    private lateinit var mRvDoc: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -138,6 +140,9 @@ class MainActivity : AppCompatActivity(),OnClickListener,OnItemClickListener,
         }
     }
     fun initView() {
+        toolbar = findViewById(R.id.toolbar)
+        mRvDoc = findViewById(R.id.mRvDoc)
+
         setSupportActionBar(toolbar)
 
         mDocAdapter = DocAdapter(this,this)
