@@ -47,31 +47,31 @@ internal class PdfPageViewAdapter(
         holder.bindView()
     }
 
-    inner class PdfPageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),View.OnAttachStateChangeListener {
-        private lateinit var pdf_view_page_loading_progress: ProgressBar
-        private lateinit var pageView: ImageView
+    inner class PdfPageViewHolder : RecyclerView.ViewHolder,View.OnAttachStateChangeListener {
+        private var pdf_view_page_loading_progress: ProgressBar? = null
+        private var pageView: ImageView? = null
+
+        constructor(itemView: View): super(itemView) {
+            pdf_view_page_loading_progress = itemView.findViewById(R.id.pdf_view_page_loading_progress)
+            pageView = itemView.findViewById(R.id.pageView)
+
+            itemView.addOnAttachStateChangeListener(this)
+        }
 
         fun bindView() {
         }
 
         private fun handleLoadingForPage(position: Int) {
             if (!enableLoadingForPages) {
-                pdf_view_page_loading_progress.hide()
+                pdf_view_page_loading_progress?.hide()
                 return
             }
 
             if (renderer?.pageExistInCache(position) == true) {
-                pdf_view_page_loading_progress.hide()
+                pdf_view_page_loading_progress?.hide()
             } else {
-                pdf_view_page_loading_progress.show()
+                pdf_view_page_loading_progress?.show()
             }
-        }
-
-        init {
-            pdf_view_page_loading_progress = itemView.findViewById(R.id.pdf_view_page_loading_progress)
-            pageView = itemView.findViewById(R.id.pageView)
-
-            itemView.addOnAttachStateChangeListener(this)
         }
 
         override fun onViewAttachedToWindow(p0: View) {
@@ -87,20 +87,20 @@ internal class PdfPageViewAdapter(
 //                            this.rightMargin = pageSpacing.right
 //                            this.bottomMargin = pageSpacing.bottom
 //                        }
-                        pageView.setImageBitmap(bitmap)
-                        pageView.animation = AlphaAnimation(0F, 1F).apply {
+                        pageView?.setImageBitmap(bitmap)
+                        pageView?.animation = AlphaAnimation(0F, 1F).apply {
                             interpolator = LinearInterpolator()
                             duration = 200
                         }
-                        pdf_view_page_loading_progress.hide()
+                        pdf_view_page_loading_progress?.hide()
                     }
                 }
             }
         }
 
         override fun onViewDetachedFromWindow(p0: View) {
-            pageView.setImageBitmap(null)
-            pageView.clearAnimation()
+            pageView?.setImageBitmap(null)
+            pageView?.clearAnimation()
         }
     }
 }

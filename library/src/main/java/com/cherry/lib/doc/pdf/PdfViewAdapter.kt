@@ -58,33 +58,38 @@ internal class PdfViewAdapter(
         holder.bindView()
     }
 
-    inner class PdfPageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),View.OnAttachStateChangeListener {
-        private lateinit var container_view: FrameLayout
-        private lateinit var pdf_view_page_loading_progress: ProgressBar
-        private lateinit var pageView: ImageView
+    inner class PdfPageViewHolder : RecyclerView.ViewHolder,View.OnAttachStateChangeListener {
+        private var container_view: FrameLayout? = null
+        private var pdf_view_page_loading_progress: ProgressBar? = null
+        private var pageView: ImageView? = null
 
-        fun bindView() {
-            container_view.setOnClickListener {
+        constructor(itemView: View): super(itemView) {
+            container_view = itemView.findViewById(R.id.container_view)
+            pdf_view_page_loading_progress = itemView.findViewById(R.id.pdf_view_page_loading_progress)
+            pageView = itemView.findViewById(R.id.pageView)
+
+            container_view?.setOnClickListener {
                 listener?.OnPdfItemClick(adapterPosition)
             }
+
+            itemView.addOnAttachStateChangeListener(this)
+        }
+
+        fun bindView() {
+
         }
 
         private fun handleLoadingForPage(position: Int) {
             if (!enableLoadingForPages) {
-                pdf_view_page_loading_progress.hide()
+                pdf_view_page_loading_progress?.hide()
                 return
             }
 
             if (renderer?.pageExistInCache(position) == true) {
-                pdf_view_page_loading_progress.hide()
+                pdf_view_page_loading_progress?.hide()
             } else {
-                pdf_view_page_loading_progress.show()
+                pdf_view_page_loading_progress?.show()
             }
-        }
-
-        init {
-            container_view = itemView.findViewById(R.id.container_view)
-            itemView.addOnAttachStateChangeListener(this)
         }
 
         override fun onViewAttachedToWindow(p0: View) {
@@ -92,28 +97,28 @@ internal class PdfViewAdapter(
             renderer?.renderPage(adapterPosition) { bitmap: Bitmap?, pageNo: Int ->
                 if (pageNo == adapterPosition) {
                     bitmap?.let {
-                        container_view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                        container_view?.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                             height =
-                                (container_view.width.toFloat() / ((bitmap.width.toFloat() / bitmap.height.toFloat()))).toInt()
+                                (container_view?.width?.toFloat() ?: 0f / ((bitmap.width.toFloat() / bitmap.height.toFloat()))).toInt()
                             this.topMargin = pageSpacing.top
                             this.leftMargin = pageSpacing.left
                             this.rightMargin = pageSpacing.right
                             this.bottomMargin = pageSpacing.bottom
                         }
-                        pageView.setImageBitmap(bitmap)
-                        pageView.animation = AlphaAnimation(0F, 1F).apply {
+                        pageView?.setImageBitmap(bitmap)
+                        pageView?.animation = AlphaAnimation(0F, 1F).apply {
                             interpolator = LinearInterpolator()
                             duration = 200
                         }
-                        pdf_view_page_loading_progress.hide()
+                        pdf_view_page_loading_progress?.hide()
                     }
                 }
             }
         }
 
         override fun onViewDetachedFromWindow(p0: View) {
-            pageView.setImageBitmap(null)
-            pageView.clearAnimation()
+            pageView?.setImageBitmap(null)
+            pageView?.clearAnimation()
         }
     }
 
