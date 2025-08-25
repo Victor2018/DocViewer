@@ -124,7 +124,9 @@ public class LinePathBuilder
         BackgroundAndFill bgFill = shape.getBackgroundAndFill();
         if(bgFill == null)
         {
-            bgFill = shape.getLine().getBackgroundAndFill();
+            if (shape.getLine() != null) {
+                bgFill = shape.getLine().getBackgroundAndFill();
+            }
         }
         extendPath.setBackgroundAndFill(bgFill);
         extendPath.setLine(shape.getLine());
@@ -223,8 +225,10 @@ public class LinePathBuilder
         BackgroundAndFill bgFill = shape.getBackgroundAndFill();
         if(bgFill == null)
         {
-        	 bgFill = shape.getLine().getBackgroundAndFill();
-        }       
+            if (shape.getLine() != null) {
+                bgFill = shape.getLine().getBackgroundAndFill();
+            }
+        }
         extendPath.setPath(path);
         extendPath.setLine(shape.getLine());
         paths.add(extendPath);
@@ -322,8 +326,10 @@ public class LinePathBuilder
         BackgroundAndFill bgFill = shape.getBackgroundAndFill();
         if(bgFill == null)
         {
-        	 bgFill = shape.getLine().getBackgroundAndFill();
-        }       
+            if (shape.getLine() != null) {
+                bgFill = shape.getLine().getBackgroundAndFill();
+            }
+        }
         extendPath.setPath(path);
         extendPath.setLine(shape.getLine());
         paths.add(extendPath);
@@ -389,8 +395,10 @@ public class LinePathBuilder
         BackgroundAndFill bgFill = shape.getBackgroundAndFill();
         if(bgFill == null)
         {
-        	 bgFill = shape.getLine().getBackgroundAndFill();
-        }               
+            if (shape.getLine() != null) {
+                bgFill = shape.getLine().getBackgroundAndFill();
+            }
+        }
         extendPath.setPath(path);
         extendPath.setLine(shape.getLine());
         paths.add(extendPath);
@@ -465,7 +473,9 @@ public class LinePathBuilder
         BackgroundAndFill bgFill = shape.getBackgroundAndFill();
         if(bgFill == null)
         {
-        	 bgFill = shape.getLine().getBackgroundAndFill();
+            if (shape.getLine() != null) {
+                bgFill = shape.getLine().getBackgroundAndFill();
+            }
         }
         
         PointF startArrowTailCenter = null;
@@ -610,8 +620,10 @@ public class LinePathBuilder
         BackgroundAndFill bgFill = shape.getBackgroundAndFill();
         if(bgFill == null)
         {
-        	 bgFill = shape.getLine().getBackgroundAndFill();
-        }               
+            if (shape.getLine() != null) {
+                bgFill = shape.getLine().getBackgroundAndFill();
+            }
+        }
         extendPath.setPath(path);
         extendPath.setLine(shape.getLine());
         paths.add(extendPath);
