@@ -86,11 +86,11 @@ public class PoiViewer {
                 WordConverter wordConverter = new WordConverter(filePath, mFileCachePath);
                 return wordConverter.returnPath;
             }
-//            if (mFileExt.equalsIgnoreCase(".xls") || mFileExt.equalsIgnoreCase(".xlsx")) {
-//                ExcelConverter excelConverter = new ExcelConverter(filePath, mFileCachePath);
-//                excelConverter.readExcelToHtml();
-//                return excelConverter.mUrlPath;
-//            }
+           if (mFileExt.equalsIgnoreCase(".xls") || mFileExt.equalsIgnoreCase(".xlsx")) {
+               ExcelConverter excelConverter = new ExcelConverter(filePath, mFileCachePath);
+               excelConverter.readExcelToHtml();
+               return excelConverter.mUrlPath;
+           }
             if (mFileExt.equalsIgnoreCase(".txt")) {
                 try {
                     String txtString = FileUtils.readFileToString(new File(filePath), "UTF-8");
