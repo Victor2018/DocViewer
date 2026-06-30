@@ -570,4 +570,8 @@ class DocView : FrameLayout,OnDownloadListener, OnWebLoadListener,OnPdfItemClick
         closePdfRender()
         mOnDocPageChangeListener = null
     }
+
+    fun getPdfRecyclerView(): RecyclerView {
+        return mRvPdf
+    }
 }
